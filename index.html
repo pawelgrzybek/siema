@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Playo</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+  <div class="playo">
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor sit amet, consectetur.</p>
+    </div>
+  </div>
+
+  <button class="prev">prev</button>
+  <button class="next">next</button>
+
+  <script src="src/playo.js"></script>
+  <script>
+    const playo1 = new Playo('.playo');
+    document.querySelector('.next').addEventListener('click', function() {
+      playo1.next();
+    });
+    document.querySelector('.prev').addEventListener('click', function() {
+      playo1.prev();
+    });
+  </script>
+
+
+</body>
+</html>
