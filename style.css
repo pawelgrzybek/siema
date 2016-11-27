@@ -22,8 +22,10 @@ body {
   line-height: 1.6rem;
 }
 
+h1,
+h2,
 p,
-h2 {
+pre {
   margin-bottom: 1.6rem;
 }
 
@@ -39,6 +41,11 @@ a {
   padding: 0 1rem;
 }
 
+.section {
+  margin-bottom: 3.2rem;
+}
+
+/* title */
 .title {
   text-align: center;
   font-size: 2rem;
@@ -52,30 +59,34 @@ a {
   line-height: 1.6rem;
 }
 
-/* playo */
-.playo {
+/* siema */
+.siema {
   margin-bottom: 1.6rem;
 }
 
-.playo__inside {
+.siema__inside {
   padding: 1.6rem;
   background: #eee;
   box-shadow: inset 0 0 0 1px #ddd;
 }
 
-.btn {
-  background: #eee;
-  border: 0;
-  line-height: 2.4rem;
+button {
   margin-bottom: 1.6rem;
   padding: 0 1.6rem;
+  border: 0;
+  background: #EC407A;
+  color: #fff;
+  font: inherit;
+  font-size: .75rem;
+  line-height: 2.4rem;
 }
 
-pre,
-code {
+pre {
+  padding: 1.6rem;
   background: #f7f7f7;
   font-family: 'Source Code Pro', monospace;
-  font-size: .847rem;
+  box-shadow: inset 0 0 0 1px #ddd;
+  font-size: 1rem;
   overflow-x: auto;
   vertical-align: top;
 }

@@ -6,33 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Pawel Grzybek - https://pawelgrzybek.com">
 
-  <title>Playo</title>
+  <title>Siema - Lightweight and simple carousel in pure JavaScript</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet">
 </head>
 <body>
 
   <div class="page">
-    <h1 class="title">
-      Playo
-      <span class="title__desc">Lightweight and simple carousel in pure JavaScript</span>
-    </h1>
-    <p>Building another grid system or slider in 2016 is probably stupid idea. Thats why I built one. It is very lightweight (just 1kb  gziped) and comes with no dependencies. It comes with no styling and no crazy functionality. As Brad Frost said "do that shit yourself". If you need some more complex tool I highly recommend amazing <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a>. By the way - I built a <a href="https://pawelgrzybek.com/do-you-really-need-another-grid-system/">grid system</a> too :)</p>
+    <!-- intro -->
+    <section class="section">
+      <h1 class="title">
+        Siema
+        <span class="title__desc">Lightweight and simple carousel in pure JavaScript</span>
+      </h1>
+      <p>Building another grid system or slider in 2016 sounds like a stupid idea. Thats why I built one. It is very lightweight (just 1kb  gziped) and comes with no dependencies. It comes with no styling and no crazy functionality. As Brad Frost said "do that shit yourself". If you need some more complex tool I highly recommend <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a>. By the way - I built a <a href="https://pawelgrzybek.com/do-you-really-need-another-grid-system/">grid system</a> too :)</p>
+      !!!VIDEO HERE!!!
+    </section>
 
-    <h2>Installation</h2>
-    A little bit of markup needed.
-    <p>Use npm / yarn or inject minifed script on ypur page manually.</p>
+    <!-- instalation -->
+    <section class="section">
+          <h2>Installation</h2>
+          <p>Setup is trivially easy. Let's add required markup.</p>
+<pre><code>&lt;div class=&quot;siema&quot;&gt;
+  &lt;div&gt;Hi, I'm slide no 1&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide no 2&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide no 3&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide no 4&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<p>If you are using module bundler like Webpack or Browserify...</p>
+<pre><code>npm i -S siema</code></pre>
+<pre><code>import Siema from 'siema';
+new Siema('.siema');</code></pre>
+
+<p>...or manually inject minified script to your website.</p>
+<pre><code>&lt;script src=&quot;siema.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  new Siema('.siema');
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <!-- Options -->
+    <section class="section">
+      <h2>Options</h2>
+      <p>Siema comes with few options that you can chnge by passing an object as a econ argument. Default values presented below. Hopefully all the names are sefl explained.</p>
+<pre><code>new Siema('.siema', {
+  duration: 300,
+  easing: 'ease-out',
+  perPage: 1,
+  startIndex: 0,
+  draggable: true,
+  threshold: 20
+});</code></pre>
+    </section>
+
+
 
 
     <h2>Examples</h2>
 
-    <div class="playo js-playo">
-      <div><div class="playo__inside">Hi, I'm slide no 1</div></div>
-      <div><div class="playo__inside">Hi, I'm slide no 2</div></div>
-      <div><div class="playo__inside">Hi, I'm slide no 3</div></div>
-      <div><div class="playo__inside">Hi, I'm slide no 4</div></div>
-      <div><div class="playo__inside">Hi, I'm slide no 5</div></div>
-      <div><div class="playo__inside">Hi, I'm slide no 6</div></div>
+    <div class="siema js-siema">
+      <div><div class="siema__inside">Hi, I'm slide no 1</div></div>
+      <div><div class="siema__inside">Hi, I'm slide no 2</div></div>
+      <div><div class="siema__inside">Hi, I'm slide no 3</div></div>
+      <div><div class="siema__inside">Hi, I'm slide no 4</div></div>
+      <div><div class="siema__inside">Hi, I'm slide no 5</div></div>
+      <div><div class="siema__inside">Hi, I'm slide no 6</div></div>
     </div>
 
     <button class="btn prev">prev</button>
@@ -42,14 +81,14 @@
 
 
 
-  <script src="src/playo.js"></script>
+  <script src="src/siema.js"></script>
   <script>
-    const playo1 = new Playo('.js-playo');
+    const siema1 = new Siema('.js-siema');
     document.querySelector('.next').addEventListener('click', function() {
-      playo1.next();
+      siema1.next();
     });
     document.querySelector('.prev').addEventListener('click', function() {
-      playo1.prev();
+      siema1.prev();
     });
   </script>
 

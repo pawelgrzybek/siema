@@ -1,6 +1,6 @@
 // eslint-disable-next-line wrap-iife, func-names
 (function(global) {
-  function Playo(selector, options) {
+  function Siema(selector, options) {
     // Default the settings
     this.defaults = {
       duration: 300,
@@ -121,10 +121,10 @@
 
   // Exports to node & browser
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = Playo;
+    module.exports = Siema;
   }
   else {
     // eslint-disable-next-line dot-notation
-    global['Playo'] = Playo;
+    global['Siema'] = Siema;
   }
 }(this));
