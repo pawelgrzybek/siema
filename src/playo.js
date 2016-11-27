@@ -1,14 +1,14 @@
-console.log('test');
-
 // eslint-disable-next-line wrap-iife, func-names
 (function(global) {
   function Playo(selector, options) {
     // Default the settings
     this.defaults = {
-      transition: 300,
+      duration: 300,
       easing: 'ease-out',
       perPage: 1,
       startIndex: 0,
+      draggable: true,
+      threshold: 20
     };
 
     // Merge defaults with user config
@@ -29,12 +29,51 @@ console.log('test');
 
     // // Create inner div that holds all slides and apply their position
     this.sliderFrame = document.createElement('div');
-    Object.assign(this.sliderFrame.style, {
-      width: `${(100 / this.config.perPage) * this.elementsCount}%`,
-      transitionDuration: `${this.config.transition}ms`,
-      transitionTimingFunction: this.config.easing,
-      transform: `translate3d(-${this.currentSlide * (100 / this.elementsCount)}%, 0, 0)`,
+    this.sliderFrame.style.width = `${(100 / this.config.perPage) * this.elementsCount}%`;
+    this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
+    this.sliderFrame.style.transitionTimingFunction = this.config.easing;
+    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (100 / this.elementsCount)}%, 0, 0)`;
+    if (this.config.draggable) {
+      this.sliderFrame.style.cursor = '-webkit-grab';
+    }
+
+    this.drag = {
+      start: 0,
+      end: 0,
+    };
+
+    this.updateAfterDrag = () => {
+      const move = this.drag.end - this.drag.start;
+      if (move > 0 && Math.abs(move) > this.config.threshold) {
+        this.prev();
+      }
+      else if (move < 0 && Math.abs(move) > this.config.threshold) {
+        this.next();
+      }
+    };
+
+    this.sliderFrame.addEventListener('touchstart', (e) => {
+      this.drag.start = e.pageX;
     });
+    this.sliderFrame.addEventListener('touchend', (e) => {
+      this.drag.end = e.pageX;
+      this.updateAfterDrag();
+    });
+    if (this.config.draggable) {
+      this.sliderFrame.addEventListener('mousedown', (e) => {
+        this.drag.start = e.pageX;
+      });
+      this.sliderFrame.addEventListener('mouseup', (e) => {
+        this.drag.end = e.pageX;
+        this.sliderFrame.style.cursor = '-webkit-grab';
+        this.updateAfterDrag();
+      });
+      this.sliderFrame.addEventListener('mousemove', (e) => {
+        if (e.which) {
+          this.sliderFrame.style.cursor = '-webkit-grabbing';
+        }
+      });
+    }
 
     // Add styles to slides and add them to frame
     for (let i = 0; i < this.elementsCount; i++) {
@@ -80,13 +119,11 @@ console.log('test');
     };
   }
 
-  // Exports to multiple environments
+  // Exports to node & browser
   if (typeof module !== 'undefined' && module.exports) {
-    // node
     module.exports = Playo;
   }
   else {
-    // browser
     // eslint-disable-next-line dot-notation
     global['Playo'] = Playo;
   }
