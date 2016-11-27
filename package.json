@@ -1,0 +1,25 @@
+{
+  "name": "siema",
+  "version": "1.0.0",
+  "description": "Lightweight and simple carousel in pure JavaScript",
+  "main": "src/siema.js",
+  "devDependencies": {
+    "babel-cli": "6.18.0",
+    "babel-plugin-transform-object-assign": "6.8.0",
+    "babel-preset-latest": "6.16.0",
+    "uglify-js": "2.7.4"
+  },
+  "scripts": {
+    "build": "babel src/siema.js --presets=latest --plugins=transform-object-assign | uglifyjs - --compress --mangle --output dist/siema.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pawelgrzybek/siema.git"
+  },
+  "author": "Pawel Grzybek <grzybecki@gmail.com> (https://pawelgrzybek.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pawelgrzybek/siema/issues"
+  },
+  "homepage": "https://github.com/pawelgrzybek/siema#readme"
+}

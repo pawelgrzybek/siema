@@ -127,4 +127,4 @@
     // eslint-disable-next-line dot-notation
     global['Siema'] = Siema;
   }
-}(this));
+}(window));
