@@ -9,6 +9,8 @@
   <title>Siema - Lightweight and simple carousel in pure JavaScript</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet">
+
+  <script src="src/siema.js"></script>
 </head>
 <body>
 
@@ -26,7 +28,7 @@
     <!-- instalation -->
     <section class="section">
           <h2>Installation</h2>
-          <p>Setup is trivially easy. Let's add required markup.</p>
+          <p>Setup is trivially easy. Let's add markup.</p>
 <pre><code>&lt;div class=&quot;siema&quot;&gt;
   &lt;div&gt;Hi, I'm slide no 1&lt;/div&gt;
   &lt;div&gt;Hi, I'm slide no 2&lt;/div&gt;
@@ -49,7 +51,7 @@ new Siema('.siema');</code></pre>
     <!-- Options -->
     <section class="section">
       <h2>Options</h2>
-      <p>Siema comes with few options that you can chnge by passing an object as a econ argument. Default values presented below. Hopefully all the names are sefl explained.</p>
+      <p>Siema comes with few options that you can chnge by passing an object as a second argument. Default values presented below. Hopefully all the names are sefl explained.</p>
 <pre><code>new Siema('.siema', {
   duration: 300,
   easing: 'ease-out',
@@ -61,37 +63,118 @@ new Siema('.siema');</code></pre>
     </section>
 
 
+    <!-- Options -->
+    <section class="section">
+      <h2>API</h2>
+      <p>As mentioned above, Siema doesn't come with crazy amount of options. Thing that it comes with is bunch useful methods. Combine it with very basic JavaScript and go crazy.</p>
 
+      <ul>
+        <li><strong>next()</strong> - Go to next slide</li>
+        <li><strong>prev()</strong> - Go to previous slide</li>
+        <li><strong>goTo(index)</strong> - Go to specific slide</li>
+      </ul>
+    </section>
 
-    <h2>Examples</h2>
+    <!-- Examples -->
+    <section class="section">
+      <h2>Examples</h2>
 
-    <div class="siema js-siema">
-      <div><div class="siema__inside">Hi, I'm slide no 1</div></div>
-      <div><div class="siema__inside">Hi, I'm slide no 2</div></div>
-      <div><div class="siema__inside">Hi, I'm slide no 3</div></div>
-      <div><div class="siema__inside">Hi, I'm slide no 4</div></div>
-      <div><div class="siema__inside">Hi, I'm slide no 5</div></div>
-      <div><div class="siema__inside">Hi, I'm slide no 6</div></div>
-    </div>
+      <p>Very basic carousel with next and previous buttons.</p>
+<pre><code>const mySiema = new Siema('.js-siema');
+document.querySelector('.next').addEventListener('click', mySiema.next);
+document.querySelector('.prev').addEventListener('click', mySiema.prev);</code></pre>
 
-    <button class="btn prev">prev</button>
-    <button class="btn next">next</button>
-    <h2>Options</h2>
+      <div class="siema js-siema">
+        <div><div class="siema__inside">Hi, I'm slide no 1</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 2</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 3</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 4</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 5</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 6</div></div>
+      </div>
+
+      <button class="btn prev">prev</button>
+      <button class="btn next">next</button>
+
+      <script>
+        const mySiema = new Siema('.js-siema');
+        document.querySelector('.next').addEventListener('click', mySiema.next);
+        document.querySelector('.prev').addEventListener('click', mySiema.prev);
+      </script>
+
+      <hr>
+
+      <p>Columns view with auto play enabled.</p>
+<pre><code>const mySiema1 = new Siema('.js-siema1', {
+  perPage: 2,
+});
+setInterval(() => mySiema1.next(), 2000) ;
+document.querySelector('.goto').addEventListener('click', () => mySiema1.goTo(0));</code></pre>
+
+      <div class="siema js-siema1">
+        <div><div class="siema__inside">Hi, I'm slide no 1</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 2</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 3</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 4</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 5</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 6</div></div>
+      </div>
+
+      <button class="btn goto">Go to slide with index 0</button>
+
+      <script>
+        const mySiema1 = new Siema('.js-siema1', {
+          perPage: 2,
+        });
+        setInterval(() => mySiema1.next(), 2000) ;
+        document.querySelector('.goto').addEventListener('click', () => mySiema1.goTo(0));
+      </script>
+
+      <hr>
+
+      <p>Lets play with some easing now and start from some middle slide.</p>
+<pre><code>const mySiema2 = new Siema('.js-siema2', {
+  duration: 600,
+  easing: 'cubic-bezier(.11,.73,.18,1.41)',
+  startIndex: 3,
+});
+document.querySelector('.next2').addEventListener('click', mySiema2.next);
+document.querySelector('.prev2').addEventListener('click', mySiema2.prev);</code></pre>
+
+      <div class="siema js-siema2">
+        <div><div class="siema__inside">Hi, I'm slide no 1</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 2</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 3</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 4</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 5</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 6</div></div>
+      </div>
+
+      <button class="btn prev2">prev</button>
+      <button class="btn next2">next</button>
+
+      <script>
+        const mySiema2 = new Siema('.js-siema2', {
+          duration: 600,
+          easing: 'cubic-bezier(.11,.73,.18,1.41)',
+          startIndex: 3,
+        });
+        document.querySelector('.next2').addEventListener('click', mySiema2.next);
+        document.querySelector('.prev2').addEventListener('click', mySiema2.prev);
+      </script>
+    </section>
+
+    <!-- Used in production -->
+    <section class="section">
+      <h2>Siema used in production</h2>
+      <p>Totally nowhere, I just built it. If you used it on ypur website let me know please and I will make sure to add URL to your website here.</p>
+    </section>
+
+    <!-- Used in production -->
+    <section class="section">
+      <h2>Extra</h2>
+      <p>Siema means 'hello' in polish. When I played around with this project on the very beginning I used this name as an random example and it stayed like this.</p>
+    </section>
   </div>
-
-
-
-  <script src="src/siema.js"></script>
-  <script>
-    const siema1 = new Siema('.js-siema');
-    document.querySelector('.next').addEventListener('click', function() {
-      siema1.next();
-    });
-    document.querySelector('.prev').addEventListener('click', function() {
-      siema1.prev();
-    });
-  </script>
-
-
 </body>
 </html>
