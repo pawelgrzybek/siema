@@ -44,14 +44,17 @@
         this.updateAfterDrag();
       });
       this.sliderFrame.addEventListener('mousedown', (e) => {
+        e.preventDefault();
         this.drag.start = e.pageX;
       });
       this.sliderFrame.addEventListener('mouseup', (e) => {
+        e.preventDefault();
         this.drag.end = e.pageX;
         this.sliderFrame.style.cursor = '-webkit-grab';
         this.updateAfterDrag();
       });
       this.sliderFrame.addEventListener('mousemove', (e) => {
+        e.preventDefault();
         if (e.which) {
           this.sliderFrame.style.cursor = '-webkit-grabbing';
         }
