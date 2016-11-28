@@ -95,6 +95,7 @@
     this.sliderFrame.style.width = `${(100 / this.config.perPage) * this.innerElementsCount}%`;
     this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
     this.sliderFrame.style.transitionTimingFunction = this.config.easing;
+    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
     this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
     if (this.config.draggable) {
       this.sliderFrame.style.cursor = '-webkit-grab';
@@ -110,6 +111,7 @@
   // slide to current slide
   // should be triggered always after changing currentSlide
   Siema.prototype.slideToCurrent = function slideToCurrent() {
+    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
     this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
   };
 
