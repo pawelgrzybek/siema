@@ -21,5 +21,6 @@
   "bugs": {
     "url": "https://github.com/pawelgrzybek/siema/issues"
   },
-  "homepage": "https://pawelgrzybek.com/siema"
+  "homepage": "https://pawelgrzybek.com/siema",
+  "keywords": ["slider", "carousel", "lightweight"]
 }
