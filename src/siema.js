@@ -27,34 +27,6 @@
     // Build markup and apply required styling to elements
     this.init();
 
-    // go to prev slide
-    this.prev = () => {
-      if (this.currentSlide === 0) {
-        this.currentSlide = this.innerElementsCount - this.config.perPage;
-      }
-      else {
-        this.currentSlide--;
-      }
-      this.slideToCurrent();
-    };
-
-    // go to next slide
-    this.next = () => {
-      if (this.currentSlide === this.innerElementsCount - this.config.perPage) {
-        this.currentSlide = 0;
-      }
-      else {
-        this.currentSlide++;
-      }
-      this.slideToCurrent();
-    };
-
-    // to to index
-    this.goTo = (index) => {
-      this.currentSlide = Math.min(Math.max(index, 0), this.innerElementsCount - 1);
-      this.slideToCurrent();
-    };
-
     // if elements is draggable
     if (this.config.draggable) {
       // Keep track of drag distance of sliderFrame
@@ -106,6 +78,34 @@
       this.sliderFrame.appendChild(this.selector.children[0]);
     }
     this.selector.appendChild(this.sliderFrame);
+  };
+
+  // go to prev slide
+  Siema.prototype.prev = function prev() {
+    if (this.currentSlide === 0) {
+      this.currentSlide = this.innerElementsCount - this.config.perPage;
+    }
+    else {
+      this.currentSlide--;
+    }
+    this.slideToCurrent();
+  };
+
+  // go to next slide
+  Siema.prototype.next = function next() {
+    if (this.currentSlide === this.innerElementsCount - this.config.perPage) {
+      this.currentSlide = 0;
+    }
+    else {
+      this.currentSlide++;
+    }
+    this.slideToCurrent();
+  };
+
+  // to to index
+  Siema.prototype.goTo = (index) => {
+    this.currentSlide = Math.min(Math.max(index, 0), this.innerElementsCount - 1);
+    this.slideToCurrent();
   };
 
   // slide to current slide
