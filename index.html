@@ -57,12 +57,12 @@
 <p>If you are using module bundler like Webpack or Browserify...</p>
 <pre><code>npm i -S siema</code></pre>
 <pre><code>import Siema from 'siema';
-new Siema('.siema');</code></pre>
+new Siema();</code></pre>
 
 <p>...or manually inject minified script to your website.</p>
 <pre><code>&lt;script src=&quot;siema.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
-  new Siema('.siema');
+  new Siema();
 &lt;/script&gt;</code></pre>
     </section>
 
@@ -70,7 +70,8 @@ new Siema('.siema');</code></pre>
     <section class="section">
       <h2>Options</h2>
       <p>Siema comes with few options that you can chnge by passing an object as a second argument. Default values presented below. Hopefully all the names are sefl explained.</p>
-<pre><code>new Siema('.siema', {
+<pre><code>new Siema({
+  selector: '.siema',
   duration: 300,
   easing: 'ease-out',
   perPage: 1,
@@ -98,7 +99,7 @@ new Siema('.siema');</code></pre>
       <h2>Examples</h2>
 
       <p>Very basic carousel with next and previous buttons.</p>
-<pre><code>const mySiema = new Siema('.js-siema');
+<pre><code>const mySiema = new Siema();
 document.querySelector('.next').addEventListener('click', mySiema.next);
 document.querySelector('.prev').addEventListener('click', mySiema.prev);</code></pre>
 
@@ -115,11 +116,39 @@ document.querySelector('.prev').addEventListener('click', mySiema.prev);</code><
       <button class="btn next">next</button>
 
       <script>
-        const mySiema = new Siema('.js-siema');
+        const mySiema = new Siema({
+          selector: '.js-siema',
+          startIndex: 3
+        });
         document.querySelector('.next').addEventListener('click', mySiema.next);
         document.querySelector('.prev').addEventListener('click', mySiema.prev);
       </script>
 
+
+
+
+      <div class="siema js-siema1">
+        <div><div class="siema__inside">Hi, I'm slide no 1</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 2</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 3</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 4</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 5</div></div>
+        <div><div class="siema__inside">Hi, I'm slide no 6</div></div>
+      </div>
+
+      <button class="btn prev1">prev</button>
+      <button class="btn next1">next</button>
+
+      <script>
+        const mySiema1 = new Siema({
+          selector: '.js-siema1',
+          duration: 130,
+          perPage: 2
+        });
+        document.querySelector('.next1').addEventListener('click', mySiema1.next);
+        document.querySelector('.prev1').addEventListener('click', mySiema1.prev);
+      </script>
+<!--
       <hr>
 
       <p>Columns view with auto play enabled.</p>
@@ -153,7 +182,7 @@ document.querySelector('.goto').addEventListener('click', () => mySiema1.goTo(0)
       <p>Lets play with some easing now and start from some middle slide.</p>
 <pre><code>const mySiema2 = new Siema('.js-siema2', {
   duration: 600,
-  easing: 'cubic-bezier(.11,.73,.18,1.41)',
+  easing: 'cubic-bezier(.11, .73, .18, 1.41)',
   startIndex: 3,
 });
 document.querySelector('.next2').addEventListener('click', mySiema2.next);
@@ -174,12 +203,12 @@ document.querySelector('.prev2').addEventListener('click', mySiema2.prev);</code
       <script>
         const mySiema2 = new Siema('.js-siema2', {
           duration: 600,
-          easing: 'cubic-bezier(.11,.73,.18,1.41)',
+          easing: 'cubic-bezier(.11, .73, .18, 1.41)',
           startIndex: 3,
         });
         document.querySelector('.next2').addEventListener('click', mySiema2.next);
         document.querySelector('.prev2').addEventListener('click', mySiema2.prev);
-      </script>
+      </script> -->
     </section>
 
     <!-- Used in production -->
