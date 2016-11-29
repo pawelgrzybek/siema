@@ -6,6 +6,7 @@ Creating another grid system or carousel framework sounds like a stupid idea? I 
 
 - Link Github page from description
 - Test cross browser
+- Add and info about supported browsers
 - Contributors welcome
 - CodePen examples
 - Video of using with yarn / npm

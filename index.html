@@ -65,7 +65,8 @@
         Siema
         <span class="title__desc">Lightweight and simple carousel in pure JavaScript</span>
       </h1>
-      <p>Creating another grid system or carousel framework sounds like a stupid idea? I did it! Crazy lightweight (just 1kb  gziped), no dependencies and no styling. As Brad Frost said once "do that shit yourself". If you need some more powerful library I recommend <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a> by iDangero team. By the way - I built a <a href="https://pawelgrzybek.com/do-you-really-need-another-grid-system/">grid system</a> too :)</p>
+      <p>Creating another grid system or carousel framework sounds like a stupid idea? I did it! Crazy lightweight (just 1kb  gziped), no dependencies and no styling. As Brad Frost said once "do that shit yourself". By the way - I built a <a href="https://pawelgrzybek.com/do-you-really-need-another-grid-system/">grid system</a> too :)</p>
+      <p>This liblary is 100% open source with source code available <a href="https://github.com/pawelgrzybek/siema">on Github</a>. Free to use on personal and commercial projects.</p>
       <!-- !!!VIDEO HERE!!! -->
     </section>
 
@@ -74,10 +75,10 @@
           <h2>Installation</h2>
           <p>Setup is trivially easy. A little bit of markup...</p>
 <pre><code>&lt;div class=&quot;siema&quot;&gt;
-  &lt;div&gt;Hi, I'm slide no 1&lt;/div&gt;
-  &lt;div&gt;Hi, I'm slide no 2&lt;/div&gt;
-  &lt;div&gt;Hi, I'm slide no 3&lt;/div&gt;
-  &lt;div&gt;Hi, I'm slide no 4&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide 1&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide 2&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide 3&lt;/div&gt;
+  &lt;div&gt;Hi, I'm slide 4&lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
 <p>If you are using module bundler like Webpack or Browserify...</p>
@@ -126,6 +127,7 @@ new Siema();</code></pre>
         <li><strong>next()</strong> - Go to next slide</li>
         <li><strong>prev()</strong> - Go to previous slide</li>
         <li><strong>goTo(index)</strong> - Go to specific slide</li>
+        <li><strong>currentSlide</strong> - Index of active slide</li>
       </ul>
     </section>
 
@@ -147,8 +149,8 @@ new Siema();</code></pre>
 &lt;button class=&quot;next&quot;&gt;next&lt;/button&gt;</code></pre>
 
 <pre><code>const mySiema = new Siema();
-document.querySelector('.next').addEventListener('click', () => mySiema.next());
-document.querySelector('.prev').addEventListener('click', () => mySiema.prev());</code></pre>
+document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
+document.querySelector('.next').addEventListener('click', () => mySiema.next());</code></pre>
 
       <div class="siema js-siema1">
         <div><img src="assets/siema--pink.svg"></div>
@@ -172,14 +174,14 @@ document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
 
       <hr>
 
-      <p>Siema is so lightful becaus it doesnt have any options that you can built with ease in few seconds. Lets display two slides on page and enable auto play with interval of 3 seconds.</p>
+      <p>Siema is so lightweight becaus it doesnt have any options that you can built by yourself in few seconds. Let's display two slides on page and enable auto play with interval of 3 seconds.</p>
 
-<pre><code>const mySiema2 = new Siema({
+<pre><code>const mySiema = new Siema({
   perPage: 2,
 });
-document.querySelector('.js-next2').addEventListener('click', () => mySiema2.next());
-document.querySelector('.js-prev2').addEventListener('click', () => mySiema2.prev());
-setInterval(() => mySiema2.next(), 3000);</code></pre>
+document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
+document.querySelector('.next').addEventListener('click', () => mySiema.next());
+setInterval(() => mySiema.next(), 3000);</code></pre>
 
       <div class="siema js-siema2">
         <div><img src="assets/siema--pink.svg"></div>
@@ -205,7 +207,22 @@ setInterval(() => mySiema2.next(), 3000);</code></pre>
 
       <hr>
 
-      <p>OK you get it. Last one with some bouncy easing arrows key bounded to next() and prev() method.</p>
+      <p>OK you get it. Last one with some bouncy easing and arrow keys bound to next() and prev() method.</p>
+
+      <pre><code>const mySiema = new Siema({
+  easing: 'cubic-bezier(.09,.75,.4,1.93)',
+  duration: 600,
+});
+document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
+document.querySelector('.next').addEventListener('click', () => mySiema.next());
+document.addEventListener('keydown', (e) => {
+  if (e.keyCode === 37) {
+    mySiema.prev();
+  }
+  else if (e.keyCode === 39) {
+    mySiema.next();
+  }
+});</code></pre>
 
       <div class="siema js-siema3">
         <div><img src="assets/siema--pink.svg"></div>
@@ -227,7 +244,6 @@ setInterval(() => mySiema2.next(), 3000);</code></pre>
         });
         document.querySelector('.js-prev3').addEventListener('click', () => mySiema3.prev());
         document.querySelector('.js-next3').addEventListener('click', () => mySiema3.next());
-        setInterval(() => mySiema2.next(), 3000);
         document.addEventListener('keydown', (e) => {
           if (e.keyCode === 37) {
             mySiema3.prev()
@@ -243,6 +259,17 @@ setInterval(() => mySiema2.next(), 3000);</code></pre>
     <section class="section">
       <h2>Siema used in production</h2>
       <p>Nowhere yet — I just built it. If you used it on your website let me know please and I will make sure to add URL to your project here.</p>
+    </section>
+
+    <section class="section">
+      <h2>Contributing</h2>
+      <p>Siema suppose to provide a basic carousel tool and allow developer to extend it by available methods. It doesn't come with comples configuration and gazzylion options — I would like to keep it this way. If you need some more powerful library I recommend amazing <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a> by iDangero team.</p>
+
+      <p>Bug fixed more than welcone. If you have a feature suggestion please <a href="https://github.com/pawelgrzybek/siema/issues">open an issue</a> on Github.</p>
+
+      <p>Before sending a pull reques make sure to use 'build' task please.</p>
+
+      <pre><code>npm run build</code></pre>
     </section>
 
     <!-- Used in production -->
