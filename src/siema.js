@@ -21,12 +21,19 @@
     // Create global references
     this.selector = document.querySelector(this.config.selector);
     this.selectorWidth = this.selector.getBoundingClientRect().width;
-    this.innerElementsCount = this.selector.childElementCount;
+    this.innerElements = [...this.selector.children];
     this.currentSlide = this.config.startIndex;
     this.sliderFrame = document.createElement('div');
 
     // Build markup and apply required styling to elements
     this.init();
+
+
+    window.addEventListener('resize', () => {
+      console.log(this);
+      this.init();
+      this.slideToCurrent();
+    });
 
     // if elements is draggable
     if (this.config.draggable) {
@@ -68,19 +75,23 @@
       throw new Error('Something wrong with your Siema sleector 😭');
     }
 
+    this.selectorWidth = this.selector.getBoundingClientRect().width;
+    this.selector.innerHTML = '';
     this.selector.style.overflow = 'hidden';
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElementsCount}px`;
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
     this.sliderFrame.style.transitionTimingFunction = this.config.easing;
-    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElementsCount)}px, 0, 0)`;
-    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElementsCount)}px, 0, 0)`;
+    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElements.length)}px, 0, 0)`;
+    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElements.length)}px, 0, 0)`;
+
     if (this.config.draggable) {
       this.sliderFrame.style.cursor = '-webkit-grab';
     }
-    for (let i = 0; i < this.innerElementsCount; i++) {
-      this.selector.children[0].style.float = 'left';
-      this.selector.children[0].style.width = `${this.selectorWidth / this.config.perPage}px`;
-      this.sliderFrame.appendChild(this.selector.children[0]);
+
+    for (const element of this.innerElements) {
+      element.style.float = 'left';
+      element.style.width = `${this.selectorWidth / this.config.perPage}px`;
+      this.sliderFrame.appendChild(element);
     }
     this.selector.appendChild(this.sliderFrame);
   };
@@ -88,7 +99,7 @@
   // go to prev slide
   Siema.prototype.prev = function prev() {
     if (this.currentSlide === 0) {
-      this.currentSlide = this.innerElementsCount - this.config.perPage;
+      this.currentSlide = this.innerElements.length - this.config.perPage;
     }
     else {
       this.currentSlide--;
@@ -98,7 +109,7 @@
 
   // go to next slide
   Siema.prototype.next = function next() {
-    if (this.currentSlide === this.innerElementsCount - this.config.perPage) {
+    if (this.currentSlide === this.innerElements.length - this.config.perPage) {
       this.currentSlide = 0;
     }
     else {
@@ -109,7 +120,7 @@
 
   // to to index
   Siema.prototype.goTo = (index) => {
-    this.currentSlide = Math.min(Math.max(index, 0), this.innerElementsCount - 1);
+    this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
     this.slideToCurrent();
   };
 
@@ -129,6 +140,7 @@
       this.next();
     }
   };
+
 
   // Exports to node & browser
   // CommonJS
