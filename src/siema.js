@@ -17,7 +17,7 @@
     };
 
     // Merge defaults with user config
-    this.config = Object.assign(defaults, options);
+    this.config = extend(defaults, options);
 
     // Create global references
     this.selector = document.querySelector(this.config.selector);
@@ -139,6 +139,18 @@
       this.next();
     }
   };
+
+  // Private methods
+  function extend(sourceObject, customObject){
+    var tempObject = {};
+    for (const attrname in sourceObject) {
+      tempObject[attrname] = sourceObject[attrname];
+    }
+    for (const attrname in customObject) {
+      tempObject[attrname] = customObject[attrname];
+    }
+    return tempObject;
+  }
 
   // Exports to node & browser
   // CommonJS
