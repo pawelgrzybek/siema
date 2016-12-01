@@ -21,7 +21,7 @@
     // Create global references
     this.selector = document.querySelector(this.config.selector);
     this.selectorWidth = this.selector.getBoundingClientRect().width;
-    this.innerElements = [...this.selector.children];
+    this.innerElements = arrayFromDoms(this.selector.children);
     this.currentSlide = this.config.startIndex;
     this.sliderFrame = document.createElement('div');
 
@@ -30,7 +30,6 @@
 
 
     window.addEventListener('resize', () => {
-      console.log(this);
       this.init();
       this.slideToCurrent();
     });
@@ -88,11 +87,18 @@
       this.sliderFrame.style.cursor = '-webkit-grab';
     }
 
-    for (const element of this.innerElements) {
-      element.style.float = 'left';
-      element.style.width = `${this.selectorWidth / this.config.perPage}px`;
-      this.sliderFrame.appendChild(element);
+    for (let i = 0; i < this.innerElements.length; i++) {
+      console.log(this.innerElements[i]);
+      this.innerElements[i].style.float = 'left';
+      this.innerElements[i].style.width = `${this.selectorWidth / this.config.perPage}px`;
+      this.sliderFrame.appendChild(this.innerElements[i]);
     }
+
+    // for (const element of this.innerElements) {
+    //   element.style.float = 'left';
+    //   element.style.width = `${this.selectorWidth / this.config.perPage}px`;
+    //   this.sliderFrame.appendChild(element);
+    // }
     this.selector.appendChild(this.sliderFrame);
   };
 
@@ -140,6 +146,15 @@
       this.next();
     }
   };
+
+  // Private methods
+  function arrayFromDoms(doms) {
+    const tempArray = [];
+    for (let i = 0; i < doms.length; i++) {
+      tempArray.push(doms[i]);
+    }
+    return tempArray;
+  }
 
 
   // Exports to node & browser
