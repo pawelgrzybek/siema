@@ -12,7 +12,8 @@
       perPage: 1,
       startIndex: 0,
       draggable: true,
-      threshold: 20
+      threshold: 20,
+      // loop to add one day
     };
 
     // Merge defaults with user config
@@ -21,18 +22,11 @@
     // Create global references
     this.selector = document.querySelector(this.config.selector);
     this.selectorWidth = this.selector.getBoundingClientRect().width;
-    this.innerElements = arrayFromDoms(this.selector.children);
+    this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
-    this.sliderFrame = document.createElement('div');
 
     // Build markup and apply required styling to elements
     this.init();
-
-
-    window.addEventListener('resize', () => {
-      this.init();
-      this.slideToCurrent();
-    });
 
     // if elements is draggable
     if (this.config.draggable) {
@@ -74,32 +68,31 @@
       throw new Error('Something wrong with your Siema sleector 😭');
     }
 
-    this.selectorWidth = this.selector.getBoundingClientRect().width;
-    this.selector.innerHTML = '';
+    // selector should hide everything out of it's bounduries'
     this.selector.style.overflow = 'hidden';
+
+    // create frame and apply styling
+    this.sliderFrame = document.createElement('div');
+    
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
     this.sliderFrame.style.transitionTimingFunction = this.config.easing;
-    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElements.length)}px, 0, 0)`;
-    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElements.length)}px, 0, 0)`;
 
     if (this.config.draggable) {
       this.sliderFrame.style.cursor = '-webkit-grab';
     }
 
+    const docFragment = document.createDocumentFragment();
+
     for (let i = 0; i < this.innerElements.length; i++) {
-      console.log(this.innerElements[i]);
       this.innerElements[i].style.float = 'left';
       this.innerElements[i].style.width = `${this.selectorWidth / this.config.perPage}px`;
-      this.sliderFrame.appendChild(this.innerElements[i]);
+      docFragment.appendChild(this.innerElements[i]);
     }
 
-    // for (const element of this.innerElements) {
-    //   element.style.float = 'left';
-    //   element.style.width = `${this.selectorWidth / this.config.perPage}px`;
-    //   this.sliderFrame.appendChild(element);
-    // }
+    this.sliderFrame.appendChild(docFragment);
     this.selector.appendChild(this.sliderFrame);
+    this.slideToCurrent();
   };
 
   // go to prev slide
@@ -146,16 +139,6 @@
       this.next();
     }
   };
-
-  // Private methods
-  function arrayFromDoms(doms) {
-    const tempArray = [];
-    for (let i = 0; i < doms.length; i++) {
-      tempArray.push(doms[i]);
-    }
-    return tempArray;
-  }
-
 
   // Exports to node & browser
   // CommonJS
