@@ -165,11 +165,12 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
       <button class="btn js-next1">next</button>
 
       <script>
-        const mySiema1 = new Siema({
-          selector: '.js-siema1'
+        var mySiema1 = new Siema({
+          selector: '.js-siema1',
+          startIndex: 3,
         });
-        document.querySelector('.js-prev1').addEventListener('click', () => mySiema1.prev());
-        document.querySelector('.js-next1').addEventListener('click', () => mySiema1.next());
+        document.querySelector('.js-prev1').addEventListener('click', function() {mySiema1.prev()});
+        document.querySelector('.js-next1').addEventListener('click', function() {mySiema1.next()});
       </script>
 
       <hr>
@@ -196,13 +197,13 @@ setInterval(() => mySiema.next(), 3000);</code></pre>
       <button class="btn js-next2">next</button>
 
       <script>
-        const mySiema2 = new Siema({
+        var mySiema2 = new Siema({
           selector: '.js-siema2',
           perPage: 2,
         });
-        document.querySelector('.js-next2').addEventListener('click', () => mySiema2.next());
-        document.querySelector('.js-prev2').addEventListener('click', () => mySiema2.prev());
-        setInterval(() => mySiema2.next(), 3000);
+        document.querySelector('.js-next2').addEventListener('click', function() {mySiema2.next()});
+        document.querySelector('.js-prev2').addEventListener('click', function() {mySiema2.prev()});
+        setInterval(function() {mySiema2.next()}, 3000);
       </script>
 
       <hr>
@@ -237,14 +238,14 @@ document.addEventListener('keydown', (e) => {
       <button class="btn js-next3">next</button>
 
       <script>
-        const mySiema3 = new Siema({
+        var mySiema3 = new Siema({
           selector: '.js-siema3',
           easing: 'cubic-bezier(.09,.75,.4,1.93)',
           duration: 600,
         });
-        document.querySelector('.js-prev3').addEventListener('click', () => mySiema3.prev());
-        document.querySelector('.js-next3').addEventListener('click', () => mySiema3.next());
-        document.addEventListener('keydown', (e) => {
+        document.querySelector('.js-prev3').addEventListener('click', function() {mySiema3.prev()});
+        document.querySelector('.js-next3').addEventListener('click', function() {mySiema3.next()});
+        document.addEventListener('keydown', function(e) {
           if (e.keyCode === 37) {
             mySiema3.prev()
           }
