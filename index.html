@@ -104,7 +104,8 @@ new Siema();</code></pre>
   perPage: 1,
   startIndex: 0,
   draggable: true,
-  threshold: 20
+  threshold: 20,
+  loop: true,
 });</code></pre>
 
       <ul>
@@ -115,6 +116,7 @@ new Siema();</code></pre>
         <li><strong>startIndex</strong> - (number) index of starting slide (zero-based)</li>
         <li><strong>draggable</strong> - (boolean) use dragging and touch swiping</li>
         <li><strong>threshold</strong> - (number) touch and mouse dragging threshold (in px)</li>
+        <li><strong>loop</strong> - (boolean) loop from slides around</li>
       </ul>
     </section>
 
@@ -167,7 +169,6 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
       <script>
         var mySiema1 = new Siema({
           selector: '.js-siema1',
-          startIndex: 3,
         });
         document.querySelector('.js-prev1').addEventListener('click', function() {mySiema1.prev()});
         document.querySelector('.js-next1').addEventListener('click', function() {mySiema1.next()});

@@ -13,7 +13,7 @@
       startIndex: 0,
       draggable: true,
       threshold: 20,
-      // loop to add one day
+      loop: true,
     };
 
     // Merge defaults with user config
@@ -114,22 +114,22 @@
 
   // go to prev slide
   Siema.prototype.prev = function prev() {
-    if (this.currentSlide === 0) {
+    if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.config.perPage;
     }
     else {
-      this.currentSlide--;
+      this.currentSlide = Math.max(this.currentSlide - 1, 0);
     }
     this.slideToCurrent();
   };
 
   // go to next slide
   Siema.prototype.next = function next() {
-    if (this.currentSlide === this.innerElements.length - this.config.perPage) {
+    if (this.currentSlide === this.innerElements.length - this.config.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
     else {
-      this.currentSlide++;
+      this.currentSlide = Math.min(this.currentSlide + 1, this.innerElements.length - this.config.perPage);
     }
     this.slideToCurrent();
   };
@@ -163,9 +163,6 @@
   Siema.prototype.resize = function() {
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
-    // grab a current width
-    // resize frame
-    // resize slides
   };
 
   // Private methods
