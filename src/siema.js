@@ -28,11 +28,17 @@
     // Build markup and apply required styling to elements
     this.init();
 
+    window.addEventListener('resize', () => {
+      this.resize();
+      this.slideToCurrent();
+    });
+
     // if elements is draggable
     if (this.config.draggable) {
       // Keep track of drag distance of sliderFrame
       this.drag = {
         start: 0,
+        current: 0,
         end: 0,
       };
 
@@ -43,6 +49,13 @@
       this.sliderFrame.addEventListener('touchend', (e) => {
         this.drag.end = e.pageX;
         this.updateAfterDrag();
+      });
+      this.sliderFrame.addEventListener('touchmove', (e) => {
+        this.drag.current = e.pageX;
+        const movement = this.drag.start - this.drag.current;
+        this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
+        this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
+
       });
       this.sliderFrame.addEventListener('mousedown', (e) => {
         e.preventDefault();
@@ -58,6 +71,10 @@
         e.preventDefault();
         if (e.which) {
           this.sliderFrame.style.cursor = '-webkit-grabbing';
+          this.drag.current = e.pageX;
+          const movement = this.drag.start - this.drag.current;
+          this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
+          this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
         }
       });
     }
@@ -73,7 +90,7 @@
 
     // create frame and apply styling
     this.sliderFrame = document.createElement('div');
-    
+
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
     this.sliderFrame.style.transitionTimingFunction = this.config.easing;
@@ -86,7 +103,7 @@
 
     for (let i = 0; i < this.innerElements.length; i++) {
       this.innerElements[i].style.float = 'left';
-      this.innerElements[i].style.width = `${this.selectorWidth / this.config.perPage}px`;
+      this.innerElements[i].style.width = `${100 / this.innerElements.length}%`;
       docFragment.appendChild(this.innerElements[i]);
     }
 
@@ -138,6 +155,17 @@
     else if (move < 0 && Math.abs(move) > this.config.threshold) {
       this.next();
     }
+    else {
+      this.slideToCurrent();
+    }
+  };
+
+  Siema.prototype.resize = function() {
+    this.selectorWidth = this.selector.getBoundingClientRect().width;
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
+    // grab a current width
+    // resize frame
+    // resize slides
   };
 
   // Private methods
