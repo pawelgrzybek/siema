@@ -67,6 +67,13 @@
         this.sliderFrame.style.cursor = '-webkit-grab';
         this.updateAfterDrag();
       });
+      this.sliderFrame.addEventListener('mouseleave', (e) => {
+        e.preventDefault();
+        if (e.which) {
+          this.drag.end = e.pageX;
+          this.updateAfterDrag();
+        }
+      });
       this.sliderFrame.addEventListener('mousemove', (e) => {
         e.preventDefault();
         if (e.which) {
