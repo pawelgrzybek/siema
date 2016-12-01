@@ -20,6 +20,7 @@
 
     // Create global references
     this.selector = document.querySelector(this.config.selector);
+    this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.innerElementsCount = this.selector.childElementCount;
     this.currentSlide = this.config.startIndex;
     this.sliderFrame = document.createElement('div');
@@ -66,18 +67,19 @@
     if (this.selector === null) {
       throw new Error('Something wrong with your Siema sleector 😭');
     }
-    this.selector.style.overflowX = 'hidden';
-    this.sliderFrame.style.width = `${(100 / this.config.perPage) * this.innerElementsCount}%`;
+
+    this.selector.style.overflow = 'hidden';
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElementsCount}px`;
     this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
     this.sliderFrame.style.transitionTimingFunction = this.config.easing;
-    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
-    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
+    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElementsCount)}px, 0, 0)`;
+    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.innerElementsCount)}px, 0, 0)`;
     if (this.config.draggable) {
       this.sliderFrame.style.cursor = '-webkit-grab';
     }
     for (let i = 0; i < this.innerElementsCount; i++) {
       this.selector.children[0].style.float = 'left';
-      this.selector.children[0].style.width = `${100 / this.innerElementsCount}%`;
+      this.selector.children[0].style.width = `${this.selectorWidth / this.config.perPage}px`;
       this.sliderFrame.appendChild(this.selector.children[0]);
     }
     this.selector.appendChild(this.sliderFrame);
@@ -114,8 +116,8 @@
   // slide to current slide
   // should be triggered always after changing currentSlide
   Siema.prototype.slideToCurrent = function slideToCurrent() {
-    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
-    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (100 / this.innerElementsCount)}%, 0, 0)`;
+    this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
+    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
   };
 
   Siema.prototype.updateAfterDrag = function updateAfterDrag() {
