@@ -6,7 +6,7 @@
   "devDependencies": {
     "babel-cli": "6.18.0",
     "babel-plugin-transform-object-assign": "6.8.0",
-    "babel-preset-latest": "6.16.0",
+    "babel-preset-latest": "^6.16.0",
     "uglify-js": "2.7.4"
   },
   "scripts": {
@@ -22,5 +22,9 @@
     "url": "https://github.com/pawelgrzybek/siema/issues"
   },
   "homepage": "https://pawelgrzybek.com/siema",
-  "keywords": ["slider", "carousel", "lightweight"]
+  "keywords": [
+    "slider",
+    "carousel",
+    "lightweight"
+  ]
 }
