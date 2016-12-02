@@ -167,14 +167,14 @@
     }
   };
 
-  Siema.prototype.resize = function() {
+  Siema.prototype.resize = function resize() {
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
   };
 
   // Private methods
   function extend(sourceObject, customObject){
-    var tempObject = {};
+    const tempObject = {};
     for (const attrname in sourceObject) {
       tempObject[attrname] = sourceObject[attrname];
     }
