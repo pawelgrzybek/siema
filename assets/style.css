@@ -1,3 +1,4 @@
+/* Globals */
 html {
   height: 100%;
   font-size: 100%;
@@ -49,7 +50,7 @@ img {
   max-width: 100%;
 }
 
-/* center stuff on the page */
+/* Center stuff on the page */
 .page {
   width: 100%;
   max-width: 44rem;
@@ -57,12 +58,12 @@ img {
   padding: 0 1rem;
 }
 
+/* Section */
 .section {
   margin-bottom: 3.2rem;
 }
 
-/* logo */
-
+/* Logo */
 @keyframes waveHane {
   0% {
     transform: rotate(4deg);
@@ -93,8 +94,6 @@ img {
   animation-duration: 2500ms;
   animation-iteration-count: infinite;
   transform-origin: center bottom;
-  /*animation-fill-mode: both|none|forwards|backwards|initial|inherit;*/
-  /*animation-play-state: running|paused|initial|inherit;}*/
 }
 
 /* title */
@@ -121,7 +120,9 @@ img {
   box-shadow: inset 0 0 0 1px #ddd;
 }
 
-button {
+button,
+.btn {
+  display: inline-block;
   margin-bottom: 1.6rem;
   padding: 0 1.6rem;
   border: 0;
@@ -132,6 +133,7 @@ button {
   line-height: 2.4rem;
   border: 0;
   outline: 0;
+  text-decoration: none;
 }
 
 button:active {
