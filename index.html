@@ -102,26 +102,15 @@ new Siema();</code></pre>
       <h2>Options</h2>
       <p>Siema comes with few options that you can chnge by passing an object as an argument. Default values presented below.</p>
 <pre><code>new Siema({
-  selector: '.siema',
-  duration: 300,
-  easing: 'ease-out',
-  perPage: 1,
-  startIndex: 0,
-  draggable: true,
-  threshold: 20,
-  loop: true,
+  selector: '.siema', // (string) specify parent element
+  duration: 300, // (number) slide transition duration (in ms)
+  easing: 'ease-out', // (string) same as transition-timing-function in CSS
+  perPage: 1, // (number) number of slides to be shown
+  startIndex: 0, // (number) index of starting slide (zero-based)
+  draggable: true, // (boolean) use dragging and touch swiping
+  threshold: 20, // (number) touch and mouse dragging threshold (in px)
+  loop: true, // (boolean) loop from slides around
 });</code></pre>
-
-      <ul>
-        <li><strong>selector</strong> - (string) specify parent element</li>
-        <li><strong>duration</strong> - (number) slide transition duration (in ms)</li>
-        <li><strong>easing</strong> - (string) same as transition-timing-function in CSS</li>
-        <li><strong>perPage</strong> - (number) number of slides to be shown</li>
-        <li><strong>startIndex</strong> - (number) index of starting slide (zero-based)</li>
-        <li><strong>draggable</strong> - (boolean) use dragging and touch swiping</li>
-        <li><strong>threshold</strong> - (number) touch and mouse dragging threshold (in px)</li>
-        <li><strong>loop</strong> - (boolean) loop from slides around</li>
-      </ul>
     </section>
 
     <!-- Options -->
