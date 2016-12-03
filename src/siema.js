@@ -1,9 +1,8 @@
 (function(global) {
 
-  // CONTRUCTOR
   function Siema(options) {
 
-    // Default the settings
+    // Default settings
     const defaults = {
       selector: '.siema',
       duration: 300,
@@ -15,7 +14,7 @@
       loop: true,
     };
 
-    // Merge defaults with user config
+    // Merge defaults with user's settings
     this.config = Object.assign(defaults, options);
 
     // Create global references
@@ -27,12 +26,13 @@
     // Build markup and apply required styling to elements
     this.init();
 
+    // Resize element on window resize
     window.addEventListener('resize', () => {
       this.resize();
       this.slideToCurrent();
     });
 
-    // if elements is draggable
+    // If element if draggable / swipable, add event handlers
     if (this.config.draggable) {
       // Keep track of drag distance of sliderFrame
       this.drag = {
@@ -41,21 +41,21 @@
         end: 0,
       };
 
-      // add touch and mouse events
+      // Touch events
       this.sliderFrame.addEventListener('touchstart', (e) => {
         this.drag.start = e.pageX;
+      });
+      this.sliderFrame.addEventListener('touchmove', (e) => {
+        this.drag.current = e.pageX;
+        this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
+        this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
       });
       this.sliderFrame.addEventListener('touchend', (e) => {
         this.drag.end = e.pageX;
         this.updateAfterDrag();
       });
-      this.sliderFrame.addEventListener('touchmove', (e) => {
-        this.drag.current = e.pageX;
-        const movement = this.drag.start - this.drag.current;
-        this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
-        this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
 
-      });
+      // Mouse evevents
       this.sliderFrame.addEventListener('mousedown', (e) => {
         e.preventDefault();
         this.drag.start = e.pageX;
@@ -78,9 +78,8 @@
         if (e.which) {
           this.sliderFrame.style.cursor = '-webkit-grabbing';
           this.drag.current = e.pageX;
-          const movement = this.drag.start - this.drag.current;
-          this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
-          this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + movement}px, 0, 0)`;
+          this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
+          this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
         }
       });
     }
@@ -88,15 +87,14 @@
 
   Siema.prototype.init = function init() {
     if (this.selector === null) {
-      throw new Error('Something wrong with your Siema sleector 😭');
+      throw new Error('Something wrong with your sleector 😭');
     }
 
-    // selector should hide everything out of it's bounduries'
+    // hide everything out of selector's bounduries
     this.selector.style.overflow = 'hidden';
 
-    // create frame and apply styling
+    // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
-
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
     this.sliderFrame.style.transitionTimingFunction = this.config.easing;
@@ -105,20 +103,25 @@
       this.sliderFrame.style.cursor = '-webkit-grab';
     }
 
+    // Create a document fragment to pus slides into it
     const docFragment = document.createDocumentFragment();
 
+    // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       this.innerElements[i].style.float = 'left';
       this.innerElements[i].style.width = `${100 / this.innerElements.length}%`;
       docFragment.appendChild(this.innerElements[i]);
     }
 
+    // Add fragment to frame and frame to selector
     this.sliderFrame.appendChild(docFragment);
     this.selector.appendChild(this.sliderFrame);
+
+    // Go to currently active slide after initial build
     this.slideToCurrent();
   };
 
-  // go to prev slide
+  // Go to previous slide
   Siema.prototype.prev = function prev() {
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.config.perPage;
@@ -129,7 +132,7 @@
     this.slideToCurrent();
   };
 
-  // go to next slide
+  // Go to Next slide
   Siema.prototype.next = function next() {
     if (this.currentSlide === this.innerElements.length - this.config.perPage && this.config.loop) {
       this.currentSlide = 0;
@@ -140,19 +143,19 @@
     this.slideToCurrent();
   };
 
-  // to to index
+  // Go to slide with particular index
   Siema.prototype.goTo = (index) => {
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
     this.slideToCurrent();
   };
 
-  // slide to current slide
-  // should be triggered always after changing currentSlide
+  // Move slider frame to corect position depending of currently active slide
   Siema.prototype.slideToCurrent = function slideToCurrent() {
     this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
     this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
   };
 
+  // Recalculate drag /swipe event and repositionthe frame of a slider
   Siema.prototype.updateAfterDrag = function updateAfterDrag() {
     const move = this.drag.end - this.drag.start;
     if (move > 0 && Math.abs(move) > this.config.threshold) {
@@ -166,22 +169,11 @@
     }
   };
 
+  // When window resizes, resize slider components as well
   Siema.prototype.resize = function resize() {
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
   };
-
-  // Private methods
-  // function extend(sourceObject, customObject) {
-  //   const tempObject = {};
-  //   for (const prop in sourceObject) {
-  //     tempObject[prop] = sourceObject[prop];
-  //   }
-  //   for (const prop in customObject) {
-  //     tempObject[prop] = customObject[prop];
-  //   }
-  //   return tempObject;
-  // }
 
   // Exports to node & browser
   // CommonJS
