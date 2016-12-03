@@ -1,7 +1,6 @@
-// eslint-disable-next-line wrap-iife, func-names
 (function(global) {
 
-  // Define constructor
+  // CONTRUCTOR
   function Siema(options) {
 
     // Default the settings
@@ -17,7 +16,7 @@
     };
 
     // Merge defaults with user config
-    this.config = extend(defaults, options);
+    this.config = Object.assign(defaults, options);
 
     // Create global references
     this.selector = document.querySelector(this.config.selector);
@@ -173,16 +172,16 @@
   };
 
   // Private methods
-  function extend(sourceObject, customObject){
-    const tempObject = {};
-    for (const attrname in sourceObject) {
-      tempObject[attrname] = sourceObject[attrname];
-    }
-    for (const attrname in customObject) {
-      tempObject[attrname] = customObject[attrname];
-    }
-    return tempObject;
-  }
+  // function extend(sourceObject, customObject) {
+  //   const tempObject = {};
+  //   for (const prop in sourceObject) {
+  //     tempObject[prop] = sourceObject[prop];
+  //   }
+  //   for (const prop in customObject) {
+  //     tempObject[prop] = customObject[prop];
+  //   }
+  //   return tempObject;
+  // }
 
   // Exports to node & browser
   // CommonJS
@@ -191,7 +190,6 @@
   }
   // Browser
   else {
-    // eslint-disable-next-line dot-notation
     global['Siema'] = Siema;
   }
 }(window));

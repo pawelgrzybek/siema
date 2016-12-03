@@ -5,11 +5,12 @@
   "main": "src/siema.js",
   "devDependencies": {
     "babel-cli": "6.18.0",
+    "babel-plugin-transform-object-assign": "6.8.0",
     "babel-preset-latest": "^6.16.0",
     "uglify-js": "2.7.4"
   },
   "scripts": {
-    "build": "babel src/siema.js --presets=latest | uglifyjs - --compress --mangle --output dist/siema.min.js"
+    "build": "babel src/siema.js --presets=latest --plugins=transform-object-assign | uglifyjs - --compress --mangle --output dist/siema.min.js"
   },
   "repository": {
     "type": "git",
