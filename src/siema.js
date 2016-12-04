@@ -47,11 +47,13 @@
       });
       this.sliderFrame.addEventListener('touchmove', (e) => {
         this.drag.current = e.pageX;
+        this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
         this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
         this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
       });
       this.sliderFrame.addEventListener('touchend', (e) => {
         this.drag.end = e.pageX;
+        this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
         this.updateAfterDrag();
       });
 
@@ -63,6 +65,7 @@
       this.sliderFrame.addEventListener('mouseup', (e) => {
         e.preventDefault();
         this.drag.end = e.pageX;
+        this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
         this.sliderFrame.style.cursor = '-webkit-grab';
         this.updateAfterDrag();
       });
@@ -76,8 +79,9 @@
       this.sliderFrame.addEventListener('mousemove', (e) => {
         e.preventDefault();
         if (e.which) {
-          this.sliderFrame.style.cursor = '-webkit-grabbing';
           this.drag.current = e.pageX;
+          this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
+          this.sliderFrame.style.cursor = '-webkit-grabbing';
           this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
           this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
         }
@@ -96,8 +100,7 @@
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
-    this.sliderFrame.style.transitionDuration = `${this.config.duration}ms`;
-    this.sliderFrame.style.transitionTimingFunction = this.config.easing;
+    this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
 
     if (this.config.draggable) {
       this.sliderFrame.style.cursor = '-webkit-grab';
