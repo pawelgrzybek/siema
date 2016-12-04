@@ -5,7 +5,7 @@
     // Default settings
     const defaults = {
       selector: '.siema',
-      duration: 300,
+      duration: 200,
       easing: 'ease-out',
       perPage: 1,
       startIndex: 0,
