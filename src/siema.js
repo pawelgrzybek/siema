@@ -73,6 +73,7 @@
         e.preventDefault();
         if (e.which) {
           this.drag.end = e.pageX;
+          this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
           this.updateAfterDrag();
         }
       });
