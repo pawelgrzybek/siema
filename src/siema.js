@@ -48,8 +48,8 @@
       this.sliderFrame.addEventListener('touchmove', (e) => {
         this.drag.current = e.pageX;
         this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-        this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
-        this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
+        this.sliderFrame.style.WebkitTransform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)) * -1}px, 0, 0)`;
+        this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)) * -1}px, 0, 0)`;
       });
       this.sliderFrame.addEventListener('touchend', (e) => {
         this.drag.end = e.pageX;
@@ -83,8 +83,8 @@
           this.drag.current = e.pageX;
           this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
           this.sliderFrame.style.cursor = '-webkit-grabbing';
-          this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
-          this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
+          this.sliderFrame.style.WebkitTransform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)) * -1}px, 0, 0)`;
+          this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)) * -1}px, 0, 0)`;
         }
       });
     }
