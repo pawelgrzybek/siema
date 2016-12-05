@@ -143,7 +143,7 @@ new Siema();</code></pre>
 
     <!-- Examples -->
     <section class="section">
-      <h2>Examples</h2>
+      <h2>Example</h2>
 
       <p>Basic carousel with next and previous buttons.</p>
 <pre><code>&lt;div class=&quot;siema&quot;&gt;
@@ -184,85 +184,10 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <hr>
 
-      <p>Siema is so lightweight becaus it doesnt have any options that you can built by yourself in a few seconds. Let's display two slides on page and enable auto play with interval of 5 seconds.</p>
+      <p>I created a Codepen collection with much more Siema examples.</p>
 
-<pre><code>const mySiema = new Siema({
-  perPage: 2,
-});
-document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
-document.querySelector('.next').addEventListener('click', () => mySiema.next());
-setInterval(() => mySiema.next(), 5000);</code></pre>
+      <a href="http://codepen.io/collection/Adpkkd/" class="btn">Check Codepen collection</a>
 
-      <div class="siema js-siema2">
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-      </div>
-
-      <button class="btn js-prev2">prev</button>
-      <button class="btn js-next2">next</button>
-
-      <script>
-        var mySiema2 = new Siema({
-          selector: '.js-siema2',
-          perPage: 2,
-        });
-        document.querySelector('.js-next2').addEventListener('click', function() {mySiema2.next()});
-        document.querySelector('.js-prev2').addEventListener('click', function() {mySiema2.prev()});
-        setInterval(function() {mySiema2.next()}, 5000);
-      </script>
-
-      <hr>
-
-      <p>OK you get it now. Last one with some bouncy easing and arrow keys bound to <code>next()</code> and <code>prev()</code> method.</p>
-
-      <pre><code>const mySiema = new Siema({
-  easing: 'cubic-bezier(.09,.75,.4,1.93)',
-  duration: 600,
-});
-document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
-document.querySelector('.next').addEventListener('click', () => mySiema.next());
-document.addEventListener('keydown', (e) => {
-  if (e.keyCode === 37) {
-    mySiema.prev();
-  }
-  else if (e.keyCode === 39) {
-    mySiema.next();
-  }
-});</code></pre>
-
-      <div class="siema js-siema3">
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-      </div>
-
-      <button class="btn js-prev3">prev</button>
-      <button class="btn js-next3">next</button>
-
-      <script>
-        var mySiema3 = new Siema({
-          selector: '.js-siema3',
-          easing: 'cubic-bezier(.09,.75,.4,1.93)',
-          duration: 600,
-        });
-        document.querySelector('.js-prev3').addEventListener('click', function() {mySiema3.prev()});
-        document.querySelector('.js-next3').addEventListener('click', function() {mySiema3.next()});
-        document.addEventListener('keydown', function(e) {
-          if (e.keyCode === 37) {
-            mySiema3.prev()
-          }
-          else if(e.keyCode === 39) {
-            mySiema3.next()
-          }
-        });
-      </script>
     </section>
 
     <!-- Used in production -->
@@ -287,13 +212,13 @@ yarn run build</code></pre>
     <!-- Used in production -->
     <section class="section">
       <h2>Extra</h2>
-      <p>Siema means 'hello' in polish. When I play around with some code, I always use some random funny names. Thats the whole story behind the name of this one :) Huge thanks to <a href="http://www.sibenberg.com/">Jarkko Sibenberg</a> for cute logo design!</p>
+      <p>Siema means 'hello' in polish. When I play around with some code, I always use some random names. Thats the whole story behind the name of this one :) Huge thanks to <a href="http://www.sibenberg.com/">Jarkko Sibenberg</a> for cute logo design!</p>
     </section>
 
     <!-- Used in production -->
     <footer class="section">
       <hr>
-      <p>Built by <a href="https://pawelgrzybek.com">Paweł Grzybek</a> | Follow me on: <a href="https://twitter.com/pawelgrzybek">Twitter</a>, <a href="https://github.com/pawelgrzybek">Github</a>, <a href="instagram.com/pawelgrzybek/">Instagram</a></p>
+      <p>Built by <a href="https://pawelgrzybek.com">Paweł Grzybek</a> | Follow me on: <a href="https://twitter.com/pawelgrzybek">Twitter</a>, <a href="https://github.com/pawelgrzybek">Github</a>, <a href="https://www.instagram.com/pawelgrzybek/">Instagram</a></p>
     </footer>
 
   </div>
