@@ -43,15 +43,18 @@
 
       // Touch events
       this.sliderFrame.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
         this.drag.start = e.pageX;
       });
       this.sliderFrame.addEventListener('touchmove', (e) => {
+        e.stopPropagation();
         this.drag.current = e.pageX;
         this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
         this.sliderFrame.style.WebkitTransform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
         this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)}px, 0, 0)`;
       });
       this.sliderFrame.addEventListener('touchend', (e) => {
+        e.stopPropagation();
         this.drag.end = e.pageX;
         this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
         this.updateAfterDrag();
@@ -60,10 +63,12 @@
       // Mouse evevents
       this.sliderFrame.addEventListener('mousedown', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         this.drag.start = e.pageX;
       });
       this.sliderFrame.addEventListener('mouseup', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         this.drag.end = e.pageX;
         this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
         this.sliderFrame.style.cursor = '-webkit-grab';
@@ -71,6 +76,7 @@
       });
       this.sliderFrame.addEventListener('mouseleave', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (e.which) {
           this.drag.end = e.pageX;
           this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
@@ -79,6 +85,7 @@
       });
       this.sliderFrame.addEventListener('mousemove', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (e.which) {
           this.drag.current = e.pageX;
           this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
