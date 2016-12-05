@@ -11,7 +11,7 @@
       startIndex: 0,
       draggable: true,
       threshold: 20,
-      loop: true,
+      loop: false,
     };
 
     // Merge defaults with user's settings
