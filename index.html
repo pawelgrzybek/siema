@@ -64,7 +64,7 @@
         Siema
         <span class="title__desc">Lightweight and simple carousel in pure JavaScript</span>
       </h1>
-      <p>Siema is a lightweight carousel plugin with no dependencies and no styling. As Brad Frost said once "do that shit yourself". Is 100% open source available <a href="https://github.com/pawelgrzybek/siema">on Github</a>. Free to use on personal and commercial projects. Use it with ease with your module bundler or by manually injecting to your project.</p>
+      <p>Siema is a lightweight (only 1kb gziped) carousel plugin with no dependencies and no styling. As Brad Frost said once "do that shit yourself". It is 100% open source available <a href="https://github.com/pawelgrzybek/siema">on Github</a>. Free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting script to your project.</p>
       <a href="" class="btn">Download Siema from Github</a>
     </section>
 
@@ -100,7 +100,7 @@ new Siema();</code></pre>
     <!-- Options -->
     <section class="section">
       <h2>Options</h2>
-      <p>Siema comes with few (optional) options that you can chnge by passing an object as an argument. Default values presented below.</p>
+      <p>Siema comes with few (optional) settings that you can chnge by passing an object as an argument. Default values are presented below.</p>
 <pre><code>new Siema({
   selector: '.siema',
   duration: 200,
@@ -112,14 +112,14 @@ new Siema();</code></pre>
   loop: true,
 });</code></pre>
       <ul>
-        <li><strong>selector</strong> - (string) specify parent element</li>
-        <li><strong>duration</strong> - (number) slide transition duration (in ms)</li>
-        <li><strong>easing</strong> - (string) same as transition-timing-function in CSS</li>
-        <li><strong>perPage</strong> - (number) number of slides to be shown</li>
-        <li><strong>startIndex</strong> - (number) index of starting slide (zero-based)</li>
-        <li><strong>draggable</strong> - (boolean) use dragging and touch swiping</li>
-        <li><strong>threshold</strong> - (number) touch and mouse dragging threshold (in px)</li>
-        <li><strong>loop</strong> - (boolean) loop from slides around</li>
+        <li><code>selector</code> - (string) specify parent element</li>
+        <li><code>duration</code> - (number) slide transition duration (in ms)</li>
+        <li><code>easing</code> - (string) same as transition-timing-function in CSS</li>
+        <li><code>perPage</code> - (number) number of slides to be shown</li>
+        <li><code>startIndex</code> - (number) index of starting slide (zero-based)</li>
+        <li><code>draggable</code> - (boolean) use dragging and touch swiping</li>
+        <li><code>threshold</code> - (number) touch and mouse dragging threshold (in px)</li>
+        <li><code>loop</code> - (boolean) loop from slides around</li>
       </ul>
     </section>
 
@@ -129,10 +129,10 @@ new Siema();</code></pre>
       <p>As mentioned above, Siema doesn't come with many options. Thing that it comes with are few useful methods. Combine it with very basic JavaScript and voila!</p>
 
       <ul>
-        <li><strong>next()</strong> - Go to next slide</li>
-        <li><strong>prev()</strong> - Go to previous slide</li>
-        <li><strong>goTo(index)</strong> - Go to specific slide</li>
-        <li><strong>currentSlide</strong> - Index of active slide (read only)</li>
+        <li><code>next()</code> - go to next slide</li>
+        <li><code>prev()</code> - go to previous slide</li>
+        <li><code>goTo(index)</code> - go to specific slide</li>
+        <li><code>currentSlide</code> - index of active slide (read only)</li>
       </ul>
     </section>
 
@@ -179,14 +179,14 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <hr>
 
-      <p>Siema is so lightweight becaus it doesnt have any options that you can built by yourself in few seconds. Let's display two slides on page and enable auto play with interval of 3 seconds.</p>
+      <p>Siema is so lightweight becaus it doesnt have any options that you can built by yourself in a few seconds. Let's display two slides on page and enable auto play with interval of 5 seconds.</p>
 
 <pre><code>const mySiema = new Siema({
   perPage: 2,
 });
 document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
 document.querySelector('.next').addEventListener('click', () => mySiema.next());
-setInterval(() => mySiema.next(), 3000);</code></pre>
+setInterval(() => mySiema.next(), 5000);</code></pre>
 
       <div class="siema js-siema2">
         <div><img src="assets/siema--pink.svg"></div>
@@ -207,12 +207,12 @@ setInterval(() => mySiema.next(), 3000);</code></pre>
         });
         document.querySelector('.js-next2').addEventListener('click', function() {mySiema2.next()});
         document.querySelector('.js-prev2').addEventListener('click', function() {mySiema2.prev()});
-        setInterval(function() {mySiema2.next()}, 3000);
+        setInterval(function() {mySiema2.next()}, 5000);
       </script>
 
       <hr>
 
-      <p>OK you get it. Last one with some bouncy easing and arrow keys bound to next() and prev() method.</p>
+      <p>OK you get it now. Last one with some bouncy easing and arrow keys bound to <code>next()</code> and <code>prev()</code> method.</p>
 
       <pre><code>const mySiema = new Siema({
   easing: 'cubic-bezier(.09,.75,.4,1.93)',
@@ -268,9 +268,9 @@ document.addEventListener('keydown', (e) => {
 
     <section class="section">
       <h2>Contributing</h2>
-      <p>Siema suppose to provide a basic carousel tool and allow developer to extend it by available methods. It doesn't come with complex configuration and gazzylion options — I would like to keep it this way. If you need some more powerful library I recommend amazing <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a> by iDangero team.</p>
+      <p>Siema suppose to provide a basic carousel tool and allow developers to extend it by using available methods. It doesn't come with complex configuration and gazzylion of options — I would like to keep it this way. If you need some more powerful library I recommend amazing <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a> by iDangero team.</p>
 
-      <p>Bug fixed more than welcone. If you have a feature suggestion please <a href="https://github.com/pawelgrzybek/siema/issues">open an issue</a> on Github. Before sending a pull reques make sure to use 'build' task please.</p>
+      <p>Bug fixes more than welcone. If you have a feature suggestion please <a href="https://github.com/pawelgrzybek/siema/issues">open an issue</a> on Github. Before sending a pull reques make sure to use 'build' task please.</p>
 
       <pre><code>npm run build</code></pre>
     </section>
@@ -280,6 +280,10 @@ document.addEventListener('keydown', (e) => {
       <h2>Extra</h2>
       <p>Siema means 'hello' in polish. When I play around with some code, I always use some random funny names. Thats the whole story behind the name of this one :) Huge thanks to <a href="http://www.sibenberg.com/">Jarkko Sibenberg</a> for cute logo design!</p>
     </section>
+
+    <hr>
+
+    <p>Built by <a href="https://pawelgrzybek.com">Paweł Grzybek</a> | Follow me on: <a href="https://twitter.com/pawelgrzybek">Twitter</a>, <a href="https://github.com/pawelgrzybek">Github</a>, <a href="instagram.com/pawelgrzybek/">Instagram</a></p>
   </div>
 </body>
 </html>
