@@ -84,7 +84,7 @@
 
 // or
 
-yarn add siema  
+yarn add siema
 </code></pre>
 <pre><code>import Siema from 'siema';
 new Siema();</code></pre>
@@ -162,7 +162,7 @@ new Siema();</code></pre>
 document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
 document.querySelector('.next').addEventListener('click', () => mySiema.next());</code></pre>
 
-      <div class="siema js-siema1">
+      <div class="siema">
         <div><img src="assets/siema--pink.svg"></div>
         <div><img src="assets/siema--yellow.svg"></div>
         <div><img src="assets/siema--pink.svg"></div>
@@ -175,11 +175,9 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
       <button class="btn js-next1">next</button>
 
       <script>
-        var mySiema1 = new Siema({
-          selector: '.js-siema1',
-        });
-        document.querySelector('.js-prev1').addEventListener('click', function() {mySiema1.prev()});
-        document.querySelector('.js-next1').addEventListener('click', function() {mySiema1.next()});
+        var mySiema = new Siema();
+        document.querySelector('.js-prev1').addEventListener('click', function() {mySiema.prev()});
+        document.querySelector('.js-next1').addEventListener('click', function() {mySiema.next()});
       </script>
 
       <hr>
