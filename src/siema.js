@@ -34,69 +34,57 @@
 
     // If element if draggable / swipable, add event handlers
     if (this.config.draggable) {
-      // Keep track of drag distance of sliderFrame
+      // Keep track pointer hold and dragging distance
+      this.pointerDown = false;
       this.drag = {
         start: 0,
-        current: 0,
         end: 0,
       };
 
       // Touch events
-      this.sliderFrame.addEventListener('touchstart', (e) => {
+      this.selector.addEventListener('touchstart', (e) => {
+        this.pointerDown = true;
         this.drag.start = e.pageX;
       });
-      // this.sliderFrame.addEventListener('touchmove', (e) => {
-      //   this.drag.current = e.pageX;
-      //   this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-      //   this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)) * -1}px, 0, 0)`;
-      // });
-      this.sliderFrame.addEventListener('touchend', (e) => {
+      this.selector.addEventListener('touchend', (e) => {
+        this.pointerDown = false;
         this.drag.end = e.pageX;
-        // this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
         this.updateAfterDrag();
       });
 
-      // Mouse evevents
-      // mouse enters
-          // clear drag object
-          // register swipeStart on mousedown
-          // register swipeEnd on mouseup
-              // updateSlide after moseup
-          // register swipe on mousemove
-              // dragFrame here
-      // mouse leaves
-          // if button hold
-              // updateSlide after moseup
-          // deregister swipeStart on mousedown
-          // deregister swipeEnd on mouseup
-          // deregister swipe on mousemove
-
-      this.sliderFrame.addEventListener('mousedown', (e) => {
+      // Mouse events
+      this.selector.addEventListener('mousedown', (e) => {
         e.preventDefault();
+        this.pointerDown = true;
         this.drag.start = e.pageX;
       });
-      // this.sliderFrame.addEventListener('mousemove', (e) => {
-      //   e.preventDefault();
-      //   if (e.which) {
-      //     this.drag.current = e.pageX;
-      //     this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-      //     this.sliderFrame.style.cursor = '-webkit-grabbing';
-      //     this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.current)) * -1}px, 0, 0)`;
-      //   }
-      // });
-      this.sliderFrame.addEventListener('mouseup', (e) => {
+      this.selector.addEventListener('mouseup', (e) => {
         e.preventDefault();
-        this.drag.end = e.pageX;
-        // this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-        this.sliderFrame.style.cursor = '-webkit-grab';
-        this.updateAfterDrag();
+        if (this.pointerDown) {
+          this.pointerDown = false;
+          this.drag.end = e.pageX;
+          this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+          this.sliderFrame.style.cursor = '-webkit-grab';
+          this.updateAfterDrag();
+        }
       });
       this.selector.addEventListener('mouseleave', (e) => {
         e.preventDefault();
-        if (e.which) {
+        if (this.pointerDown) {
           this.drag.end = e.pageX;
-          // this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+          this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+          this.sliderFrame.style.cursor = '-webkit-grab';
           this.updateAfterDrag();
+        }
+        this.pointerDown = false;
+      });
+      this.selector.addEventListener('mousemove', (e) => {
+        e.preventDefault();
+        if (this.pointerDown) {
+          this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
+          this.sliderFrame.style.cursor = '-webkit-grabbing';
+          this.drag.end = e.pageX;
+          this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
         }
       });
     }
