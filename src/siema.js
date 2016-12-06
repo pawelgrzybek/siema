@@ -49,7 +49,13 @@
       this.selector.addEventListener('touchend', (e) => {
         this.pointerDown = false;
         this.drag.end = e.pageX;
+        this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
         this.updateAfterDrag();
+      });
+      this.selector.addEventListener('touchmove', (e) => {
+        this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
+        this.drag.end = e.pageX;
+        this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
       });
 
       // Mouse events
