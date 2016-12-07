@@ -22,6 +22,7 @@
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
+    this.lastTimeDragged = 0;
 
     // Build markup and apply required styling to elements
     this.init();
@@ -124,16 +125,21 @@
 
   // Recalculate drag /swipe event and repositionthe frame of a slider
   Siema.prototype.updateAfterDrag = function updateAfterDrag() {
-    const move = this.drag.end - this.drag.start;
-    if (move > 0 && Math.abs(move) > this.config.threshold) {
-      this.prev();
+    // This is fucking weird
+    // Then the touch event is very quick on iOS
+    // Two events are triggered - touchend & mouseup
+    // This one ensures that the delay between grags is 100ms or longer
+    if (Date.now() - this.lastTimeDragged > 100) {
+      const move = this.drag.end - this.drag.start;
+      if (move > 0 && Math.abs(move) > this.config.threshold) {
+        this.prev();
+      }
+      else if (move < 0 && Math.abs(move) > this.config.threshold) {
+        this.next();
+      }
     }
-    else if (move < 0 && Math.abs(move) > this.config.threshold) {
-      this.next();
-    }
-    else {
-      this.slideToCurrent();
-    }
+    this.slideToCurrent();
+    this.lastTimeDragged = Date.now();
   };
 
   // When window resizes, resize slider components as well
@@ -145,18 +151,15 @@
   // Event handlers
   // Touch events
   Siema.prototype.touchstartHandler = function touchstartHandler(e) {
-    e.stopImmediatePropagation();
     this.pointerDown = true;
     this.drag.start = e.touches[0].pageX;
   };
   Siema.prototype.touchendHandler = function touchendHandler(e) {
-    e.stopImmediatePropagation();
     this.pointerDown = false;
     this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
     this.updateAfterDrag();
   };
   Siema.prototype.touchmoveHandler = function touchmoveHandler(e) {
-    e.stopImmediatePropagation();
     this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
     this.drag.end = e.touches[0].pageX;
     this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
