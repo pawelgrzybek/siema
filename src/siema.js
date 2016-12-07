@@ -152,7 +152,6 @@
   Siema.prototype.touchendHandler = function touchendHandler(e) {
     e.stopImmediatePropagation();
     this.pointerDown = false;
-    this.drag.end = e.pageX;
     this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
     this.updateAfterDrag();
   };
@@ -175,7 +174,6 @@
     e.stopImmediatePropagation();
     if (this.pointerDown) {
       this.pointerDown = false;
-      this.drag.end = e.pageX;
       this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.cursor = '-webkit-grab';
       this.updateAfterDrag();
