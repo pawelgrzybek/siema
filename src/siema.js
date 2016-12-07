@@ -147,7 +147,7 @@
   Siema.prototype.touchstartHandler = function touchstartHandler(e) {
     e.stopImmediatePropagation();
     this.pointerDown = true;
-    this.drag.start = e.pageX;
+    this.drag.start = e.touches[0].pageX;
   };
   Siema.prototype.touchendHandler = function touchendHandler(e) {
     e.stopImmediatePropagation();
@@ -158,7 +158,7 @@
   Siema.prototype.touchmoveHandler = function touchmoveHandler(e) {
     e.stopImmediatePropagation();
     this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-    this.drag.end = e.pageX;
+    this.drag.end = e.touches[0].pageX;
     this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
   };
 
