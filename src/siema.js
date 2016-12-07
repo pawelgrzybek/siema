@@ -65,8 +65,8 @@
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
-    this.sliderFrame.style.webkitTransition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
     if (this.config.draggable) {
       this.sliderFrame.style.cursor = '-webkit-grab';
@@ -162,8 +162,8 @@
   Siema.prototype.touchendHandler = function touchendHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
-    this.sliderFrame.style.webkitTransition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.end) {
       this.updateAfterDrag();
     }
@@ -173,8 +173,8 @@
     e.stopPropagation();
     if (this.pointerDown) {
       this.drag.end = e.touches[0].pageX;
-      this.sliderFrame.style.webkitTransition = `-webkit-transform 0ms ${this.config.easing}, transform 0ms ${this.config.easing}`;
-      this.sliderFrame.style.transition = `-webkit-transform 0ms ${this.config.easing}, transform 0ms ${this.config.easing}`;
+      this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
+      this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
@@ -189,8 +189,8 @@
     e.stopPropagation();
     this.pointerDown = false;
     this.sliderFrame.style.cursor = '-webkit-grab';
-    this.sliderFrame.style.webkitTransition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.end) {
       this.updateAfterDrag();
     }
@@ -201,8 +201,8 @@
     if (this.pointerDown) {
       this.drag.end = e.pageX;
       this.sliderFrame.style.cursor = '-webkit-grabbing';
-      this.sliderFrame.style.webkitTransition = `-webkit-transform 0ms ${this.config.easing}, transform 0ms ${this.config.easing}`;
-      this.sliderFrame.style.transition = `-webkit-transform 0ms ${this.config.easing}, transform 0ms ${this.config.easing}`;
+      this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
+      this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
@@ -210,8 +210,8 @@
     if (this.pointerDown) {
       this.pointerDown = false;
       this.drag.end = e.pageX;
-      this.sliderFrame.style.webkitTransition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
-      this.sliderFrame.style.transition = `-webkit-transform ${this.config.duration}ms ${this.config.easing}, transform ${this.config.duration}ms ${this.config.easing}`;
+      this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+      this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.updateAfterDrag();
       this.clearDrag();
     }
