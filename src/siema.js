@@ -168,6 +168,7 @@
     this.clearDrag();
   };
   Siema.prototype.touchmoveHandler = function touchmoveHandler(e) {
+    e.stopPropagation();
     if (this.pointerDown) {
       this.drag.end = e.touches[0].pageX;
       this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
