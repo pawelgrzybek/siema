@@ -42,57 +42,15 @@
       };
 
       // Touch events
-      this.selector.addEventListener('touchstart', (e) => {
-        this.pointerDown = true;
-        this.drag.start = e.pageX;
-      });
-      this.selector.addEventListener('touchend', (e) => {
-        this.pointerDown = false;
-        this.drag.end = e.pageX;
-        this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-        this.updateAfterDrag();
-      });
-      this.selector.addEventListener('touchmove', (e) => {
-        this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-        this.drag.end = e.pageX;
-        this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
-      });
+      this.selector.addEventListener('touchstart', this.touchstartHandler.bind(this));
+      this.selector.addEventListener('touchend', this.touchendHandler.bind(this));
+      this.selector.addEventListener('touchmove', this.touchmoveHandler.bind(this));
 
       // Mouse events
-      this.selector.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        this.pointerDown = true;
-        this.drag.start = e.pageX;
-      });
-      this.selector.addEventListener('mouseup', (e) => {
-        e.preventDefault();
-        if (this.pointerDown) {
-          this.pointerDown = false;
-          this.drag.end = e.pageX;
-          this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-          this.sliderFrame.style.cursor = '-webkit-grab';
-          this.updateAfterDrag();
-        }
-      });
-      this.selector.addEventListener('mouseleave', (e) => {
-        e.preventDefault();
-        if (this.pointerDown) {
-          this.drag.end = e.pageX;
-          this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-          this.sliderFrame.style.cursor = '-webkit-grab';
-          this.updateAfterDrag();
-        }
-        this.pointerDown = false;
-      });
-      this.selector.addEventListener('mousemove', (e) => {
-        e.preventDefault();
-        if (this.pointerDown) {
-          this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-          this.sliderFrame.style.cursor = '-webkit-grabbing';
-          this.drag.end = e.pageX;
-          this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
-        }
-      });
+      this.selector.addEventListener('mousedown', this.mousedownHandler.bind(this));
+      this.selector.addEventListener('mouseup', this.mouseupHandler.bind(this));
+      this.selector.addEventListener('mouseleave', this.mouseleaveHandler.bind(this));
+      this.selector.addEventListener('mousemove', this.mousemoveHandler.bind(this));
     }
   }
 
@@ -182,6 +140,67 @@
   Siema.prototype.resize = function resize() {
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
+  };
+
+  // Event handlers
+  // Touch events
+  Siema.prototype.touchstartHandler = function touchstartHandler(e) {
+    e.stopImmediatePropagation();
+    this.pointerDown = true;
+    this.drag.start = e.pageX;
+  };
+  Siema.prototype.touchendHandler = function touchendHandler(e) {
+    e.stopImmediatePropagation();
+    this.pointerDown = false;
+    this.drag.end = e.pageX;
+    this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+    this.updateAfterDrag();
+  };
+  Siema.prototype.touchmoveHandler = function touchmoveHandler(e) {
+    e.stopImmediatePropagation();
+    this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
+    this.drag.end = e.pageX;
+    this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+  };
+
+  // Mouse events
+  Siema.prototype.mousedownHandler = function mousedownHandler(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    this.pointerDown = true;
+    this.drag.start = e.pageX;
+  };
+  Siema.prototype.mouseupHandler = function mouseupHandler(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (this.pointerDown) {
+      this.pointerDown = false;
+      this.drag.end = e.pageX;
+      this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+      this.sliderFrame.style.cursor = '-webkit-grab';
+      this.updateAfterDrag();
+    }
+  };
+  Siema.prototype.mouseleaveHandler = function mouseleaveHandler(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (this.pointerDown) {
+      this.drag.end = e.pageX;
+      this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+      this.sliderFrame.style.cursor = '-webkit-grab';
+      this.updateAfterDrag();
+    }
+    this.pointerDown = false;
+  };
+  Siema.prototype.mousemoveHandler = function mousemoveHandler(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (this.pointerDown) {
+      this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
+      this.sliderFrame.style.cursor = '-webkit-grabbing';
+      this.drag.end = e.pageX;
+      this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+    }
   };
 
   // Exports to node & browser
