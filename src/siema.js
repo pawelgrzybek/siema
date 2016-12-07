@@ -42,9 +42,9 @@
       };
 
       // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler.bind(this));
-      this.selector.addEventListener('touchend', this.touchendHandler.bind(this));
-      this.selector.addEventListener('touchmove', this.touchmoveHandler.bind(this));
+      this.selector.addEventListener('touchstart', this.touchstartHandler.bind(this), { passive: true });
+      this.selector.addEventListener('touchend', this.touchendHandler.bind(this), { passive: true });
+      this.selector.addEventListener('touchmove', this.touchmoveHandler.bind(this), { passive: true });
 
       // Mouse events
       this.selector.addEventListener('mousedown', this.mousedownHandler.bind(this));
