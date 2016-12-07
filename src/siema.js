@@ -22,7 +22,6 @@
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
-    this.lastTimeDragged = 0;
 
     // Build markup and apply required styling to elements
     this.init();
@@ -43,8 +42,8 @@
       };
 
       // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler.bind(this), { passive: true });
-      this.selector.addEventListener('touchend', this.touchendHandler.bind(this), { passive: true });
+      this.selector.addEventListener('touchstart', this.touchstartHandler.bind(this));
+      this.selector.addEventListener('touchend', this.touchendHandler.bind(this));
       this.selector.addEventListener('touchmove', this.touchmoveHandler.bind(this), { passive: true });
 
       // Mouse events
@@ -129,17 +128,14 @@
     // Then the touch event is very quick on iOS
     // Two events are triggered - touchend & mouseup
     // This one ensures that the delay between grags is 100ms or longer
-    if (Date.now() - this.lastTimeDragged > 100) {
-      const move = this.drag.end - this.drag.start;
-      if (move > 0 && Math.abs(move) > this.config.threshold) {
-        this.prev();
-      }
-      else if (move < 0 && Math.abs(move) > this.config.threshold) {
-        this.next();
-      }
+    const movement = this.drag.end - this.drag.start;
+    if (movement > 0 && Math.abs(movement) > this.config.threshold) {
+      this.prev();
+    }
+    else if (movement < 0 && Math.abs(movement) > this.config.threshold) {
+      this.next();
     }
     this.slideToCurrent();
-    this.lastTimeDragged = Date.now();
   };
 
   // When window resizes, resize slider components as well
@@ -148,71 +144,77 @@
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
   };
 
-  // Event handlers
-  // Touch events
+  // Clar drag
+  Siema.prototype.clearDrag = function resize() {
+    this.drag = {
+      start: 0,
+      end: 0,
+    };
+  };
+
+  // Touch events handlers
   Siema.prototype.touchstartHandler = function touchstartHandler(e) {
-    e.stopImmediatePropagation();
+    e.stopPropagation();
     this.pointerDown = true;
     this.drag.start = e.touches[0].pageX;
   };
   Siema.prototype.touchendHandler = function touchendHandler(e) {
-    e.stopImmediatePropagation();
+    e.stopPropagation();
     this.pointerDown = false;
     this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-    this.updateAfterDrag();
+    if (this.drag.end) {
+      this.updateAfterDrag();
+    }
+    this.clearDrag();
   };
   Siema.prototype.touchmoveHandler = function touchmoveHandler(e) {
-    e.stopImmediatePropagation();
-    this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-    this.drag.end = e.touches[0].pageX;
-    this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
-  };
-
-  // Mouse events
-  Siema.prototype.mousedownHandler = function mousedownHandler(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.pointerDown = true;
-    this.drag.start = e.pageX;
-  };
-  Siema.prototype.mouseupHandler = function mouseupHandler(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
     if (this.pointerDown) {
-      this.pointerDown = false;
-      this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-      this.sliderFrame.style.cursor = '-webkit-grab';
-      this.updateAfterDrag();
-    }
-  };
-  Siema.prototype.mouseleaveHandler = function mouseleaveHandler(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    if (this.pointerDown) {
-      this.drag.end = e.pageX;
-      this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
-      this.sliderFrame.style.cursor = '-webkit-grab';
-      this.updateAfterDrag();
-    }
-    this.pointerDown = false;
-  };
-  Siema.prototype.mousemoveHandler = function mousemoveHandler(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    if (this.pointerDown) {
+      this.drag.end = e.touches[0].pageX;
       this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-      this.sliderFrame.style.cursor = '-webkit-grabbing';
-      this.drag.end = e.pageX;
       this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
 
-  // Exports to node & browser
-  // CommonJS
+  // Mouse events handlers
+  Siema.prototype.mousedownHandler = function mousedownHandler(e) {
+    e.stopPropagation();
+    this.pointerDown = true;
+    this.drag.start = e.pageX;
+  };
+  Siema.prototype.mouseupHandler = function mouseupHandler(e) {
+    e.stopPropagation();
+    this.pointerDown = false;
+    this.sliderFrame.style.cursor = '-webkit-grab';
+    this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+    if (this.drag.end) {
+      this.updateAfterDrag();
+    }
+    this.clearDrag();
+  };
+  Siema.prototype.mousemoveHandler = function mousemoveHandler(e) {
+    e.preventDefault();
+    if (this.pointerDown) {
+      this.drag.end = e.pageX;
+      this.sliderFrame.style.cursor = '-webkit-grabbing';
+      this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
+      this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+    }
+  };
+  Siema.prototype.mouseleaveHandler = function mouseleaveHandler(e) {
+    if (this.pointerDown) {
+      this.pointerDown = false;
+      this.drag.end = e.pageX;
+      this.sliderFrame.style.transition = `transform ${this.config.duration}ms ${this.config.easing}`;
+      this.updateAfterDrag();
+      this.clearDrag();
+    }
+  };
+
+  // Export to CommonJS
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = Siema;
   }
-  // Browser
+  // Export to Browser
   else {
     global['Siema'] = Siema;
   }
