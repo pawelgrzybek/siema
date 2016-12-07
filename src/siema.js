@@ -119,7 +119,7 @@
 
   // Move slider frame to corect position depending of currently active slide
   Siema.prototype.slideToCurrent = function slideToCurrent() {
-    this.sliderFrame.style.transform = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
+    this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
   };
 
   // Recalculate drag /swipe event and repositionthe frame of a slider
@@ -172,7 +172,7 @@
     if (this.pointerDown) {
       this.drag.end = e.touches[0].pageX;
       this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-      this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
 
@@ -198,7 +198,7 @@
       this.drag.end = e.pageX;
       this.sliderFrame.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.transition = `transform 0ms ${this.config.easing}`;
-      this.sliderFrame.style.transform = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
   Siema.prototype.mouseleaveHandler = function mouseleaveHandler(e) {
@@ -210,6 +210,15 @@
       this.clearDrag();
     }
   };
+
+  // Public methods
+  const transformProperty = (() => {
+    const style = document.documentElement.style;
+    if (typeof style.transform == 'string') {
+      return 'transform';
+    }
+    return 'WebkitTransform';
+  })();
 
   // Export to CommonJS
   if (typeof module !== 'undefined' && module.exports) {
