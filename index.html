@@ -7,14 +7,14 @@
   <meta name="author" content="Pawel Grzybek - https://pawelgrzybek.com">
 
   <title>Siema - Lightweight and simple carousel in pure JavaScript</title>
-  <meta name="description" content="Siema is a simple and very leightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies.">
+  <meta name="description" content="Siema is a simple and very lightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies.">
 
   <!-- Open graph data -->
   <meta property="og:site_name" content="Siema - Lightweight and simple carousel in pure JavaScript">
   <meta property="og:title" content="Siema - Lightweight and simple carousel in pure JavaScript">
   <meta property="og:url" content="https://pawelgrzybek.com/siema">
   <meta property="og:type" content="website">
-  <meta property="og:description" content="Siema is a simple and very leightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies.">
+  <meta property="og:description" content="Siema is a simple and very lightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies.">
   <meta property="og:image" content="https://pawelgrzybek.com/siema/assets/siema.jpg">
 
   <!-- Twitter Card -->
@@ -22,7 +22,7 @@
   <meta name="twitter:site" content="@pawelgrzybek" />
   <meta name="twitter:creator" content="@pawelgrzybek" />
   <meta name="twitter:title" content="Siema - Lightweight and simple carousel in pure JavaScript" />
-  <meta name="twitter:description" content="Siema is a simple and very leightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies." />
+  <meta name="twitter:description" content="Siema is a simple and very lightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies." />
   <meta property="og:image" content="https://pawelgrzybek.com/siema/assets/siema.jpg">
 
   <!-- Favicons -->
@@ -64,7 +64,7 @@
         Siema
         <span class="title__desc">Lightweight and simple carousel in pure JavaScript</span>
       </h1>
-      <p>Siema is a lightweight (only 1kb gziped) carousel plugin with no dependencies and no styling. As Brad Frost said once "do that shit yourself". It is 100% open source available <a href="https://github.com/pawelgrzybek/siema">on Github</a>. Free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting script to your project.</p>
+      <p>Siema is a lightweight (only 1kb gziped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and available <a href="https://github.com/pawelgrzybek/siema">on Github</a>. It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.</p>
       <a href="" class="btn">Download Siema from Github</a>
     </section>
 
@@ -79,7 +79,7 @@
   &lt;div&gt;Hi, I'm slide 4&lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
-      <p>If you are using module bundler like Webpack or Browserify...</p>
+      <p>If you are using a module bundler like Webpack or Browserify...</p>
 <pre><code>npm i -S siema
 
 // or
@@ -89,7 +89,7 @@ yarn add siema
 <pre><code>import Siema from 'siema';
 new Siema();</code></pre>
 
-      <p>...or manually inject minified script to your website.</p>
+      <p>...or manually inject the minified script into your website.</p>
 <pre><code>&lt;script src=&quot;siema.min.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
   new Siema();
@@ -105,7 +105,7 @@ new Siema();</code></pre>
     <!-- Options -->
     <section class="section">
       <h2>Options</h2>
-      <p>Siema comes with few (optional) settings that you can chnge by passing an object as an argument. Default values are presented below.</p>
+      <p>Siema comes with a few (optional) settings that you can change by passing an object as an argument. Default values are presented below.</p>
 <pre><code>new Siema({
   selector: '.siema',
   duration: 200,
@@ -117,27 +117,27 @@ new Siema();</code></pre>
   loop: false,
 });</code></pre>
       <ul>
-        <li><code>selector</code> - (string) specify parent element</li>
+        <li><code>selector</code> - (string) specify the parent element</li>
         <li><code>duration</code> - (number) slide transition duration (in ms)</li>
-        <li><code>easing</code> - (string) same as transition-timing-function in CSS</li>
-        <li><code>perPage</code> - (number) number of slides to be shown</li>
-        <li><code>startIndex</code> - (number) index of starting slide (zero-based)</li>
+        <li><code>easing</code> - (string) the same as transition-timing-function in CSS</li>
+        <li><code>perPage</code> - (number) the number of slides to be shown</li>
+        <li><code>startIndex</code> - (number) index of the starting slide (zero-based)</li>
         <li><code>draggable</code> - (boolean) use dragging and touch swiping</li>
         <li><code>threshold</code> - (number) touch and mouse dragging threshold (in px)</li>
-        <li><code>loop</code> - (boolean) loop from slides around</li>
+        <li><code>loop</code> - (boolean) loop the slides around</li>
       </ul>
     </section>
 
     <!-- Options -->
     <section class="section">
       <h2>API</h2>
-      <p>As mentioned above, Siema doesn't come with many options. Thing that it comes with are few useful methods. Combine it with very basic JavaScript and voila!</p>
+      <p>As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!</p>
 
       <ul>
         <li><code>next()</code> - go to next slide</li>
         <li><code>prev()</code> - go to previous slide</li>
-        <li><code>goTo(index)</code> - go to specific slide</li>
-        <li><code>currentSlide</code> - index of active slide (read only)</li>
+        <li><code>goTo(index)</code> - go to a specific slide</li>
+        <li><code>currentSlide</code> - index of the current active slide (read only)</li>
       </ul>
     </section>
 
@@ -182,23 +182,23 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <hr>
 
-      <p>I created a Codepen collection with much more Siema examples.</p>
+      <p>I've also created a Codepen collection with many more Siema examples.</p>
 
-      <a href="http://codepen.io/collection/Adpkkd/" class="btn">Check Codepen collection</a>
+      <a href="http://codepen.io/collection/Adpkkd/" class="btn">Check the Codepen collection</a>
 
     </section>
 
     <!-- Used in production -->
     <section class="section">
       <h2>Siema used in production</h2>
-      <p>Nowhere yet — I just built it. If you used it on your website let me know please and I will make sure to add URL to your project here.</p>
+      <p>Nowhere yet — I've just built it. If you use it on your website please let me know and I will make sure to add the URL of your project here.</p>
     </section>
 
     <section class="section">
       <h2>Contributing</h2>
-      <p>Siema suppose to provide a basic carousel tool and allow developers to extend it by using available methods. It doesn't come with complex configuration and gazzylion of options — I would like to keep it this way. If you need some more powerful library I recommend amazing <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a> by iDangero team.</p>
+      <p>Siema's purpose is to provide a basic carousel tool and allow developers to extend it by using the available methods. It doesn't come with any complex configuration and myriad options — I would like to keep it this way. If you need a more powerful library I recommend the amazing <a href="http://flickity.metafizzy.co/">Flickity</a> by David DeSandro or <a href="http://idangero.us/swiper/">Swiper</a> by iDangero team.</p>
 
-      <p>Bug fixes more than welcone. If you have a feature suggestion please <a href="https://github.com/pawelgrzybek/siema/issues">open an issue</a> on Github. Before sending a pull reques make sure to use 'build' task please.</p>
+      <p>Bug fixes are more than welcone. If you have a feature suggestion please <a href="https://github.com/pawelgrzybek/siema/issues">open an issue</a> on Github. Before sending a pull request make sure to use the 'build' task please.</p>
 
 <pre><code>npm run build
 
@@ -224,7 +224,7 @@ yarn run build</code></pre>
     <!-- Used in production -->
     <section class="section">
       <h2>Extra</h2>
-      <p>Siema means 'hello' in polish. When I play around with some code, I always use some random names. Thats the whole story behind the name of this one :) Huge thanks to <a href="http://www.sibenberg.com/">Jarkko Sibenberg</a> for cute logo design!</p>
+      <p>Siema means 'hello' in Polish. When I play around with some code, I always use random names. That's the whole story behind the name of this one :) Huge thanks to <a href="http://www.sibenberg.com/">Jarkko Sibenberg</a> for the cute logo design!</p>
     </section>
 
     <!-- Used in production -->
