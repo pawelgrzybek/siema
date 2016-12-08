@@ -1,7 +1,7 @@
 {
   "name": "siema",
   "version": "1.0.0",
-  "description": "Lightweight and simple carousel in pure JavaScript",
+  "description": "Lightweight and simple carousel with no dependencies",
   "main": "src/siema.js",
   "devDependencies": {
     "babel-cli": "6.18.0",
