@@ -182,6 +182,7 @@
 
   // Mouse events handlers
   Siema.prototype.mousedownHandler = function mousedownHandler(e) {
+    e.preventDefault();
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.start = e.pageX;
