@@ -1,6 +1,6 @@
 {
   "name": "siema",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Lightweight and simple carousel in pure JavaScript",
   "main": "src/siema.js",
   "devDependencies": {
