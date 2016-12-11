@@ -73,7 +73,7 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 
 - `next()` - go to next slide
 - `prev()` - go to previous slide
-- `goTo(i`ndex) - go to a specific slide
+- `goTo(index)` - go to a specific slide
 - `currentSlide` - index of the current active slide (read only)
 
 ## Siema used in production
