@@ -56,7 +56,7 @@
 
   Siema.prototype.init = function init() {
     if (this.selector === null) {
-      throw new Error('Something wrong with your sleector 😭');
+      throw new Error('Something wrong with your selector 😭');
     }
 
     // hide everything out of selector's bounduries
