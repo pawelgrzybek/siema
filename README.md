@@ -84,7 +84,7 @@ Nowhere yet — I've just built it. If you use it on your website please let me 
 
 Siema's purpose is to provide a basic carousel tool and allow developers to extend it by using the available methods. It doesn't come with any complex configuration and myriad options — I would like to keep it this way. If you need a more powerful library I recommend the amazing [Flickity](http://flickity.metafizzy.co/) by David DeSandro or [Swiper](http://idangero.us/swiper/) by iDangero team.
 
-Bug fixes are more than welcone. If you have a feature suggestion please open an issue on Github. Before sending a pull request make sure to use the 'build' task please.
+Bug fixes are more than welcome. If you have a feature suggestion please open an issue on Github. Before sending a pull request make sure to use the 'build' task please.
 
 ```bash
 npm run build
