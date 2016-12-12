@@ -76,18 +76,27 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 - `goTo(index)` - go to a specific slide
 - `currentSlide` - index of the current active slide (read only)
 
-## Gem
-
-If you want to use siema as a gem, there is a gem called [siema-rails](https://github.com/Naggi-Goishi/siema-rails).
-
-Include this line in your gem file.
-‘‘‘ruby
-  gem 'siema-rails'
-‘‘‘
-
 ## Siema used in production
 
 Nowhere yet — I've just built it. If you use it on your website please let me know and I will make sure to add the URL of your project here.
+
+## Browser support
+
+- IE10
+- Chrome 12
+- Firefox 16
+- Opera 15
+- Safari 4
+- Android Browser 4.0
+- iOS Safari 6.0
+
+## Gem
+
+[Siema-rails](https://github.com/Naggi-Goishi/siema-rails) allows you to use Siema as a a gem. Thanks to [Naggi Goishi](https://github.com/Naggi-Goishi) for amazing contribution.
+
+```ruby
+gem 'siema-rails'
+```
 
 ## Contributing
 
@@ -102,16 +111,6 @@ npm run build
 
 yarn run build
 ```
-
-## Browser support
-
-- IE10
-- Chrome 12
-- Firefox 16
-- Opera 15
-- Safari 4
-- Android Browser 4.0
-- iOS Safari 6.0
 
 ## Extra
 
