@@ -32,7 +32,7 @@
       this.slideToCurrent();
     });
 
-    // If element if draggable / swipable, add event handlers
+    // If element is draggable / swipable, add event handlers
     if (this.config.draggable) {
       // Keep track pointer hold and dragging distance
       this.pointerDown = false;
@@ -56,10 +56,10 @@
 
   Siema.prototype.init = function init() {
     if (this.selector === null) {
-      throw new Error('Something wrong with your sleector 😭');
+      throw new Error('Something wrong with your selector 😭');
     }
 
-    // hide everything out of selector's bounduries
+    // hide everything out of selector's boundaries
     this.selector.style.overflow = 'hidden';
 
     // Create frame and apply styling
@@ -72,7 +72,7 @@
       this.sliderFrame.style.cursor = '-webkit-grab';
     }
 
-    // Create a document fragment to pus slides into it
+    // Create a document fragment to put slides into it
     const docFragment = document.createDocumentFragment();
 
     // Loop through the slides, add styling and add them to document fragment
@@ -119,7 +119,7 @@
     this.slideToCurrent();
   };
 
-  // Move slider frame to corect position depending of currently active slide
+  // Move slider frame to correct position depending on currently active slide
   Siema.prototype.slideToCurrent = function slideToCurrent() {
     this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
   };
@@ -129,7 +129,7 @@
     // This is fucking weird
     // Then the touch event is very quick on iOS
     // Two events are triggered - touchend & mouseup
-    // This one ensures that the delay between grags is 100ms or longer
+    // This one ensures that the delay between drags is 100ms or longer
     const movement = this.drag.end - this.drag.start;
     if (movement > 0 && Math.abs(movement) > this.config.threshold) {
       this.prev();
@@ -146,7 +146,7 @@
     this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
   };
 
-  // Clar drag
+  // Clear drag
   Siema.prototype.clearDrag = function resize() {
     this.drag = {
       start: 0,
