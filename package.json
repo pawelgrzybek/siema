@@ -2,7 +2,7 @@
   "name": "siema",
   "version": "1.0.2",
   "description": "Lightweight and simple carousel with no dependencies",
-  "main": "src/siema.js",
+  "main": "dist/siema.min.js",
   "devDependencies": {
     "babel-cli": "6.18.0",
     "babel-plugin-transform-object-assign": "6.8.0",
