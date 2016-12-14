@@ -126,10 +126,6 @@
 
   // Recalculate drag /swipe event and repositionthe frame of a slider
   Siema.prototype.updateAfterDrag = function updateAfterDrag() {
-    // This is fucking weird
-    // Then the touch event is very quick on iOS
-    // Two events are triggered - touchend & mouseup
-    // This one ensures that the delay between drags is 100ms or longer
     const movement = this.drag.end - this.drag.start;
     if (movement > 0 && Math.abs(movement) > this.config.threshold) {
       this.prev();
