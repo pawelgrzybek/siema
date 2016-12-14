@@ -143,7 +143,7 @@
   };
 
   // Clear drag
-  Siema.prototype.clearDrag = function resize() {
+  Siema.prototype.clearDrag = function clearDrag() {
     this.drag = {
       start: 0,
       end: 0,
