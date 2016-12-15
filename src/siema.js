@@ -2,8 +2,8 @@
 
   function Siema(options) {
 
-    // Default settings
-    const defaults = {
+    // Merge defaults with user's settings
+    this.config = objectAssign({
       selector: '.siema',
       duration: 200,
       easing: 'ease-out',
@@ -12,10 +12,7 @@
       draggable: true,
       threshold: 20,
       loop: false,
-    };
-
-    // Merge defaults with user's settings
-    this.config = Object.assign(defaults, options);
+    }, options);
 
     // Create global references
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
@@ -245,6 +242,18 @@
     }
     return 'WebkitTransform';
   })();
+
+  // Object.assign ponyfill
+  const objectAssign = Object.assign || function(srcObj) {
+    for (let i = 1; i < arguments.length; i++) {
+      for (const objProperty in arguments[i]) {
+        if (Object.prototype.hasOwnProperty.call(arguments[i], objProperty)) {
+          srcObj[objProperty] = arguments[i][objProperty];
+        }
+      }
+    }
+    return srcObj;
+  };
 
   // Export to CommonJS
   if (typeof module !== 'undefined' && module.exports) {
