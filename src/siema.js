@@ -228,6 +228,7 @@
   Siema.prototype.mouseleaveHandler = function mouseleaveHandler(e) {
     if (this.pointerDown) {
       this.pointerDown = false;
+      this.sliderFrame.style.cursor = '-webkit-grab';
       this.drag.end = e.pageX;
       this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
