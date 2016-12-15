@@ -61,7 +61,7 @@ new Siema({
 - `selector` - (string or DOM element) specify the selector
 - `duration` - (number) slide transition duration (in ms)
 - `easing` - (string) the same as transition-timing-function in CSS
-- `perPage` - (number) the number of slides to be shown
+- `perPage` - (number or object) the number of slides to be shown
 - `startIndex` - (number) index of the starting slide (zero-based)
 - `draggable` - (boolean) use dragging and touch swiping
 - `threshold` - (number) touch and mouse dragging threshold (in px)

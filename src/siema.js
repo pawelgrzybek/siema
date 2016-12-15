@@ -59,12 +59,15 @@
       throw new Error('Something wrong with your selector 😭');
     }
 
+    // update perPage number dependable of user value
+    this.resolveSlidesNumber();
+
     // hide everything out of selector's boundaries
     this.selector.style.overflow = 'hidden';
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
@@ -92,9 +95,24 @@
   };
 
   // Go to previous slide
+  Siema.prototype.resolveSlidesNumber = function resolveSlidesNumber() {
+    if (typeof this.config.perPage === 'number') {
+      this.perPage = this.config.perPage;
+    }
+    else if (typeof this.config.perPage === 'object') {
+      this.perPage = 1;
+      for (const viewport in this.config.perPage) {
+        if (window.innerWidth > viewport) {
+          this.perPage = this.config.perPage[viewport];
+        }
+      }
+    }
+  };
+
+  // Go to previous slide
   Siema.prototype.prev = function prev() {
     if (this.currentSlide === 0 && this.config.loop) {
-      this.currentSlide = this.innerElements.length - this.config.perPage;
+      this.currentSlide = this.innerElements.length - this.perPage;
     }
     else {
       this.currentSlide = Math.max(this.currentSlide - 1, 0);
@@ -104,11 +122,11 @@
 
   // Go to Next slide
   Siema.prototype.next = function next() {
-    if (this.currentSlide === this.innerElements.length - this.config.perPage && this.config.loop) {
+    if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
     else {
-      this.currentSlide = Math.min(this.currentSlide + 1, this.innerElements.length - this.config.perPage);
+      this.currentSlide = Math.min(this.currentSlide + 1, this.innerElements.length - this.perPage);
     }
     this.slideToCurrent();
   };
@@ -121,7 +139,7 @@
 
   // Move slider frame to correct position depending on currently active slide
   Siema.prototype.slideToCurrent = function slideToCurrent() {
-    this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.config.perPage)}px, 0, 0)`;
+    this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
   };
 
   // Recalculate drag /swipe event and repositionthe frame of a slider
@@ -138,8 +156,11 @@
 
   // When window resizes, resize slider components as well
   Siema.prototype.resize = function resize() {
+    // update perPage number dependable of user value
+    this.resolveSlidesNumber();
+
     this.selectorWidth = this.selector.getBoundingClientRect().width;
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.config.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
   };
 
   // Clear drag
@@ -172,7 +193,7 @@
       this.drag.end = e.touches[0].pageX;
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
 
@@ -201,7 +222,7 @@
       this.sliderFrame.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.config.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   };
   Siema.prototype.mouseleaveHandler = function mouseleaveHandler(e) {
