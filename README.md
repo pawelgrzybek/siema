@@ -78,6 +78,13 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 
 ## Siema used in production
 
+For single page applications that might load and remove Siema components many times, you can call the `destroy` instance method to unsubscribe DOM events.
+    
+    // Enable carousel
+    const instance = new Siema(DOMnode);
+    // Later, before discarding the `DOMNode` element
+    instance.destroy();
+
 Nowhere yet — I've just built it. If you use it on your website please let me know and I will make sure to add the URL of your project here.
 
 ## Browser support
