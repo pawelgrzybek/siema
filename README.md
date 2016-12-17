@@ -58,10 +58,10 @@ new Siema({
 });
 ```
 
-- `selector` - (string) specify the parent element
+- `selector` - (string or DOM element) specify the selector
 - `duration` - (number) slide transition duration (in ms)
 - `easing` - (string) the same as transition-timing-function in CSS
-- `perPage` - (number) the number of slides to be shown
+- `perPage` - (number or object) the number of slides to be shown
 - `startIndex` - (number) index of the starting slide (zero-based)
 - `draggable` - (boolean) use dragging and touch swiping
 - `threshold` - (number) touch and mouse dragging threshold (in px)
@@ -80,6 +80,24 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 
 Nowhere yet — I've just built it. If you use it on your website please let me know and I will make sure to add the URL of your project here.
 
+## Browser support
+
+- IE10
+- Chrome 12
+- Firefox 16
+- Opera 15
+- Safari 4
+- Android Browser 4.0
+- iOS Safari 6.0
+
+## Gem
+
+[Siema-rails](https://github.com/Naggi-Goishi/siema-rails) allows you to use Siema as a a gem. Thanks to [Naggi Goishi](https://github.com/Naggi-Goishi) for amazing contribution.
+
+```ruby
+gem 'siema-rails'
+```
+
 ## Contributing
 
 Siema's purpose is to provide a basic carousel tool and allow developers to extend it by using the available methods. It doesn't come with any complex configuration and myriad options — I would like to keep it this way. If you need a more powerful library I recommend the amazing [Flickity](http://flickity.metafizzy.co/) by David DeSandro or [Swiper](http://idangero.us/swiper/) by iDangero team.
@@ -93,16 +111,6 @@ npm run build
 
 yarn run build
 ```
-
-## Browser support
-
-- IE10
-- Chrome 12
-- Firefox 16
-- Opera 15
-- Safari 4
-- Android Browser 4.0
-- iOS Safari 6.0
 
 ## Extra
 
