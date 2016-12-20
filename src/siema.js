@@ -1,5 +1,27 @@
-(function(global) {
+(function(global) { // eslint-disable-line
 
+  // Webkit or not, here I come, you can't hide 🎶
+  const transformProperty = (() => {
+    const style = document.documentElement.style;
+    if (typeof style.transform == 'string') {
+      return 'transform';
+    }
+    return 'WebkitTransform';
+  })();
+
+  // Object.assign ponyfill
+  const objectAssign = Object.assign || function(srcObj) { // eslint-disable-line
+    for (let i = 1; i < arguments.length; i++) {
+      for (const objProperty in arguments[i]) {
+        if (Object.prototype.hasOwnProperty.call(arguments[i], objProperty)) {
+          srcObj[objProperty] = arguments[i][objProperty];
+        }
+      }
+    }
+    return srcObj;
+  };
+
+  // Constructor
   function Siema(options) {
 
     // Merge defaults with user's settings
@@ -234,33 +256,12 @@
     }
   };
 
-  // Public methods
-  const transformProperty = (() => {
-    const style = document.documentElement.style;
-    if (typeof style.transform == 'string') {
-      return 'transform';
-    }
-    return 'WebkitTransform';
-  })();
-
-  // Object.assign ponyfill
-  const objectAssign = Object.assign || function(srcObj) {
-    for (let i = 1; i < arguments.length; i++) {
-      for (const objProperty in arguments[i]) {
-        if (Object.prototype.hasOwnProperty.call(arguments[i], objProperty)) {
-          srcObj[objProperty] = arguments[i][objProperty];
-        }
-      }
-    }
-    return srcObj;
-  };
-
   // Export to CommonJS
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = Siema;
   }
   // Export to Browser
   else {
-    global['Siema'] = Siema;
+    global['Siema'] = Siema; // eslint-disable-line
   }
 }(window));
