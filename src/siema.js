@@ -113,7 +113,7 @@
     this.slideToCurrent();
   };
 
-  // Go to previous slide
+  // Determinate slides number
   Siema.prototype.resolveSlidesNumber = function resolveSlidesNumber() {
     if (typeof this.config.perPage === 'number') {
       this.perPage = this.config.perPage;
