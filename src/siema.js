@@ -45,11 +45,13 @@
     // Build markup and apply required styling to elements
     this.init();
 
-    // Resize element on window resize
-    window.addEventListener('resize', () => {
-      this.resize();
-      this.slideToCurrent();
+    // Bind all event handlers for referencability
+    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
+      this[method] = this[method].bind(this);
     });
+
+    // Resize element on window resize
+    window.addEventListener('resize', this.resizeHandler);
 
     // If element is draggable / swipable, add event handlers
     if (this.config.draggable) {
@@ -61,15 +63,15 @@
       };
 
       // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler.bind(this));
-      this.selector.addEventListener('touchend', this.touchendHandler.bind(this));
-      this.selector.addEventListener('touchmove', this.touchmoveHandler.bind(this), { passive: true });
+      this.selector.addEventListener('touchstart', this.touchstartHandler);
+      this.selector.addEventListener('touchend', this.touchendHandler);
+      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
 
       // Mouse events
-      this.selector.addEventListener('mousedown', this.mousedownHandler.bind(this));
-      this.selector.addEventListener('mouseup', this.mouseupHandler.bind(this));
-      this.selector.addEventListener('mouseleave', this.mouseleaveHandler.bind(this));
-      this.selector.addEventListener('mousemove', this.mousemoveHandler.bind(this));
+      this.selector.addEventListener('mousedown', this.mousedownHandler);
+      this.selector.addEventListener('mouseup', this.mouseupHandler);
+      this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
+      this.selector.addEventListener('mousemove', this.mousemoveHandler);
     }
   }
 
@@ -161,7 +163,7 @@
     this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
   };
 
-  // Recalculate drag /swipe event and repositionthe frame of a slider
+  // Recalculate drag /swipe event and reposition the frame of a slider
   Siema.prototype.updateAfterDrag = function updateAfterDrag() {
     const movement = this.drag.end - this.drag.start;
     if (movement > 0 && Math.abs(movement) > this.config.threshold) {
@@ -174,12 +176,14 @@
   };
 
   // When window resizes, resize slider components as well
-  Siema.prototype.resize = function resize() {
+  Siema.prototype.resizeHandler = function resizeHandler() {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+
+    this.slideToCurrent();
   };
 
   // Clear drag
@@ -254,6 +258,18 @@
       this.updateAfterDrag();
       this.clearDrag();
     }
+  };
+
+  // Destroy - remove listeners to prevent from memory leak (keeps the markup)
+  Siema.prototype.destroy = function destroy() {
+    window.removeEventListener('resize', this.resizeHandler);
+    this.selector.removeEventListener('touchstart', this.touchstartHandler);
+    this.selector.removeEventListener('touchend', this.touchendHandler);
+    this.selector.removeEventListener('touchmove', this.touchmoveHandler);
+    this.selector.removeEventListener('mousedown', this.mousedownHandler);
+    this.selector.removeEventListener('mouseup', this.mouseupHandler);
+    this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
+    this.selector.removeEventListener('mousemove', this.mousemoveHandler);
   };
 
   // Export to CommonJS
