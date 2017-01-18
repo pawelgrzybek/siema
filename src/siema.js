@@ -58,11 +58,11 @@
 
     // If autoplay is true
     if (this.config.autoplay) {
-      let isPaused = false; 
-      window.setInterval(() => { return (!isPaused) && this.next() }, this.config.delay );
+      this.isPaused = false;
+      window.setInterval(() => { return (!this.isPaused) && this.next() }, this.config.delay );
       if (this.config.pauseable) {
-        this.selector.addEventListener('mouseover', (e) => isPaused = true );
-        this.selector.addEventListener('mouseout', (e) => isPaused = false )
+        this.selector.addEventListener('mouseover', (e) => this.isPaused = true );
+        this.selector.addEventListener('mouseout', (e) => this.isPaused = false );
       }
     }
 
@@ -211,11 +211,13 @@
   Siema.prototype.touchstartHandler = function touchstartHandler(e) {
     e.stopPropagation();
     this.pointerDown = true;
+    this.isPaused = true;
     this.drag.start = e.touches[0].pageX;
   };
   Siema.prototype.touchendHandler = function touchendHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
+    this.isPaused = false;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.end) {
