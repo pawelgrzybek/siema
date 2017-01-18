@@ -55,6 +55,9 @@ new Siema({
   draggable: true,
   threshold: 20,
   loop: false,
+  autoplay: false,
+  delay: 3000,
+  pauseable: false,
 });
 ```
 
@@ -66,6 +69,9 @@ new Siema({
 - `draggable` - (boolean) use dragging and touch swiping
 - `threshold` - (number) touch and mouse dragging threshold (in px)
 - `loop` - (boolean) loop the slides around
+- `autoplay` - (boolean) autoplaying slides in configurable delay
+- `delay` -  (number) delay before next slide moves in (in ms)
+- `pauseable` - (boolean) if the autoplay pauses on mouseover
 
 ## API
 
