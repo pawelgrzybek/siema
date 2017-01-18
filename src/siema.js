@@ -34,6 +34,9 @@
       draggable: true,
       threshold: 20,
       loop: false,
+      autoplay: false,
+      delay: 3000,
+      pauseable: false,
     }, options);
 
     // Create global references
@@ -52,6 +55,16 @@
 
     // Resize element on window resize
     window.addEventListener('resize', this.resizeHandler);
+
+    // If autoplay is true
+    if (this.config.autoplay) {
+      let isPaused = false; 
+      window.setInterval(() => { return (!isPaused) && this.next() }, this.config.delay );
+      if (this.config.pauseable) {
+        this.selector.addEventListener('mouseover', (e) => isPaused = true );
+        this.selector.addEventListener('mouseout', (e) => isPaused = false )
+      }
+    }
 
     // If element is draggable / swipable, add event handlers
     if (this.config.draggable) {
