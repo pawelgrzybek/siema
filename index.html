@@ -138,6 +138,7 @@ new Siema();</code></pre>
         <li><code>next()</code> - go to next slide</li>
         <li><code>prev()</code> - go to previous slide</li>
         <li><code>goTo(index)</code> - go to a specific slide</li>
+        <li><code>destroy()</code> - remove all active listeners</li>
         <li><code>currentSlide</code> - index of the current active slide (read only)</li>
       </ul>
     </section>
@@ -214,10 +215,11 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
     <!-- Other implementations -->
     <section class="section">
-      <h2 id="gem">Other implementations</h2>
+      <h2 id="other-implementations">Other implementations</h2>
       <ul>
         <li><a href="https://github.com/Naggi-Goishi/siema-rails">Siema-rails</a> by <a href="https://github.com/Naggi-Goishi">Naggi Goishi</a></li>
         <li>React version is coming soon...</li>
+        <li>Vue version is coming soon...</li>
       </ul>
     </section>
 
@@ -247,7 +249,6 @@ yarn run build</code></pre>
       <p>Whats new in upcoming version?</p>
       <ul>
         <li>Basic callbacks</li>
-        <li><code>destroy()</code> method</li>
         <li>rtl (right to left) support</li>
       </ul>
     </section>
