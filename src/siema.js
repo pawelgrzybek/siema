@@ -34,6 +34,7 @@
       draggable: true,
       threshold: 20,
       loop: false,
+      initCallback: null,
     }, options);
 
     // Create global references
@@ -112,7 +113,7 @@
     this.selector.appendChild(this.sliderFrame);
 
     // Go to currently active slide after initial build
-    this.slideToCurrent(cb);
+    this.slideToCurrent(this.config.initCallback);
   };
 
   // Determinate slides number
