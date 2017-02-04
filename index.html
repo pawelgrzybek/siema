@@ -184,6 +184,46 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <hr>
 
+      <p>Basic carousel with next and previous buttons and callbacks.</p>
+
+      <pre><code>var mySiema = new Siema({
+  selector: '.siema-callbacks',
+  initCallback: (currentIndex) => console.log(`Initialized on index ${currentIndex}`),
+});
+document.querySelector('.siema-callbacks-prev1').addEventListener('click', function() {mySiema.prev((currentIndex) => {
+  console.log(`Went back to slide ${currentIndex}`);
+})});
+document.querySelector('.siema-callbacks-next1').addEventListener('click', function() {mySiema.next((currentIndex) => {
+  console.log(`Advanced to slide ${currentIndex}`);
+})});</code></pre>
+
+      <div class="siema-callbacks">
+        <div><img src="assets/siema--pink.svg"></div>
+        <div><img src="assets/siema--yellow.svg"></div>
+        <div><img src="assets/siema--pink.svg"></div>
+        <div><img src="assets/siema--yellow.svg"></div>
+        <div><img src="assets/siema--pink.svg"></div>
+        <div><img src="assets/siema--yellow.svg"></div>
+      </div>
+
+      <button class="btn siema-callbacks-prev1">prev</button>
+      <button class="btn siema-callbacks-next1">next</button>
+
+      <script>
+        var mySiema = new Siema({
+          selector: '.siema-callbacks',
+          initCallback: (currentIndex) => console.log(`Initialized on index ${currentIndex}`),
+        });
+        document.querySelector('.siema-callbacks-prev1').addEventListener('click', function() {mySiema.prev((currentIndex) => {
+          console.log(`Went back to slide ${currentIndex}`);
+        })});
+        document.querySelector('.siema-callbacks-next1').addEventListener('click', function() {mySiema.next((currentIndex) => {
+          console.log(`Advanced to slide ${currentIndex}`);
+        })});
+      </script>
+
+      <hr>
+
       <p>I've also created a Codepen collection with many more Siema examples.</p>
 
       <a href="http://codepen.io/collection/Adpkkd/" class="btn">Check the Codepen collection</a>

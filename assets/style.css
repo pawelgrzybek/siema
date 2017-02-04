@@ -137,7 +137,8 @@ code {
 }
 
 /* siema */
-.siema {
+.siema,
+.siema-callbacks {
   margin-bottom: 1.6rem;
 }
 
