@@ -224,6 +224,10 @@ document.querySelector('.siema-callbacks-next1').addEventListener('click', funct
         })});
       </script>
 
+      <p>You can also use a callback as a optional second parameter on the goTo function</p>
+
+      <pre><code>mySiema.goTo(2, (currentIndex) => console.log(`Transitioned to ${currentIndex}`));</code></pre>
+
       <hr>
 
       <p>I've also created a Codepen collection with many more Siema examples.</p>

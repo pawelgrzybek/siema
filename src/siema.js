@@ -155,7 +155,7 @@
   };
 
   // Go to slide with particular index
-  Siema.prototype.goTo = function goTo(index) {
+  Siema.prototype.goTo = function goTo(index, cb) {
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
     this.slideToCurrent(cb);
   };
