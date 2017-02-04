@@ -112,7 +112,7 @@
     this.selector.appendChild(this.sliderFrame);
 
     // Go to currently active slide after initial build
-    this.slideToCurrent();
+    this.slideToCurrent(cb);
   };
 
   // Determinate slides number
@@ -131,40 +131,41 @@
   };
 
   // Go to previous slide
-  Siema.prototype.prev = function prev() {
+  Siema.prototype.prev = function prev(cb) {
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
     }
     else {
       this.currentSlide = Math.max(this.currentSlide - 1, 0);
     }
-    this.slideToCurrent();
+    this.slideToCurrent(cb);
   };
 
   // Go to Next slide
-  Siema.prototype.next = function next() {
+  Siema.prototype.next = function next(cb) {
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
     else {
       this.currentSlide = Math.min(this.currentSlide + 1, this.innerElements.length - this.perPage);
     }
-    this.slideToCurrent();
+    this.slideToCurrent(cb);
   };
 
   // Go to slide with particular index
   Siema.prototype.goTo = function goTo(index) {
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
-    this.slideToCurrent();
+    this.slideToCurrent(cb);
   };
 
   // Move slider frame to correct position depending on currently active slide
-  Siema.prototype.slideToCurrent = function slideToCurrent() {
+  Siema.prototype.slideToCurrent = function slideToCurrent(cb) {
     this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
+    if (cb) { cb(this.currentSlide) };
   };
 
   // Recalculate drag /swipe event and reposition the frame of a slider
-  Siema.prototype.updateAfterDrag = function updateAfterDrag() {
+  Siema.prototype.updateAfterDrag = function updateAfterDrag(cb) {
     const movement = this.drag.end - this.drag.start;
     if (movement > 0 && Math.abs(movement) > this.config.threshold) {
       this.prev();
@@ -172,18 +173,18 @@
     else if (movement < 0 && Math.abs(movement) > this.config.threshold) {
       this.next();
     }
-    this.slideToCurrent();
+    this.slideToCurrent(cb);
   };
 
   // When window resizes, resize slider components as well
-  Siema.prototype.resizeHandler = function resizeHandler() {
+  Siema.prototype.resizeHandler = function resizeHandler(cb) {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
 
-    this.slideToCurrent();
+    this.slideToCurrent(cb);
   };
 
   // Clear drag
