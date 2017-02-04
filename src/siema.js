@@ -35,6 +35,7 @@
       threshold: 20,
       loop: false,
       initCallback: null,
+      dragCallback: null,
     }, options);
 
     // Create global references
@@ -178,14 +179,14 @@
   };
 
   // When window resizes, resize slider components as well
-  Siema.prototype.resizeHandler = function resizeHandler(cb) {
+  Siema.prototype.resizeHandler = function resizeHandler() {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
 
-    this.slideToCurrent(cb);
+    this.slideToCurrent();
   };
 
   // Clear drag
@@ -208,7 +209,7 @@
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.end) {
-      this.updateAfterDrag();
+      this.updateAfterDrag(this.config.dragCallback);
     }
     this.clearDrag();
   };
@@ -236,7 +237,7 @@
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.end) {
-      this.updateAfterDrag();
+      this.updateAfterDrag(this.config.dragCallback);
     }
     this.clearDrag();
   };
@@ -257,7 +258,7 @@
       this.drag.end = e.pageX;
       this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
-      this.updateAfterDrag();
+      this.updateAfterDrag(this.config.dragCallback);
       this.clearDrag();
     }
   };

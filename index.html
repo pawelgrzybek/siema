@@ -189,6 +189,7 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
       <pre><code>var mySiema = new Siema({
   selector: '.siema-callbacks',
   initCallback: (currentIndex) => console.log(`Initialized on index ${currentIndex}`),
+  dragCallback: (currentIndex) => console.log(`Moved slide to ${currentIndex} after drag`),
 });
 document.querySelector('.siema-callbacks-prev1').addEventListener('click', function() {mySiema.prev((currentIndex) => {
   console.log(`Went back to slide ${currentIndex}`);
@@ -213,6 +214,7 @@ document.querySelector('.siema-callbacks-next1').addEventListener('click', funct
         var mySiema = new Siema({
           selector: '.siema-callbacks',
           initCallback: (currentIndex) => console.log(`Initialized on index ${currentIndex}`),
+          dragCallback: (currentIndex) => console.log(`Moved slide to ${currentIndex} after drag`),
         });
         document.querySelector('.siema-callbacks-prev1').addEventListener('click', function() {mySiema.prev((currentIndex) => {
           console.log(`Went back to slide ${currentIndex}`);
