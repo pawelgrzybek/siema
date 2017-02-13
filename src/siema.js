@@ -34,6 +34,9 @@
       draggable: true,
       threshold: 20,
       loop: false,
+      autoplay: false,
+      delay: 3000,
+      pauseable: false,
     }, options);
 
     // Create global references
@@ -52,6 +55,16 @@
 
     // Resize element on window resize
     window.addEventListener('resize', this.resizeHandler);
+
+    // If autoplay is true
+    if (this.config.autoplay) {
+      this.isPaused = false;
+      window.setInterval(() => { return (!this.isPaused) && this.next() }, this.config.delay );
+      if (this.config.pauseable) {
+        this.selector.addEventListener('mouseover', (e) => this.isPaused = true );
+        this.selector.addEventListener('mouseout', (e) => this.isPaused = false );
+      }
+    }
 
     // If element is draggable / swipable, add event handlers
     if (this.config.draggable) {
@@ -198,11 +211,13 @@
   Siema.prototype.touchstartHandler = function touchstartHandler(e) {
     e.stopPropagation();
     this.pointerDown = true;
+    this.isPaused = true;
     this.drag.start = e.touches[0].pageX;
   };
   Siema.prototype.touchendHandler = function touchendHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
+    this.isPaused = false;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.end) {
