@@ -34,6 +34,7 @@
       draggable: true,
       threshold: 20,
       loop: false,
+      infinite: false
     }, options);
 
     // Create global references
@@ -111,6 +112,14 @@
     this.sliderFrame.appendChild(docFragment);
     this.selector.appendChild(this.sliderFrame);
 
+    if (this.config.infinite) {
+      this.sliderFrame.style.position = 'relative';
+      this.sliderFrame.style.right = `${(this.selectorWidth / this.perPage)}px`;
+      this.sliderFrame.removeChild(this.innerElements[this.innerElements.length - 1]);
+      this.sliderFrame.insertBefore(this.innerElements[this.innerElements.length - 1], this.innerElements[0]);
+      this.innerElements.unshift(this.innerElements.pop());
+    }
+
     // Go to currently active slide after initial build
     this.slideToCurrent();
   };
@@ -132,6 +141,10 @@
 
   // Go to previous slide
   Siema.prototype.prev = function prev() {
+    if (this.config.infinite) {
+      this.slideToCurrentInfinite(1);
+      return;
+    }
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
     }
@@ -143,6 +156,10 @@
 
   // Go to Next slide
   Siema.prototype.next = function next() {
+    if (this.config.infinite) {
+      this.slideToCurrentInfinite(-1);
+      return;
+    }
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
@@ -163,7 +180,35 @@
     this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
   };
 
-  // Recalculate drag /swipe event and reposition the frame of a slider
+  // Move slider frame to correct position in infinite loop
+  Siema.prototype.slideToCurrentInfinite = function slideToCurrentInfinite(direction) {
+    this.sliderFrame.style[transformProperty] = `translate3d(${direction * (this.selectorWidth / this.perPage)}px, 0, 0)`;
+		const self = this;
+		const index = direction === -1 ? 0 : self.innerElements.length - 1;
+		setTimeout(function(){
+			if (direction === -1) {
+      	self.sliderFrame.removeChild(self.innerElements[index]);
+      	self.sliderFrame.appendChild(self.innerElements[index]);
+			} else {
+				self.sliderFrame.removeChild(self.innerElements[index]);
+      	self.sliderFrame.insertBefore(self.innerElements[index], self.innerElements[0]);
+			}
+      self.sliderFrame.style.webkitTransition = ``;
+      self.sliderFrame.style.transition = ``;
+      self.sliderFrame.style[transformProperty] = `translate3d(0, 0, 0)`;
+      // Trigger DOM repaint
+      self.sliderFrame.offsetHeight;
+      self.sliderFrame.style.webkitTransition = `all ${self.config.duration}ms ${self.config.easing}`;
+      self.sliderFrame.style.transition = `all ${self.config.duration}ms ${self.config.easing}`;
+      if (direction === -1) {
+        self.innerElements.push(self.innerElements.shift());
+      } else {
+        self.innerElements.unshift(self.innerElements.pop());
+      }
+		}, self.config.duration);
+  }
+
+  // Recalculate drag /swipe event and repositionthe frame of a slider
   Siema.prototype.updateAfterDrag = function updateAfterDrag() {
     const movement = this.drag.end - this.drag.start;
     if (movement > 0 && Math.abs(movement) > this.config.threshold) {
