@@ -171,11 +171,14 @@ export default class Siema {
   // Recalculate drag /swipe event and reposition the frame of a slider
   updateAfterDrag() {
     const movement = this.drag.end - this.drag.start;
-    if (movement > 0 && Math.abs(movement) > this.config.threshold) {
-      this.prev();
+    const movementDistance = Math.abs(movement);
+    const howManySliderToSlide = Math.ceil(movementDistance / (this.selectorWidth / this.perPage));
+
+    if (movement > 0 && movementDistance > this.config.threshold) {
+      this.prev(howManySliderToSlide);
     }
-    else if (movement < 0 && Math.abs(movement) > this.config.threshold) {
-      this.next();
+    else if (movement < 0 && movementDistance > this.config.threshold) {
+      this.next(howManySliderToSlide);
     }
     this.slideToCurrent();
   }
