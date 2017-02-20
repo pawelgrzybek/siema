@@ -20,10 +20,6 @@ Setup is trivially easy. A little bit of markup...
 If you are using a module bundler like Webpack or Browserify...
 
 ```bash
-npm i -S siema
-
-// or
-
 yarn add siema
 ```
 
@@ -71,8 +67,8 @@ new Siema({
 
 As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!
 
-- `next()` - go to next slide
-- `prev()` - go to previous slide
+- `next(howManySlides = 1)` - go to next slide (optionally few items)
+- `prev(howManySlides = 1)` - go to previous slide (optionally few items)
 - `goTo(index)` - go to a specific slide
 - `destroy()` - remove all active listeners
 - `currentSlide` - index of the current active slide (read only)
