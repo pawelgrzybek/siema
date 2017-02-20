@@ -81,12 +81,7 @@
 &lt;/div&gt;</code></pre>
 
       <p>If you are using a module bundler like Webpack or Browserify...</p>
-<pre><code>npm i -S siema
-
-// or
-
-yarn add siema
-</code></pre>
+<pre><code>yarn add siema</code></pre>
 <pre><code>import Siema from 'siema';
 new Siema();</code></pre>
 
@@ -135,8 +130,8 @@ new Siema();</code></pre>
       <p>As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!</p>
 
       <ul>
-        <li><code>next()</code> - go to next slide</li>
-        <li><code>prev()</code> - go to previous slide</li>
+        <li><code>next(howManySlides = 1)</code> - go to next (optionally few items)</li>
+        <li><code>prev(howManySlides = 1)</code> - go to previous (optionally few items)</li>
         <li><code>goTo(index)</code> - go to a specific slide</li>
         <li><code>destroy()</code> - remove all active listeners</li>
         <li><code>currentSlide</code> - index of the current active slide (read only)</li>
