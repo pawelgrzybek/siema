@@ -1,45 +1,16 @@
-// Webkit or not, here I come, you can't hide 🎶
-const transformProperty = (() => {
-  const style = document.documentElement.style;
-  if (typeof style.transform == 'string') {
-    return 'transform';
-  }
-  return 'WebkitTransform';
-})();
-
-// Object.assign ponyfill
-const objectAssign = Object.assign || function(srcObj) { // eslint-disable-line
-  for (let i = 1; i < arguments.length; i++) {
-    for (const objProperty in arguments[i]) {
-      if (Object.prototype.hasOwnProperty.call(arguments[i], objProperty)) {
-        srcObj[objProperty] = arguments[i][objProperty];
-      }
-    }
-  }
-  return srcObj;
-};
-
-// Constructor
-class Siema {
+// Hi :-)
+export default class Siema {
 
   constructor(options) {
     // Merge defaults with user's settings
-    this.config = objectAssign({
-      selector: '.siema',
-      duration: 200,
-      easing: 'ease-out',
-      perPage: 1,
-      startIndex: 0,
-      draggable: true,
-      threshold: 20,
-      loop: false,
-    }, options);
+    this.config = this.mergeSettings(options);
 
     // Create global references
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
+    this.transformProperty = this.webkitOrNot();
 
     // Build markup and apply required styling to elements
     this.init();
@@ -73,6 +44,35 @@ class Siema {
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
     }
   }
+
+
+  mergeSettings(options) {
+    const settings = {
+      selector: '.siema',
+      duration: 200,
+      easing: 'ease-out',
+      perPage: 1,
+      startIndex: 0,
+      draggable: true,
+      threshold: 20,
+      loop: false,
+    };
+    const userSttings = options;
+    for (const attrname in userSttings) {
+      settings[attrname] = userSttings[attrname];
+    }
+    return settings;
+  }
+
+
+  webkitOrNot() {
+    const style = document.documentElement.style;
+    if (typeof style.transform == 'string') {
+      return 'transform';
+    }
+    return 'WebkitTransform';
+  }
+
 
   init() {
     if (this.selector === null) {
@@ -114,6 +114,7 @@ class Siema {
     this.slideToCurrent();
   }
 
+
   // Determinate slides number
   resolveSlidesNumber() {
     if (typeof this.config.perPage === 'number') {
@@ -129,27 +130,30 @@ class Siema {
     }
   }
 
+
   // Go to previous slide
-  prev() {
+  prev(howManySlides = 1) {
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
     }
     else {
-      this.currentSlide = Math.max(this.currentSlide - 1, 0);
+      this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
     }
     this.slideToCurrent();
   }
 
+
   // Go to Next slide
-  next() {
+  next(howManySlides = 1) {
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
     else {
-      this.currentSlide = Math.min(this.currentSlide + 1, this.innerElements.length - this.perPage);
+      this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
     }
     this.slideToCurrent();
   }
+
 
   // Go to slide with particular index
   goTo(index) {
@@ -157,10 +161,12 @@ class Siema {
     this.slideToCurrent();
   }
 
+
   // Move slider frame to correct position depending on currently active slide
   slideToCurrent() {
-    this.sliderFrame.style[transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
+    this.sliderFrame.style[this.transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
   }
+
 
   // Recalculate drag /swipe event and reposition the frame of a slider
   updateAfterDrag() {
@@ -174,6 +180,7 @@ class Siema {
     this.slideToCurrent();
   }
 
+
   // When window resizes, resize slider components as well
   resizeHandler() {
     // update perPage number dependable of user value
@@ -185,6 +192,7 @@ class Siema {
     this.slideToCurrent();
   }
 
+
   // Clear drag
   clearDrag() {
     this.drag = {
@@ -193,12 +201,14 @@ class Siema {
     };
   }
 
+
   // Touch events handlers
   touchstartHandler(e) {
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.start = e.touches[0].pageX;
   }
+
 
   touchendHandler(e) {
     e.stopPropagation();
@@ -211,15 +221,17 @@ class Siema {
     this.clearDrag();
   }
 
+
   touchmoveHandler(e) {
     e.stopPropagation();
     if (this.pointerDown) {
       this.drag.end = e.touches[0].pageX;
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   }
+
 
   // Mouse events handlers
   mousedownHandler(e) {
@@ -228,6 +240,7 @@ class Siema {
     this.pointerDown = true;
     this.drag.start = e.pageX;
   }
+
 
   mouseupHandler(e) {
     e.stopPropagation();
@@ -241,6 +254,7 @@ class Siema {
     this.clearDrag();
   }
 
+
   mousemoveHandler(e) {
     e.preventDefault();
     if (this.pointerDown) {
@@ -248,9 +262,10 @@ class Siema {
       this.sliderFrame.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
     }
   }
+
 
   mouseleaveHandler(e) {
     if (this.pointerDown) {
@@ -264,6 +279,7 @@ class Siema {
     }
   }
 
+
   // Destroy - remove listeners to prevent from memory leak (keeps the markup)
   destroy() {
     window.removeEventListener('resize', this.resizeHandler);
@@ -276,5 +292,3 @@ class Siema {
     this.selector.removeEventListener('mousemove', this.mousemoveHandler);
   }
 }
-
-export default Siema;
