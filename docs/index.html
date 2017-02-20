@@ -39,7 +39,7 @@
   <link rel="stylesheet" type="text/css" href="assets/style.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet">
   <!-- <script src="dist/siema.min.js"></script> -->
-  <script src="dist/siema.min.js"></script>
+  <script src="assets/siema.min.js"></script>
 </head>
 <body>
 
@@ -81,12 +81,7 @@
 &lt;/div&gt;</code></pre>
 
       <p>If you are using a module bundler like Webpack or Browserify...</p>
-<pre><code>npm i -S siema
-
-// or
-
-yarn add siema
-</code></pre>
+<pre><code>yarn add siema</code></pre>
 <pre><code>import Siema from 'siema';
 new Siema();</code></pre>
 
@@ -135,8 +130,8 @@ new Siema();</code></pre>
       <p>As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!</p>
 
       <ul>
-        <li><code>next()</code> - go to next slide</li>
-        <li><code>prev()</code> - go to previous slide</li>
+        <li><code>next(howManySlides = 1)</code> - go to next (optionally few items)</li>
+        <li><code>prev(howManySlides = 1)</code> - go to previous (optionally few items)</li>
         <li><code>goTo(index)</code> - go to a specific slide</li>
         <li><code>destroy()</code> - remove all active listeners</li>
         <li><code>currentSlide</code> - index of the current active slide (read only)</li>
@@ -149,12 +144,12 @@ new Siema();</code></pre>
 
       <p>Basic carousel with next and previous buttons.</p>
 <pre><code>&lt;div class=&quot;siema&quot;&gt;
-  &lt;div&gt;&lt;img src=&quot;assets/siema--pink.svg&quot;&gt;&lt;/div&gt;
-  &lt;div&gt;&lt;img src=&quot;assets/siema--yellow.svg&quot;&gt;&lt;/div&gt;
-  &lt;div&gt;&lt;img src=&quot;assets/siema--pink.svg&quot;&gt;&lt;/div&gt;
-  &lt;div&gt;&lt;img src=&quot;assets/siema--yellow.svg&quot;&gt;&lt;/div&gt;
-  &lt;div&gt;&lt;img src=&quot;assets/siema--pink.svg&quot;&gt;&lt;/div&gt;
-  &lt;div&gt;&lt;img src=&quot;assets/siema--yellow.svg&quot;&gt;&lt;/div&gt;
+  &lt;img src=&quot;assets/siema--pink.svg&quot;&gt;
+  &lt;img src=&quot;assets/siema--yellow.svg&quot;&gt;
+  &lt;img src=&quot;assets/siema--pink.svg&quot;&gt;
+  &lt;img src=&quot;assets/siema--yellow.svg&quot;&gt;
+  &lt;img src=&quot;assets/siema--pink.svg&quot;&gt;
+  &lt;img src=&quot;assets/siema--yellow.svg&quot;&gt;
 &lt;/div&gt;
 
 &lt;button class=&quot;prev&quot;&gt;prev&lt;/button&gt;
@@ -165,12 +160,12 @@ document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
 document.querySelector('.next').addEventListener('click', () => mySiema.next());</code></pre>
 
       <div class="siema">
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
-        <div><img src="assets/siema--pink.svg"></div>
-        <div><img src="assets/siema--yellow.svg"></div>
+        <img src="assets/siema--pink.svg">
+        <img src="assets/siema--yellow.svg">
+        <img src="assets/siema--pink.svg">
+        <img src="assets/siema--yellow.svg">
+        <img src="assets/siema--pink.svg">
+        <img src="assets/siema--yellow.svg">
       </div>
 
       <button class="btn js-prev1">prev</button>
@@ -188,15 +183,6 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <a href="http://codepen.io/collection/Adpkkd/" class="btn">Check the Codepen collection</a>
 
-    </section>
-
-    <!-- Used in production -->
-    <section class="section">
-      <h2 id="siema-used-in-production">Siema used in production</h2>
-      <ul>
-        <li><a href="https://evlear.com/cars">Evlear - Blending Music, Cars, Lifestyle and Events</a></li>
-        <li>Your project here...</li>
-      </ul>
     </section>
 
     <!-- Browser support-->
@@ -217,9 +203,10 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
     <section class="section">
       <h2 id="other-implementations">Other implementations</h2>
       <ul>
-        <li><a href="https://github.com/Naggi-Goishi/siema-rails">Siema-rails</a> by <a href="https://github.com/Naggi-Goishi">Naggi Goishi</a></li>
-        <li>React version is coming soon...</li>
-        <li>Vue version is coming soon...</li>
+        <li><a href="https://www.npmjs.com/package/ngx-siema">Angular version</a> by Lex Zhukov</li>
+        <li><a href="https://www.npmjs.com/package/react-siema">React version</a> by Mantas Kaveckas</li>
+        <li><a href="https://www.npmjs.com/package/vue-siema">Vue version</a> by Marko Bolliger</li>
+        <li><a href="https://github.com/Naggi-Goishi/siema-rails">Siema-rails</a> by Naggi Goishi</li>
       </ul>
     </section>
 
@@ -230,27 +217,13 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <p>Bug fixes are more than welcome. If you have a feature suggestion please <a href="https://github.com/pawelgrzybek/siema/issues">open an issue</a> on Github. Before sending a pull request make sure to use the 'build' task please.</p>
 
-<pre><code>npm run build
-
-//or
-
-yarn run build</code></pre>
+<pre><code>yarn run build</code></pre>
     </section>
 
     <!-- Extra -->
     <section class="section">
       <h2 id="extra">Extra</h2>
       <p>Siema means 'hello' in Polish. When I play around with some code, I always use random names. That's the whole story behind the name of this one :) Huge thanks to <a href="http://www.sibenberg.com/">Jarkko Sibenberg</a> for the cute logo design!</p>
-    </section>
-
-    <!-- To do -->
-    <section class="section">
-      <h2 id="extra">To do</h2>
-      <p>Whats new in upcoming version?</p>
-      <ul>
-        <li>Basic callbacks</li>
-        <li>rtl (right to left) support</li>
-      </ul>
     </section>
 
     <!-- Footer -->
