@@ -100,10 +100,12 @@ export default class Siema {
 
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
-      this.innerElements[i].style.cssFloat = 'left';
-      this.innerElements[i].style.float = 'left';
-      this.innerElements[i].style.width = `${100 / this.innerElements.length}%`;
-      docFragment.appendChild(this.innerElements[i]);
+      const elementContainer = document.createElement('div');
+      elementContainer.style.cssFloat = 'left';
+      elementContainer.style.float = 'left';
+      elementContainer.style.width = `${100 / this.innerElements.length}%`;
+      elementContainer.appendChild(this.innerElements[i]);
+      docFragment.appendChild(elementContainer);
     }
 
     // Add fragment to frame and frame to selector
