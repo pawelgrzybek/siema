@@ -51,6 +51,8 @@ new Siema({
   draggable: true,
   threshold: 20,
   loop: false,
+  afterInitCallback: function(){},
+  afterChangeCallback: function(){},
 });
 ```
 
@@ -62,6 +64,8 @@ new Siema({
 - `draggable` - (boolean) use dragging and touch swiping
 - `threshold` - (number) touch and mouse dragging threshold (in px)
 - `loop` - (boolean) loop the slides around
+- `afterInitCallback` - (function) runs after first initialization
+- `afterChangeCallback` - (function) runs after slide change
 
 ## API
 
