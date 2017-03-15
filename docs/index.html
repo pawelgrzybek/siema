@@ -111,6 +111,8 @@ new Siema();</code></pre>
   draggable: true,
   threshold: 20,
   loop: false,
+  afterInitCallback: function(){},
+  afterChangeCallback: function(){},
 });</code></pre>
       <ul>
         <li><code>selector</code> - (string or DOM element) specify the selector</li>
@@ -121,6 +123,8 @@ new Siema();</code></pre>
         <li><code>draggable</code> - (boolean) use dragging and touch swiping</li>
         <li><code>threshold</code> - (number) touch and mouse dragging threshold (in px)</li>
         <li><code>loop</code> - (boolean) loop the slides around</li>
+        <li><code>afterInitCallback</code> - (function) runs after first initialization.</li>
+        <li><code>afterChangeCallback</code> - (function) runs after slide change</li>
       </ul>
     </section>
 
