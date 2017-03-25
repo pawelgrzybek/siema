@@ -56,8 +56,8 @@ export default class Siema {
       draggable: true,
       threshold: 20,
       loop: false,
-      afterInitCallback: function(){},
-      afterChangeCallback: function(){},
+      onInit: function() {},
+      onChange: function() {},
     };
     const userSttings = options;
     for (const attrname in userSttings) {
@@ -116,7 +116,7 @@ export default class Siema {
 
     // Go to currently active slide after initial build
     this.slideToCurrent();
-    this.config.afterInitCallback.call(this);
+    this.config.onInit.call(this);
   }
 
 
@@ -145,6 +145,7 @@ export default class Siema {
       this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
     }
     this.slideToCurrent();
+    this.config.onChange.call(this);
   }
 
 
@@ -157,6 +158,7 @@ export default class Siema {
       this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
     }
     this.slideToCurrent();
+    this.config.onChange.call(this);
   }
 
 
@@ -170,7 +172,6 @@ export default class Siema {
   // Move slider frame to correct position depending on currently active slide
   slideToCurrent() {
     this.sliderFrame.style[this.transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
-    this.config.afterChangeCallback.call(this);
   }
 
 
