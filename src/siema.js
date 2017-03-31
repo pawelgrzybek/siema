@@ -16,7 +16,7 @@ export default class Siema {
     this.init();
 
     // Bind all event handlers for referencability
-    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
+    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler', 'keydownHandler'].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
@@ -42,6 +42,9 @@ export default class Siema {
       this.selector.addEventListener('mouseup', this.mouseupHandler);
       this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
+
+      // Keyboard events
+      document.addEventListener('keydown', this.keydownHandler);
     }
   }
 
@@ -294,6 +297,17 @@ export default class Siema {
     }
   }
 
+  keydownHandler(e) {
+    switch (e.key) {
+      case "ArrowLeft":
+        this.prev();
+        break;
+
+      case "ArrowRight":
+        this.next();
+        break;
+    }
+  }
 
   // Destroy - remove listeners to prevent from memory leak (keeps the markup)
   destroy() {
@@ -305,6 +319,7 @@ export default class Siema {
     this.selector.removeEventListener('mouseup', this.mouseupHandler);
     this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
     this.selector.removeEventListener('mousemove', this.mousemoveHandler);
+    document.removeEventListener('keydown', this.keydownHandler);
     this.config.onDestroy.call(this);
   }
 }
