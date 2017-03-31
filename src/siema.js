@@ -56,8 +56,11 @@ export default class Siema {
       draggable: true,
       threshold: 20,
       loop: false,
-      onInit: function() {},
-      onChange: function() {},
+      onInit: () => {},
+      onChange: () => {},
+      afterPrev: () => {},
+      afterNext: () => {},
+      onDestroy: () => {}
     };
     const userSttings = options;
     for (const attrname in userSttings) {
@@ -146,6 +149,7 @@ export default class Siema {
     }
     this.slideToCurrent();
     this.config.onChange.call(this);
+    this.config.afterPrev.call(this);
   }
 
 
@@ -159,6 +163,7 @@ export default class Siema {
     }
     this.slideToCurrent();
     this.config.onChange.call(this);
+    this.config.afterNext.call(this);
   }
 
 
@@ -300,5 +305,6 @@ export default class Siema {
     this.selector.removeEventListener('mouseup', this.mouseupHandler);
     this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
     this.selector.removeEventListener('mousemove', this.mousemoveHandler);
+    this.config.onDestroy.call(this);
   }
 }

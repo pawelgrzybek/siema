@@ -53,6 +53,9 @@ new Siema({
   loop: false,
   onInit: function(){},
   onChange: function(){},
+  afterPrev: function() {},
+  afterNext: function() {},
+  onDestroy: function() {}  
 });
 ```
 
@@ -66,6 +69,9 @@ new Siema({
 - `loop` - (boolean) loop the slides around
 - `onInit` - (function) runs immediately after first initialization
 - `onChange` - (function) runs after slide change
+- `afterPrev` - (function) runs after going to previous slide
+- `afterNext` - (function) runs after going to next slide
+- `onDestroy` - (function) runs after removing all active listeners
 
 ## API
 
