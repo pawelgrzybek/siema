@@ -309,7 +309,7 @@ export default class Siema {
     }
   }
 
-  // Destroy - remove listeners to prevent from memory leak (keeps the markup)
+  // Destroy - remove listeners to prevent from memory leak (and revert to original markup)
   destroy() {
     window.removeEventListener('resize', this.resizeHandler);
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
@@ -320,6 +320,24 @@ export default class Siema {
     this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
     this.selector.removeEventListener('mousemove', this.mousemoveHandler);
     document.removeEventListener('keydown', this.keydownHandler);
+
+    // create temp fragment
+    const originalFragment = document.createDocumentFragment();
+    // clone current node without children to temp container
+    const originalContainer = this.selector.cloneNode(false);
+    // remove style="display:none"
+    originalContainer.removeAttribute("style");
+    
+    // copy original inner elements to temp container
+    for (let i = 0; i < this.innerElements.length; i++) {
+      originalContainer.appendChild(this.innerElements[i]);
+    }
+    // add temp container to temp fragment
+    originalFragment.appendChild(originalContainer);
+
+    // replace current markup with original one
+    this.selector.parentNode.replaceChild(originalFragment, this.selector);
+
     this.config.onDestroy.call(this);
   }
 }
