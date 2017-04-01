@@ -2,7 +2,7 @@
 
 Full docs with examples: [https://pawelgrzybek.com/siema/](https://pawelgrzybek.com/siema/).
 
-Siema is a lightweight (only 1kb gzipped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and [available on Github](https://pawelgrzybek.com/siema/). It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.
+Siema is a lightweight (only 2kb gzipped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and [available on Github](https://pawelgrzybek.com/siema/). It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.
 
 ## Installation
 
