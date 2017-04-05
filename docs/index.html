@@ -125,6 +125,7 @@ new Siema();</code></pre>
         <li><code>loop</code> - (boolean) loop the slides around</li>
         <li><code>onInit</code> - (function) runs immediately after first initialization</li>
         <li><code>onChange</code> - (function) runs after slide change</li>
+        <li><code>onDestroy</code> - (function) runs after destroy</li>
       </ul>
     </section>
 
@@ -137,7 +138,7 @@ new Siema();</code></pre>
         <li><code>next(howManySlides = 1)</code> - go to next (optionally few items)</li>
         <li><code>prev(howManySlides = 1)</code> - go to previous (optionally few items)</li>
         <li><code>goTo(index)</code> - go to a specific slide</li>
-        <li><code>destroy()</code> - remove all active listeners</li>
+        <li><code>destroy()</code> - remove all active listeners and revert to original markup</li>
         <li><code>currentSlide</code> - index of the current active slide (read only)</li>
       </ul>
     </section>
