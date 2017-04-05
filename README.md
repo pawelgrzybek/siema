@@ -53,6 +53,9 @@ new Siema({
   loop: false,
   onInit: function(){},
   onChange: function(){},
+  afterPrev: function() {},
+  afterNext: function() {},
+  onDestroy: function() {}  
 });
 ```
 
@@ -66,6 +69,9 @@ new Siema({
 - `loop` - (boolean) loop the slides around
 - `onInit` - (function) runs immediately after first initialization
 - `onChange` - (function) runs after slide change
+- `afterPrev` - (function) runs after going to previous slide
+- `afterNext` - (function) runs after going to next slide
+- `onDestroy` - (function) runs after removing all active listeners
 
 ## API
 
@@ -74,7 +80,7 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 - `next(howManySlides = 1)` - go to next slide (optionally few items)
 - `prev(howManySlides = 1)` - go to previous slide (optionally few items)
 - `goTo(index)` - go to a specific slide
-- `destroy()` - remove all active listeners
+- `destroy()` - remove all active listeners and revert to original markup
 - `currentSlide` - index of the current active slide (read only)
 
 ## Browser support

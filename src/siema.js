@@ -16,7 +16,7 @@ export default class Siema {
     this.init();
 
     // Bind all event handlers for referencability
-    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
+    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler', 'keydownHandler'].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
@@ -42,6 +42,9 @@ export default class Siema {
       this.selector.addEventListener('mouseup', this.mouseupHandler);
       this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
+
+      // Keyboard events
+      document.addEventListener('keydown', this.keydownHandler);
     }
   }
 
@@ -56,8 +59,11 @@ export default class Siema {
       draggable: true,
       threshold: 20,
       loop: false,
-      onInit: function() {},
-      onChange: function() {},
+      onInit: () => {},
+      onChange: () => {},
+      afterPrev: () => {},
+      afterNext: () => {},
+      onDestroy: () => {}
     };
     const userSttings = options;
     for (const attrname in userSttings) {
@@ -146,6 +152,7 @@ export default class Siema {
     }
     this.slideToCurrent();
     this.config.onChange.call(this);
+    this.config.afterPrev.call(this);
   }
 
 
@@ -159,6 +166,7 @@ export default class Siema {
     }
     this.slideToCurrent();
     this.config.onChange.call(this);
+    this.config.afterNext.call(this);
   }
 
 
@@ -289,8 +297,19 @@ export default class Siema {
     }
   }
 
+  keydownHandler(e) {
+    switch (e.key) {
+      case "ArrowLeft":
+        this.prev();
+        break;
 
-  // Destroy - remove listeners to prevent from memory leak (keeps the markup)
+      case "ArrowRight":
+        this.next();
+        break;
+    }
+  }
+
+  // Destroy - remove listeners to prevent from memory leak (and revert to original markup)
   destroy() {
     window.removeEventListener('resize', this.resizeHandler);
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
@@ -300,5 +319,25 @@ export default class Siema {
     this.selector.removeEventListener('mouseup', this.mouseupHandler);
     this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
     this.selector.removeEventListener('mousemove', this.mousemoveHandler);
+    document.removeEventListener('keydown', this.keydownHandler);
+
+    // create temp fragment
+    const originalFragment = document.createDocumentFragment();
+    // clone current node without children to temp container
+    const originalContainer = this.selector.cloneNode(false);
+    // remove style="display:none"
+    originalContainer.removeAttribute("style");
+    
+    // copy original inner elements to temp container
+    for (let i = 0; i < this.innerElements.length; i++) {
+      originalContainer.appendChild(this.innerElements[i]);
+    }
+    // add temp container to temp fragment
+    originalFragment.appendChild(originalContainer);
+
+    // replace current markup with original one
+    this.selector.parentNode.replaceChild(originalFragment, this.selector);
+
+    this.config.onDestroy.call(this);
   }
 }
