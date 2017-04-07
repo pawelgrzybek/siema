@@ -3,14 +3,14 @@ export default class Siema {
 
   constructor(options) {
     // Merge defaults with user's settings
-    this.config = this.mergeSettings(options);
+    this.config = Siema.mergeSettings(options);
 
     // Create global references
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
     this.selectorWidth = this.selector.getBoundingClientRect().width;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
-    this.transformProperty = this.webkitOrNot();
+    this.transformProperty = Siema.webkitOrNot();
 
     // Build markup and apply required styling to elements
     this.init();
@@ -46,7 +46,7 @@ export default class Siema {
   }
 
 
-  mergeSettings(options) {
+  static mergeSettings(options) {
     const settings = {
       selector: '.siema',
       duration: 200,
@@ -68,7 +68,7 @@ export default class Siema {
   }
 
 
-  webkitOrNot() {
+  static webkitOrNot() {
     const style = document.documentElement.style;
     if (typeof style.transform == 'string') {
       return 'transform';
