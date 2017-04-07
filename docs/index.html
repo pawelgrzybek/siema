@@ -111,8 +111,9 @@ new Siema();</code></pre>
   draggable: true,
   threshold: 20,
   loop: false,
-  onInit: function(){},
-  onChange: function(){},
+  onInit: () => {},
+  onChange: () => {},
+  onDestroy: () => {},
 });</code></pre>
       <ul>
         <li><code>selector</code> - (string or DOM element) specify the selector</li>
@@ -184,7 +185,7 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
 
       <hr>
 
-      <p>I've also created a Codepen collection with many more Siema examples.</p>
+      <p>I've also created a Codepen collection with tons of Siema examples.</p>
 
       <a href="http://codepen.io/collection/Adpkkd/" class="btn">Check the Codepen collection</a>
 
