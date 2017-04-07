@@ -76,7 +76,7 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 - `next(howManySlides = 1)` - go to next slide (optionally few items)
 - `prev(howManySlides = 1)` - go to previous slide (optionally few items)
 - `goTo(index)` - go to a specific slide
-- `destroy()` - remove all active listeners and revert to original markup
+- `destroy(restoreMarkup = false)` - destroy instance (restore markup — optional)
 - `currentSlide` - index of the current active slide (read only)
 
 ## Browser support
