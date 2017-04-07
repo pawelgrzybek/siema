@@ -12,37 +12,13 @@ export default class Siema {
     this.currentSlide = this.config.startIndex;
     this.transformProperty = Siema.webkitOrNot();
 
-    // Build markup and apply required styling to elements
-    this.init();
-
     // Bind all event handlers for referencability
     ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
-    // Resize element on window resize
-    window.addEventListener('resize', this.resizeHandler);
-
-    // If element is draggable / swipable, add event handlers
-    if (this.config.draggable) {
-      // Keep track pointer hold and dragging distance
-      this.pointerDown = false;
-      this.drag = {
-        start: 0,
-        end: 0,
-      };
-
-      // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler);
-      this.selector.addEventListener('touchend', this.touchendHandler);
-      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
-
-      // Mouse events
-      this.selector.addEventListener('mousedown', this.mousedownHandler);
-      this.selector.addEventListener('mouseup', this.mouseupHandler);
-      this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
-      this.selector.addEventListener('mousemove', this.mousemoveHandler);
-    }
+    // Build markup and apply required styling to elements
+    this.init();
   }
 
 
@@ -78,6 +54,30 @@ export default class Siema {
 
 
   init() {
+    // Resize element on window resize
+    window.addEventListener('resize', this.resizeHandler);
+
+    // If element is draggable / swipable, add event handlers
+    if (this.config.draggable) {
+      // Keep track pointer hold and dragging distance
+      this.pointerDown = false;
+      this.drag = {
+        start: 0,
+        end: 0,
+      };
+
+      // Touch events
+      this.selector.addEventListener('touchstart', this.touchstartHandler);
+      this.selector.addEventListener('touchend', this.touchendHandler);
+      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
+
+      // Mouse events
+      this.selector.addEventListener('mousedown', this.mousedownHandler);
+      this.selector.addEventListener('mouseup', this.mouseupHandler);
+      this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
+      this.selector.addEventListener('mousemove', this.mousemoveHandler);
+    }
+
     if (this.selector === null) {
       throw new Error('Something wrong with your selector 😭');
     }
@@ -111,8 +111,11 @@ export default class Siema {
       docFragment.appendChild(elementContainer);
     }
 
-    // Add fragment to frame and frame to selector
+    // Add fragment to frame
     this.sliderFrame.appendChild(docFragment);
+
+    // Clear selector (just in case something exists there) and append a frame
+    this.selector.innerHTML = '';
     this.selector.appendChild(this.sliderFrame);
 
     // Go to currently active slide after initial build
