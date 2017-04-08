@@ -62,8 +62,10 @@ export default class Siema {
       // Keep track pointer hold and dragging distance
       this.pointerDown = false;
       this.drag = {
-        start: 0,
-        end: 0,
+        startX: 0,
+        endX: 0,
+        startY: 0,
+        letItGo: null
       };
 
       // Touch events
@@ -181,7 +183,7 @@ export default class Siema {
 
   // Recalculate drag /swipe event and reposition the frame of a slider
   updateAfterDrag() {
-    const movement = this.drag.end - this.drag.start;
+    const movement = this.drag.endX - this.drag.startX;
     const movementDistance = Math.abs(movement);
     const howManySliderToSlide = Math.ceil(movementDistance / (this.selectorWidth / this.perPage));
 
@@ -210,8 +212,10 @@ export default class Siema {
   // Clear drag
   clearDrag() {
     this.drag = {
-      start: 0,
-      end: 0,
+      startX: 0,
+      endX: 0,
+      startY: 0,
+      letItGo: null
     };
   }
 
@@ -220,7 +224,8 @@ export default class Siema {
   touchstartHandler(e) {
     e.stopPropagation();
     this.pointerDown = true;
-    this.drag.start = e.touches[0].pageX;
+    this.drag.startX = e.touches[0].pageX;
+    this.drag.startY = e.touches[0].pageY;
   }
 
 
@@ -229,7 +234,7 @@ export default class Siema {
     this.pointerDown = false;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
-    if (this.drag.end) {
+    if (this.drag.endX) {
       this.updateAfterDrag();
     }
     this.clearDrag();
@@ -238,11 +243,16 @@ export default class Siema {
 
   touchmoveHandler(e) {
     e.stopPropagation();
-    if (this.pointerDown) {
-      this.drag.end = e.touches[0].pageX;
+
+    if (this.drag.letItGo === null) {
+      this.drag.letItGo = Math.abs(this.drag.startY - e.touches[0].pageY) < Math.abs(this.drag.startX - e.touches[0].pageX);
+    }
+
+    if (this.pointerDown && this.drag.letItGo) {
+      this.drag.endX = e.touches[0].pageX;
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
     }
   }
 
@@ -252,7 +262,7 @@ export default class Siema {
     e.preventDefault();
     e.stopPropagation();
     this.pointerDown = true;
-    this.drag.start = e.pageX;
+    this.drag.startX = e.pageX;
   }
 
 
@@ -262,7 +272,7 @@ export default class Siema {
     this.sliderFrame.style.cursor = '-webkit-grab';
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
-    if (this.drag.end) {
+    if (this.drag.endX) {
       this.updateAfterDrag();
     }
     this.clearDrag();
@@ -272,11 +282,11 @@ export default class Siema {
   mousemoveHandler(e) {
     e.preventDefault();
     if (this.pointerDown) {
-      this.drag.end = e.pageX;
+      this.drag.endX = e.pageX;
       this.sliderFrame.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.start - this.drag.end)) * -1}px, 0, 0)`;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
     }
   }
 
@@ -285,7 +295,7 @@ export default class Siema {
     if (this.pointerDown) {
       this.pointerDown = false;
       this.sliderFrame.style.cursor = '-webkit-grab';
-      this.drag.end = e.pageX;
+      this.drag.endX = e.pageX;
       this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.updateAfterDrag();
