@@ -1,6 +1,11 @@
-// Hi :-)
+/**
+ * Hi :-) This is a class representing a Siema.
+ */
 export default class Siema {
-
+  /**
+   * Create a Siema.
+   * @param {Object} options - Optional settings object.
+   */
   constructor(options) {
     // Merge defaults with user's settings
     this.config = Siema.mergeSettings(options);
@@ -22,6 +27,11 @@ export default class Siema {
   }
 
 
+  /**
+   * Overrides default settings with custom ones.
+   * @param {Object} options - Optional settings object.
+   * @returns {Object} - Custom Siema settings.
+   */
   static mergeSettings(options) {
     const settings = {
       selector: '.siema',
@@ -44,6 +54,10 @@ export default class Siema {
   }
 
 
+  /**
+   * Determine if browser supports unprefixed transform property.
+   * @returns {string} - Transform property supported by client.
+   */
   static webkitOrNot() {
     const style = document.documentElement.style;
     if (typeof style.transform == 'string') {
@@ -53,6 +67,9 @@ export default class Siema {
   }
 
 
+  /**
+   * Builds the markup and attaches listeners to required events.
+   */
   init() {
     // Resize element on window resize
     window.addEventListener('resize', this.resizeHandler);
@@ -113,7 +130,7 @@ export default class Siema {
       docFragment.appendChild(elementContainer);
     }
 
-    // Add fragment to frame
+    // Add fragment to the frame
     this.sliderFrame.appendChild(docFragment);
 
     // Clear selector (just in case something exists there) and append a frame
@@ -126,7 +143,9 @@ export default class Siema {
   }
 
 
-  // Determinate slides number
+  /**
+   * Determinates slides number acordingly to clients viewport.
+   */
   resolveSlidesNumber() {
     if (typeof this.config.perPage === 'number') {
       this.perPage = this.config.perPage;
@@ -142,7 +161,10 @@ export default class Siema {
   }
 
 
-  // Go to previous slide
+  /**
+   * Go to previous slide.
+   * @param {number} [howManySlides=1] - How many items to slide backward.
+   */
   prev(howManySlides = 1) {
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
@@ -155,7 +177,10 @@ export default class Siema {
   }
 
 
-  // Go to Next slide
+  /**
+   * Go to next slide.
+   * @param {number} [howManySlides=1] - How many items to slide forward.
+   */
   next(howManySlides = 1) {
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
@@ -168,20 +193,27 @@ export default class Siema {
   }
 
 
-  // Go to slide with particular index
+  /**
+   * Go to slide with particular index
+   * @param {number} index - Item index to slide to.
+   */
   goTo(index) {
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
     this.slideToCurrent();
   }
 
 
-  // Move slider frame to correct position depending on currently active slide
+  /**
+   * Moves sliders frame to position of currently active slide
+   */
   slideToCurrent() {
     this.sliderFrame.style[this.transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
   }
 
 
-  // Recalculate drag /swipe event and reposition the frame of a slider
+  /**
+   * Recalculate drag /swipe event and reposition the frame of a slider
+   */
   updateAfterDrag() {
     const movement = this.drag.endX - this.drag.startX;
     const movementDistance = Math.abs(movement);
@@ -197,7 +229,9 @@ export default class Siema {
   }
 
 
-  // When window resizes, resize slider components as well
+  /**
+   * When window resizes, resize slider components as well
+   */
   resizeHandler() {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
@@ -209,7 +243,9 @@ export default class Siema {
   }
 
 
-  // Clear drag
+  /**
+   * Clear drag after touchend and mouseup event
+   */
   clearDrag() {
     this.drag = {
       startX: 0,
@@ -220,7 +256,9 @@ export default class Siema {
   }
 
 
-  // Touch events handlers
+  /**
+   * touchstart event handler
+   */
   touchstartHandler(e) {
     e.stopPropagation();
     this.pointerDown = true;
@@ -229,6 +267,9 @@ export default class Siema {
   }
 
 
+  /**
+   * touchend event handler
+   */
   touchendHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
@@ -241,6 +282,9 @@ export default class Siema {
   }
 
 
+  /**
+   * touchmove event handler
+   */
   touchmoveHandler(e) {
     e.stopPropagation();
 
@@ -257,7 +301,9 @@ export default class Siema {
   }
 
 
-  // Mouse events handlers
+  /**
+   * mousedown event handler
+   */
   mousedownHandler(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -266,6 +312,9 @@ export default class Siema {
   }
 
 
+  /**
+   * mouseup event handler
+   */
   mouseupHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
@@ -279,6 +328,9 @@ export default class Siema {
   }
 
 
+  /**
+   * mousemove event handler
+   */
   mousemoveHandler(e) {
     e.preventDefault();
     if (this.pointerDown) {
@@ -291,6 +343,9 @@ export default class Siema {
   }
 
 
+  /**
+   * mouseleave event handler
+   */
   mouseleaveHandler(e) {
     if (this.pointerDown) {
       this.pointerDown = false;
@@ -303,7 +358,11 @@ export default class Siema {
     }
   }
 
-  // Destroy - remove listeners to prevent from memory leak (and revert to original markup)
+
+  /**
+   * Removes listeners and optionally restores to initial markup
+   * @param {boolean} restoreMarkup - determinants about restoring an initial markup
+   */
   destroy(restoreMarkup = false) {
     window.removeEventListener('resize', this.resizeHandler);
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
