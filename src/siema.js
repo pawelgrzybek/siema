@@ -44,7 +44,6 @@ export default class Siema {
       loop: false,
       onInit: () => {},
       onChange: () => {},
-      onDestroy: () => {},
     };
     const userSttings = options;
     for (const attrname in userSttings) {
@@ -164,8 +163,9 @@ export default class Siema {
   /**
    * Go to previous slide.
    * @param {number} [howManySlides=1] - How many items to slide backward.
+   * @param {function} callback - Optional callback function.
    */
-  prev(howManySlides = 1) {
+  prev(howManySlides = 1, callback) {
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
     }
@@ -173,6 +173,9 @@ export default class Siema {
       this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
     }
     this.slideToCurrent();
+    if (callback) {
+      callback.call(this);
+    }
     this.config.onChange.call(this);
   }
 
@@ -180,8 +183,9 @@ export default class Siema {
   /**
    * Go to next slide.
    * @param {number} [howManySlides=1] - How many items to slide forward.
+   * @param {function} callback - Optional callback function.
    */
-  next(howManySlides = 1) {
+  next(howManySlides = 1, callback) {
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
@@ -189,6 +193,9 @@ export default class Siema {
       this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
     }
     this.slideToCurrent();
+    if (callback) {
+      callback.call(this);
+    }
     this.config.onChange.call(this);
   }
 
@@ -196,10 +203,14 @@ export default class Siema {
   /**
    * Go to slide with particular index
    * @param {number} index - Item index to slide to.
+   * @param {function} callback - Optional callback function.
    */
-  goTo(index) {
+  goTo(index, callback) {
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
     this.slideToCurrent();
+    if (callback) {
+      callback.call(this);
+    }
   }
 
 
@@ -472,9 +483,10 @@ export default class Siema {
 
   /**
    * Removes listeners and optionally restores to initial markup
-   * @param {boolean} restoreMarkup - determinants about restoring an initial markup
+   * @param {boolean} restoreMarkup - Determinants about restoring an initial markup.
+   * @param {function} callback - Optional callback function.
    */
-  destroy(restoreMarkup = false) {
+  destroy(restoreMarkup = false, callback) {
     window.removeEventListener('resize', this.resizeHandler);
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
     this.selector.removeEventListener('touchend', this.touchendHandler);
@@ -494,6 +506,8 @@ export default class Siema {
       this.selector.removeAttribute('style');
     }
 
-    this.config.onDestroy.call(this);
+    if (callback) {
+      callback.call(this);
+    }
   }
 }

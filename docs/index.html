@@ -126,7 +126,6 @@ new Siema();</code></pre>
         <li><code>loop</code> - (boolean) loop the slides around</li>
         <li><code>onInit</code> - (function) runs immediately after first initialization</li>
         <li><code>onChange</code> - (function) runs after slide change</li>
-        <li><code>onDestroy</code> - (function) runs after destroy</li>
       </ul>
     </section>
 
@@ -136,11 +135,14 @@ new Siema();</code></pre>
       <p>As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!</p>
 
       <ul>
-        <li><code>next(howManySlides = 1)</code> - go to next (optionally few items)</li>
-        <li><code>prev(howManySlides = 1)</code> - go to previous (optionally few items)</li>
-        <li><code>goTo(index)</code> - go to a specific slide</li>
-        <li><code>destroy(restoreMarkup = false)</code> - destroy instance (restore markup — optional)</li>
-        <li><code>currentSlide</code> - index of the current active slide (read only)</li>
+        <li><code>next(howManySlides = 1, callback)</code> - go to next (optionally few items) (takes optional callback as an optional argument)</li>
+        <li><code>prev(howManySlides = 1, callback)</code> - go to previous (optionally few items) (takes optional callback as an optional argument)</li>
+        <li><code>goTo(index, callback)</code> - go to a specific slide (takes optional callback as an optional argument)</li>
+        <li><code>remove(index, callback)</code> - remove item at particular index (takes optional callback as an optional argument)</li>
+        <li><code>insert(item, index, callback)</code> - insert new item at particular index (takes optional callback as an optional argument)</li>
+        <li><code>prepend(item, callback)</code> - prepend new item (takes optional callback as an optional argument)</li>
+        <li><code>append(item, callback)</code> - append new item (takes optional callback as an optional argument)</li>
+        <li><code>destroy(restoreMarkup = false, callback)</code> - destroy instance (restore markup — optional) (takes optional callback as an optional argument)</li>
       </ul>
     </section>
 

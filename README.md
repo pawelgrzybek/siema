@@ -67,17 +67,19 @@ new Siema({
 - `loop` - (boolean) loop the slides around
 - `onInit` - (function) runs immediately after first initialization
 - `onChange` - (function) runs after slide change
-- `onDestroy` - (function) runs after destroy
 
 ## API
 
 As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!
 
-- `next(howManySlides = 1)` - go to next slide (optionally few items)
-- `prev(howManySlides = 1)` - go to previous slide (optionally few items)
-- `goTo(index)` - go to a specific slide
-- `destroy(restoreMarkup = false)` - destroy instance (restore markup — optional)
-- `currentSlide` - index of the current active slide (read only)
+- `next(howManySlides = 1, callback)` - go to next slide (optionally few items) (takes optional callback as an optional argument)
+- `prev(howManySlides = 1, callback)` - go to previous slide (optionally few items) (takes optional callback as an optional argument)
+- `goTo(index, callback)` - go to a specific slide (takes optional callback as an optional argument)
+- `remove(index, callback)` - remove item at particular index (takes optional callback as an optional argument)
+- `insert(item, index, callback)` - insert new item at particular index (takes optional callback as an optional argument)
+- `prepend(item, callback)` - prepend new item (takes optional callback as an optional argument)
+- `append(item, callback)` - append new item (takes optional callback as an optional argument)
+- `destroy(restoreMarkup = false, callback)` - destroy instance (restore markup — optional) (takes optional callback as an optional argument)
 
 ## Browser support
 
