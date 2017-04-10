@@ -401,8 +401,9 @@ export default class Siema {
   /**
    * Remove item from carousel.
    * @param {number} index - Item index to remove.
+   * @param {function} callback - Optional callback to call after remove.
    */
-  remove(index) {
+  remove(index, callback) {
     if (index < 0 || index > this.innerElements.length) {
       throw new Error('Item to remove doesn\'t exist 😭');
     }
@@ -412,6 +413,9 @@ export default class Siema {
     this.currentSlide = index < this.currentSlide ? this.currentSlide - 1 : this.currentSlide;
 
     this.updateFrame();
+    if (callback) {
+      callback.call(this);
+    }
   }
 
 
@@ -419,8 +423,9 @@ export default class Siema {
    * Insert item to carousel at particular index.
    * @param {HTMLNode} item - Item to insert.
    * @param {number} index - Index of new new item insertion.
+   * @param {function} callback - Optional callback to call after insert.
    */
-  insert(item, index = 0) {
+  insert(item, index, callback) {
     if (index < 0 || index > this.innerElements.length + 1) {
       throw new Error('Unable to inset it at this index 😭');
     }
@@ -433,24 +438,35 @@ export default class Siema {
     this.currentSlide = index < this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
 
     this.updateFrame();
+    if (callback) {
+      callback.call(this);
+    }
   }
 
 
   /**
    * Prepernd item to carousel.
    * @param {HTMLNode} item - Item to prepend.
+   * @param {function} callback - Optional callback to call after prepend.
    */
-  prepend(item) {
+  prepend(item, callback) {
     this.insert(item, 0);
+    if (callback) {
+      callback.call(this);
+    }
   }
 
 
   /**
    * Append item to carousel.
    * @param {HTMLNode} item - Item to append.
+   * @param {function} callback - Optional callback to call after append.
    */
-  append(item) {
+  append(item, callback) {
     this.insert(item, this.innerElements.length + 1);
+    if (callback) {
+      callback.call(this);
+    }
   }
 
 
