@@ -133,7 +133,7 @@ export default class Siema {
     // Add fragment to the frame
     this.sliderFrame.appendChild(docFragment);
 
-    // Clear selector (just in case something exists there) and append a frame
+    // Clear selector (just in case something is there) and insert a frame
     this.selector.innerHTML = '';
     this.selector.appendChild(this.sliderFrame);
 
@@ -356,6 +356,101 @@ export default class Siema {
       this.updateAfterDrag();
       this.clearDrag();
     }
+  }
+
+
+  /**
+   * Update after removing, prepending or appending items.
+   */
+  updateFrame() {
+    // Create frame and apply styling
+    this.sliderFrame = document.createElement('div');
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+
+    if (this.config.draggable) {
+      this.sliderFrame.style.cursor = '-webkit-grab';
+    }
+
+    // Create a document fragment to put slides into it
+    const docFragment = document.createDocumentFragment();
+
+    // Loop through the slides, add styling and add them to document fragment
+    for (let i = 0; i < this.innerElements.length; i++) {
+      const elementContainer = document.createElement('div');
+      elementContainer.style.cssFloat = 'left';
+      elementContainer.style.float = 'left';
+      elementContainer.style.width = `${100 / this.innerElements.length}%`;
+      elementContainer.appendChild(this.innerElements[i]);
+      docFragment.appendChild(elementContainer);
+    }
+
+    // Add fragment to the frame
+    this.sliderFrame.appendChild(docFragment);
+
+    // Clear selector (just in case something is there) and insert a frame
+    this.selector.innerHTML = '';
+    this.selector.appendChild(this.sliderFrame);
+
+    // Go to currently active slide after initial build
+    this.slideToCurrent();
+  }
+
+
+  /**
+   * Remove item from carousel.
+   * @param {number} index - Item index to remove.
+   */
+  remove(index) {
+    if (index < 0 || index > this.innerElements.length) {
+      throw new Error('Item to remove doesn\'t exist 😭');
+    }
+    this.innerElements.splice(index, 1);
+
+    // Avoide shifting content
+    this.currentSlide = index < this.currentSlide ? this.currentSlide - 1 : this.currentSlide;
+
+    this.updateFrame();
+  }
+
+
+  /**
+   * Insert item to carousel at particular index.
+   * @param {HTMLNode} item - Item to insert.
+   * @param {number} index - Index of new new item insertion.
+   */
+  insert(item, index = 0) {
+    if (index < 0 || index > this.innerElements.length + 1) {
+      throw new Error('Unable to inset it at this index 😭');
+    }
+    if (this.innerElements.includes(item)) {
+      throw new Error('The same item in a carousel? Really? Nope 😭');
+    }
+    this.innerElements.splice(index, 0, item);
+
+    // Avoide shifting content
+    this.currentSlide = index < this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
+
+    this.updateFrame();
+  }
+
+
+  /**
+   * Prepernd item to carousel.
+   * @param {HTMLNode} item - Item to prepend.
+   */
+  prepend(item) {
+    this.insert(item, 0);
+  }
+
+
+  /**
+   * Append item to carousel.
+   * @param {HTMLNode} item - Item to append.
+   */
+  append(item) {
+    this.insert(item, this.innerElements.length + 1);
   }
 
 
