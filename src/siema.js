@@ -494,6 +494,7 @@ export default class Siema {
    */
   destroy(restoreMarkup = false, callback) {
     window.removeEventListener('resize', this.resizeHandler);
+    this.selector.style.cursor = 'auto';
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
     this.selector.removeEventListener('touchend', this.touchendHandler);
     this.selector.removeEventListener('touchmove', this.touchmoveHandler);
