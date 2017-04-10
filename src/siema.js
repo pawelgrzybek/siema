@@ -435,7 +435,7 @@ export default class Siema {
     this.innerElements.splice(index, 0, item);
 
     // Avoide shifting content
-    this.currentSlide = index < this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
+    this.currentSlide = index <= this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
 
     this.updateFrame();
     if (callback) {
