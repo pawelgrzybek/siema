@@ -113,7 +113,7 @@ export default class Siema {
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
     if (this.config.draggable) {
-      this.sliderFrame.style.cursor = '-webkit-grab';
+      this.selector.style.cursor = '-webkit-grab';
     }
 
     // Create a document fragment to put slides into it
@@ -335,7 +335,7 @@ export default class Siema {
   mouseupHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
-    this.sliderFrame.style.cursor = '-webkit-grab';
+    this.selector.style.cursor = '-webkit-grab';
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.endX) {
@@ -352,7 +352,7 @@ export default class Siema {
     e.preventDefault();
     if (this.pointerDown) {
       this.drag.endX = e.pageX;
-      this.sliderFrame.style.cursor = '-webkit-grabbing';
+      this.selector.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
@@ -366,7 +366,7 @@ export default class Siema {
   mouseleaveHandler(e) {
     if (this.pointerDown) {
       this.pointerDown = false;
-      this.sliderFrame.style.cursor = '-webkit-grab';
+      this.selector.style.cursor = '-webkit-grab';
       this.drag.endX = e.pageX;
       this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -387,7 +387,7 @@ export default class Siema {
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
     if (this.config.draggable) {
-      this.sliderFrame.style.cursor = '-webkit-grab';
+      this.selector.style.cursor = '-webkit-grab';
     }
 
     // Create a document fragment to put slides into it
