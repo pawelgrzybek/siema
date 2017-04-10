@@ -219,10 +219,10 @@ export default class Siema {
     const movementDistance = Math.abs(movement);
     const howManySliderToSlide = Math.ceil(movementDistance / (this.selectorWidth / this.perPage));
 
-    if (movement > 0 && movementDistance > this.config.threshold) {
+    if (movement > 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
       this.prev(howManySliderToSlide);
     }
-    else if (movement < 0 && movementDistance > this.config.threshold) {
+    else if (movement < 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
       this.next(howManySliderToSlide);
     }
     this.slideToCurrent();
