@@ -53,7 +53,6 @@ new Siema({
   loop: false,
   onInit: () => {},
   onChange: () => {},
-  onDestroy: () => {},
 });
 ```
 
