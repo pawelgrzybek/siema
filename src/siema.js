@@ -166,17 +166,20 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   prev(howManySlides = 1, callback) {
+    const beforeChange = this.currentSlide;
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
     }
     else {
       this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
     }
-    this.slideToCurrent();
-    if (callback) {
-      callback.call(this);
+    if (beforeChange !== this.currentSlide) {
+      this.slideToCurrent();
+      this.config.onChange.call(this);
+      if (callback) {
+        callback.call(this);
+      }
     }
-    this.config.onChange.call(this);
   }
 
 
@@ -186,17 +189,20 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   next(howManySlides = 1, callback) {
+    const beforeChange = this.currentSlide;
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
     }
     else {
       this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
     }
-    this.slideToCurrent();
-    if (callback) {
-      callback.call(this);
+    if (beforeChange !== this.currentSlide) {
+      this.slideToCurrent();
+      this.config.onChange.call(this);
+      if (callback) {
+        callback.call(this);
+      }
     }
-    this.config.onChange.call(this);
   }
 
 
