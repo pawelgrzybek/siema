@@ -158,8 +158,6 @@ Basic carousel with next and previous buttons.
   <img src="assets/siema--yellow.svg">
   <img src="assets/siema--pink.svg">
   <img src="assets/siema--yellow.svg">
-  <img src="assets/siema--pink.svg">
-  <img src="assets/siema--yellow.svg">
 </div>
 
 <button class="prev">prev</button>
@@ -177,17 +175,15 @@ document.querySelector('.next').addEventListener('click', () => mySiema.next());
   <img src="assets/siema--yellow.svg">
   <img src="assets/siema--pink.svg">
   <img src="assets/siema--yellow.svg">
-  <img src="assets/siema--pink.svg">
-  <img src="assets/siema--yellow.svg">
 </div>
 
-<button class="btn js-prev1">prev</button>
-<button class="btn js-next1">next</button>
+<button class="btn js-prev">prev</button>
+<button class="btn js-next">next</button>
 
 <script>
   var mySiema = new Siema();
-  document.querySelector('.js-prev1').addEventListener('click', function() {mySiema.prev()});
-  document.querySelector('.js-next1').addEventListener('click', function() {mySiema.next()});
+  document.querySelector('.js-prev').addEventListener('click', function() {mySiema.prev()});
+  document.querySelector('.js-next').addEventListener('click', function() {mySiema.next()});
 </script>
 
 I've also created a Codepen collection with tons of Siema examples.
