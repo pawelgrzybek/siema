@@ -38,6 +38,7 @@ h1 {
 
 h2 {
   font-size: 1.6rem;
+  margin-top: 3.2rem;
 }
 
 h3 {
@@ -92,11 +93,6 @@ code {
   max-width: 44rem;
   margin: 3.2rem auto;
   padding: 0 1rem;
-}
-
-/* Section */
-.section {
-  margin-bottom: 3.2rem;
 }
 
 /* Logo */
