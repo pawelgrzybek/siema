@@ -50,7 +50,8 @@ p {
   margin-bottom: 1.6rem;
 }
 
-ul {
+ul,
+ol {
   margin: 0 0 1.6rem 1.6rem;
 }
 

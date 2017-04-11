@@ -6,6 +6,15 @@ Siema is a lightweight (only 2kb gzipped) carousel plugin with no dependencies a
 
 <a href="https://github.com/pawelgrzybek/siema/releases" class="btn">Download Siema from Github</a>
 
+1. [Installation](#installation)
+2. [Options](#options)
+3. [API](#api)
+4. [Example](#example)
+5. [Browser support](#browser-support)
+6. [Other implementations](#other-implementations)
+7. [Contributing](#contributing)
+8. [Extra](#extra)
+
 ## Installation
 
 Setup is trivially easy. A little bit of markup...
@@ -116,7 +125,7 @@ As mentioned above, Siema doesn't come with many options - just a few useful met
 - `append(item, callback)` - append new item (takes optional callback as an optional argument)
 - `destroy(restoreMarkup = false, callback)` - destroy instance (restore markup — optional) (takes optional callback as an optional argument)
 
-## Example</h2>
+## Example
 
 Basic carousel with next and previous buttons.
 
