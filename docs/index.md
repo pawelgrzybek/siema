@@ -2,6 +2,10 @@
 layout: default
 ---
 
+Siema is a lightweight (only 2kb gzipped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and [available on Github](https://github.com/pawelgrzybek/siema). It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.
+
+<a href="https://github.com/pawelgrzybek/siema/releases" class="btn">Download Siema from Github</a>
+
 ## Installation
 
 Setup is trivially easy. A little bit of markup...
@@ -59,16 +63,45 @@ new Siema({
 });
 ```
 
-- `selector` - (string or DOM element) specify the selector
-- `duration` - (number) slide transition duration (in ms)
-- `easing` - (string) the same as transition-timing-function in CSS
-- `perPage` - (number or object) the number of slides to be shown
-- `startIndex` - (number) index of the starting slide (zero-based)
-- `draggable` - (boolean) use dragging and touch swiping
-- `threshold` - (number) touch and mouse dragging threshold (in px)
-- `loop` - (boolean) loop the slides around
-- `onInit` - (function) runs immediately after first initialization
-- `onChange` - (function) runs after slide change
+### `selector` (string or DOM element)
+
+Specify the selector to use as a carousel. Siema will use all immediate children of this selector as a slider items. It can be a query string [(example)](http://codepen.io/pawelgrzybek/pen/QvLjxY) or DOM element [(example)](http://codepen.io/pawelgrzybek/pen/gWYaje).
+
+### `duration` (number)
+
+Slide transition duration in milliseconds [(example)](http://codepen.io/pawelgrzybek/pen/BRBoqO).
+
+### `easing` (string)
+
+It is like a CSS `transition-timing-function` — describes acceleration curve [(example)](http://codepen.io/pawelgrzybek/pen/aWovrB).
+
+### `perPage` (number or object)
+
+The number of slides to be shown. It accepts a number [(example)](http://codepen.io/pawelgrzybek/pen/bWbVXz) or object [(example)](http://codepen.io/pawelgrzybek/pen/dWbGyZ) for complex responsive layouts.
+
+### `startIndex` (number)
+
+Index (zero-based) of the starting slide [(example)](http://codepen.io/pawelgrzybek/pen/vmBLER).
+
+### `draggable` (boolean)
+
+Use dragging and touch swiping [(example)](http://codepen.io/pawelgrzybek/pen/mmbVVj).
+
+### `threshold` (number)
+
+Touch and mouse dragging threshold (in px) [(example)](http://codepen.io/pawelgrzybek/pen/gWYPrQ).
+
+### `loop` (boolean)
+
+Loop the slides around [(example)](http://codepen.io/pawelgrzybek/pen/zwOrKN).
+
+### `onInit` (function)
+
+Runs immediately after initialization [(example)](http://codepen.io/pawelgrzybek/pen/BRBjpE).
+
+### `onChange` (function)
+
+Runs after slide change [(example)](http://codepen.io/pawelgrzybek/pen/RVbrVe).
 
 ## API
 
