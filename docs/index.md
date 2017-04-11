@@ -116,14 +116,37 @@ Runs after slide change [(example)](http://codepen.io/pawelgrzybek/pen/RVbrVe).
 
 As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!
 
-- `next(howManySlides = 1, callback)` - go to next (optionally few items) (takes optional callback as an optional argument)
-- `prev(howManySlides = 1, callback)` - go to previous (optionally few items) (takes optional callback as an optional argument)
-- `goTo(index, callback)` - go to a specific slide (takes optional callback as an optional argument)
-- `remove(index, callback)` - remove item at particular index (takes optional callback as an optional argument)
-- `insert(item, index, callback)` - insert new item at particular index (takes optional callback as an optional argument)
-- `prepend(item, callback)` - prepend new item (takes optional callback as an optional argument)
-- `append(item, callback)` - append new item (takes optional callback as an optional argument)
-- `destroy(restoreMarkup = false, callback)` - destroy instance (restore markup — optional) (takes optional callback as an optional argument)
+### `prev(howManySlides = 1, callback)`
+
+Go to previous item [(example)](http://codepen.io/pawelgrzybek/pen/JNPKVE). Optionally slide few items backward by passing `howManySlides` (number) argument [(example)](http://codepen.io/pawelgrzybek/pen/wdwWZQ). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/JNPKQW).
+
+### `next(howManySlides = 1, callback)`
+
+Go to next item [(example)](http://codepen.io/pawelgrzybek/pen/JNPKVE). Optionally slide few items forward by passing `howManySlides` (number) argument [(example)](http://codepen.io/pawelgrzybek/pen/wdwWZQ). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/JNPKQW).
+
+### `goTo(index, callback)`
+
+Go to item at particular `index` (number) [(example)](http://codepen.io/pawelgrzybek/pen/gWYLXP). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/ZKzBvo).
+
+### `remove(index, callback)`
+
+Remove item at particular `index` (number) [(example)](http://codepen.io/pawelgrzybek/pen/BRBpQJ). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/rmBjjE).
+
+### `insert(item, index, callback)`
+
+Insert new `item` (DOM element) at specific `index` (number) [(example)](http://codepen.io/pawelgrzybek/pen/QvLdaJ). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/vmBgdZ).
+
+### `prepend(item, callback)`
+
+Prepend new `item` (DOM element) [(example)](http://codepen.io/pawelgrzybek/pen/rmBymW). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/LyPWLe).
+
+### `append(item, callback)`
+
+Append new `item` (DOM element) [(example)](http://codepen.io/pawelgrzybek/pen/RVbpZe). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/rmByGj).
+
+### `destroy(restoreMarkup = false, callback)`
+
+Remove all event listeners on instance [(example)](http://codepen.io/pawelgrzybek/pen/oWvZEd). Use `restoreMarkup` to restore the initial markup inside selector [(example)](http://codepen.io/pawelgrzybek/pen/ZKzeoL). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/Wjepyv).
 
 ## Example
 
