@@ -58,7 +58,7 @@ new Siema({
 
 ### `selector` (string or DOM element)
 
-Specify the selector to use as a carousel. Siema will use all immediate children of this selector as a slider items. It can be a query string [(example)](http://codepen.io/pawelgrzybek/pen/QvLjxY) or DOM element [(example)](http://codepen.io/pawelgrzybek/pen/gWYaje).
+The selector to use as a carousel. Siema will use all immediate children of this selector as a slider items. It can be a query string [(example)](http://codepen.io/pawelgrzybek/pen/QvLjxY) or DOM element [(example)](http://codepen.io/pawelgrzybek/pen/gWYaje).
 
 ### `duration` (number)
 
@@ -70,7 +70,7 @@ It is like a CSS `transition-timing-function` — describes acceleration curve [
 
 ### `perPage` (number or object)
 
-The number of slides to be shown. It accepts a number [(example)](http://codepen.io/pawelgrzybek/pen/bWbVXz) or object [(example)](http://codepen.io/pawelgrzybek/pen/dWbGyZ) for complex responsive layouts.
+The number of slides to be shown. It accepts a number [(example)](http://codepen.io/pawelgrzybek/pen/bWbVXz) or an object [(example)](http://codepen.io/pawelgrzybek/pen/dWbGyZ) for complex responsive layouts.
 
 ### `startIndex` (number)
 
