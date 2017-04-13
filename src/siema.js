@@ -166,6 +166,9 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   prev(howManySlides = 1, callback) {
+    if (this.innerElements.length <= this.perPage) {
+      return;
+    }
     const beforeChange = this.currentSlide;
     if (this.currentSlide === 0 && this.config.loop) {
       this.currentSlide = this.innerElements.length - this.perPage;
@@ -189,6 +192,9 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   next(howManySlides = 1, callback) {
+    if (this.innerElements.length <= this.perPage) {
+      return;
+    }
     const beforeChange = this.currentSlide;
     if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
       this.currentSlide = 0;
@@ -212,7 +218,10 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   goTo(index, callback) {
-    this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - 1);
+    if (this.innerElements.length <= this.perPage) {
+      return;
+    }
+    this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
     this.slideToCurrent();
     if (callback) {
       callback.call(this);
