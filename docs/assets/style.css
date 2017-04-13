@@ -24,8 +24,7 @@ body {
 }
 
 h1,
-h2,
-h3 {
+h2 {
   margin-bottom: 1.6rem;
   color: #000;
   font-family: 'Source Code Pro', monospace;
@@ -39,11 +38,6 @@ h1 {
 h2 {
   font-size: 1.6rem;
   margin-top: 3.2rem;
-}
-
-h3 {
-  font-size: 1rem;
-  margin-bottom: .8rem;
 }
 
 p {
