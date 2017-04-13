@@ -12,7 +12,7 @@ export default class Siema {
 
     // Create global references
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
-    this.selectorWidth = this.selector.getBoundingClientRect().width;
+    this.selectorWidth = Math.ceil(this.selector.getBoundingClientRect().width);
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
     this.transformProperty = Siema.webkitOrNot();
@@ -253,7 +253,7 @@ export default class Siema {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
-    this.selectorWidth = this.selector.getBoundingClientRect().width;
+    this.selectorWidth = Math.ceil(this.selector.getBoundingClientRect().width);
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
 
     this.slideToCurrent();
