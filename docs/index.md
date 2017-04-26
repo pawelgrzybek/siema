@@ -130,6 +130,9 @@ Append new `item` (DOM element) [(example)](http://codepen.io/pawelgrzybek/pen/R
 **`destroy(restoreMarkup = false, callback)`**  
 Remove all event listeners on instance [(example)](http://codepen.io/pawelgrzybek/pen/oWvZEd). Use `restoreMarkup` to restore the initial markup inside selector [(example)](http://codepen.io/pawelgrzybek/pen/ZKzeoL). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/Wjepyv).
 
+**`currentSlide`**  
+Prints current slide index [(example)](https://codepen.io/pawelgrzybek/pen/XRNOPP).
+
 ## Example
 
 Basic carousel with next and previous buttons.
