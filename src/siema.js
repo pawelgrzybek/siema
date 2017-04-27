@@ -221,11 +221,14 @@ export default class Siema {
     if (this.innerElements.length <= this.perPage) {
       return;
     }
+    const beforeChange = this.currentSlide;
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
-    this.slideToCurrent();
-    this.config.onChange.call(this);
-    if (callback) {
-      callback.call(this);
+    if (beforeChange !== this.currentSlide) {
+      this.slideToCurrent();
+      this.config.onChange.call(this);
+      if (callback) {
+        callback.call(this);
+      }
     }
   }
 
