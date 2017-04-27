@@ -223,6 +223,7 @@ export default class Siema {
     }
     this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
     this.slideToCurrent();
+    this.config.onChange.call(this);
     if (callback) {
       callback.call(this);
     }
