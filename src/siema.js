@@ -434,7 +434,7 @@ export default class Siema {
    * @param {function} callback - Optional callback to call after remove.
    */
   remove(index, callback) {
-    if (index < 0 || index > this.innerElements.length) {
+    if (index < 0 || index >= this.innerElements.length) {
       throw new Error('Item to remove doesn\'t exist 😭');
     }
     this.innerElements.splice(index, 1);
