@@ -13,9 +13,21 @@ export default class Siema {
     // Create global references
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
     this.selectorWidth = this.selector.offsetWidth;
+
+    // Prepare the elements by clone the last element and put it in the top, and clone the first node and put it on the last elements
+    if (this.config.loop && this.selector && this.selector.children.length > 0) {
+      const baseNode = this.selector.children[0].cloneNode(true);
+      const tailNode = this.selector.children[this.selector.children.length - 1].cloneNode(true);
+
+      this.selector.insertBefore(tailNode, this.selector.children[0]);
+      this.selector.appendChild(baseNode);
+    }
+
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
     this.transformProperty = Siema.webkitOrNot();
+    this.transitionTimingFunctionProperty = 'transitionTimingFunction';
+    this.transitionDurationProperty = 'transitionDuration';
 
     // Bind all event handlers for referencability
     ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
@@ -136,8 +148,21 @@ export default class Siema {
     this.selector.innerHTML = '';
     this.selector.appendChild(this.sliderFrame);
 
+    this.sliderFrame.addEventListener('transitionend', () => {
+      if (this.transitionEndCallback) {
+        this.transitionEndCallback();
+      }
+      delete this.transitionEndCallback;
+    });
+
     // Go to currently active slide after initial build
-    this.slideToCurrent();
+    if (this.innerElements.length > 1) {
+      // Starting from index 1, becuase index 0 it will be the cloned element from the last element
+      this.currentSlide = 1;
+    }
+
+    // silent transition to current slide
+    this.slideToCurrent(true);
     this.config.onInit.call(this);
   }
 
@@ -236,10 +261,34 @@ export default class Siema {
   /**
    * Moves sliders frame to position of currently active slide
    */
-  slideToCurrent() {
+  slideToCurrent(silentTransition) {
+    if (silentTransition) {
+      this.sliderFrame.style[this.transitionTimingFunctionProperty] = null;
+      this.sliderFrame.style[this.transitionDurationProperty] = '0ms';
+    }
+    else {
+      this.sliderFrame.style[this.transitionTimingFunctionProperty] = this.config.easing;
+      this.sliderFrame.style[this.transitionDurationProperty] = this.config.duration + 'ms';
+    }
     this.sliderFrame.style[this.transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
-  }
 
+    // Prepare the transitionEnd callback if the current slide index is zero "cloned from last element", or current slide is last element "cloned from first element"
+    if (this.config.loop && this.innerElements.length > 1
+          && (this.currentSlide === this.innerElements.length - 1 || this.currentSlide === 0)) {
+      const self = this;
+      this.transitionEndCallback = function transitionEndCallback() {
+        if (self.currentSlide === self.innerElements.length - 1) {
+          self.currentSlide = 1;
+        }
+        else if (self.currentSlide === 0) {
+          self.currentSlide = self.innerElements.length - 2;
+        }
+
+        // Move first original element or last original element in silent transition
+        self.slideToCurrent(true);
+      };
+    }
+  }
 
   /**
    * Recalculate drag /swipe event and reposition the frame of a slider
