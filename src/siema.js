@@ -156,8 +156,8 @@ export default class Siema {
     });
 
     // Go to currently active slide after initial build
-    if (this.innerElements.length > 1) {
-      // Starting from index 1, becuase index 0 it will be the cloned element from the last element
+    if (this.config.loop && this.innerElements.length > 1) {
+      // Starting from index 1, because index 0 it will be the cloned element from the last element
       this.currentSlide = 1;
     }
 
