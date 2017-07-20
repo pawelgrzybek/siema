@@ -59,7 +59,7 @@ export default class Siema {
    */
   static webkitOrNot() {
     const style = document.documentElement.style;
-    if (typeof style.transform == 'string') {
+    if (typeof style.transform === 'string') {
       return 'transform';
     }
     return 'WebkitTransform';
@@ -143,7 +143,7 @@ export default class Siema {
 
 
   /**
-   * Determinates slides number acordingly to clients viewport.
+   * Determinates slides number accordingly to clients viewport.
    */
   resolveSlidesNumber() {
     if (typeof this.config.perPage === 'number') {
@@ -152,7 +152,7 @@ export default class Siema {
     else if (typeof this.config.perPage === 'object') {
       this.perPage = 1;
       for (const viewport in this.config.perPage) {
-        if (window.innerWidth >= viewport) {
+        if (this.config.perPage.hasOwnProperty(viewport) && window.innerWidth >= viewport) {
           this.perPage = this.config.perPage[viewport];
         }
       }
