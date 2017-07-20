@@ -1,4 +1,4 @@
-// Apply best pratices by enabling eslint:recommended
+// Apply best practices by enabling eslint:recommended
 // Never repeat rules that eslint:recommended sets as a default
 // Explicitly add more rules categorized in categories taken from official docs
 
@@ -257,7 +257,6 @@ module.exports = {
     'no-var': 2,
     'prefer-arrow-callback': 2,
     'prefer-const': 2,
-    'prefer-template': 2,
     'prefer-template': 2,
     'require-yield': 2,
     'template-curly-spacing': [

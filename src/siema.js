@@ -439,7 +439,7 @@ export default class Siema {
     }
     this.innerElements.splice(index, 1);
 
-    // Avoide shifting content
+    // Avoid shifting content
     this.currentSlide = index <= this.currentSlide ? this.currentSlide - 1 : this.currentSlide;
 
     this.updateFrame();
@@ -451,7 +451,7 @@ export default class Siema {
 
   /**
    * Insert item to carousel at particular index.
-   * @param {HTMLNode} item - Item to insert.
+   * @param {HTMLElement} item - Item to insert.
    * @param {number} index - Index of new new item insertion.
    * @param {function} callback - Optional callback to call after insert.
    */
@@ -464,7 +464,7 @@ export default class Siema {
     }
     this.innerElements.splice(index, 0, item);
 
-    // Avoide shifting content
+    // Avoid shifting content
     this.currentSlide = index <= this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
 
     this.updateFrame();
@@ -476,7 +476,7 @@ export default class Siema {
 
   /**
    * Prepernd item to carousel.
-   * @param {HTMLNode} item - Item to prepend.
+   * @param {HTMLElement} item - Item to prepend.
    * @param {function} callback - Optional callback to call after prepend.
    */
   prepend(item, callback) {
@@ -489,7 +489,7 @@ export default class Siema {
 
   /**
    * Append item to carousel.
-   * @param {HTMLNode} item - Item to append.
+   * @param {HTMLElement} item - Item to append.
    * @param {function} callback - Optional callback to call after append.
    */
   append(item, callback) {
