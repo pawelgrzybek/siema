@@ -14,16 +14,16 @@ module.exports = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015'],
+          presets: ['env'],
           plugins: ['babel-plugin-add-module-exports'],
         },
       },
