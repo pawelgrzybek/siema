@@ -46,7 +46,12 @@ export default class Siema {
       onChange: () => {},
     };
 
-    return Object.assign(settings, options);
+    const userSttings = options;
+    for (const attrname in userSttings) {
+      settings[attrname] = userSttings[attrname];
+    }
+
+    return settings;
   }
 
 
@@ -149,7 +154,7 @@ export default class Siema {
     else if (typeof this.config.perPage === 'object') {
       this.perPage = 1;
       for (const viewport in this.config.perPage) {
-        if (this.config.perPage.hasOwnProperty(viewport) && window.innerWidth >= viewport) {
+        if (window.innerWidth >= viewport) {
           this.perPage = this.config.perPage[viewport];
         }
       }
