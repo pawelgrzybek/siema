@@ -87,8 +87,8 @@ The number of slides to be shown. It accepts a number [(example)](http://codepen
 **`startIndex`** (number)  
 Index (zero-based) of the starting slide [(example)](http://codepen.io/pawelgrzybek/pen/vmBLER).
 
-**`draggable`** (boolean)  
-Use dragging and touch swiping [(example)](http://codepen.io/pawelgrzybek/pen/mmbVVj).
+**`draggable`** (boolean or object)  
+Use dragging and touch swiping. It accepts a boolean [(example)](http://codepen.io/pawelgrzybek/pen/mmbVVj) or an object [(example)](https://codepen.io/anon/pen/QMovXE) for complex responsive layouts.
 
 **`threshold`** (number)  
 Touch and mouse dragging threshold (in px) [(example)](http://codepen.io/pawelgrzybek/pen/gWYPrQ).
