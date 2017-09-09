@@ -14,6 +14,7 @@ export default class Siema {
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
     this.selectorWidth = this.selector.offsetWidth;
     this.innerElements = [].slice.call(this.selector.children);
+    this.totalSlides = this.innerElements.length;
     this.currentSlide = this.config.startIndex;
     this.transformProperty = Siema.webkitOrNot();
 
@@ -75,28 +76,8 @@ export default class Siema {
     // Resize element on window resize
     window.addEventListener('resize', this.resizeHandler);
 
-    // If element is draggable / swipable, add event handlers
-    if (this.config.draggable) {
-      // Keep track pointer hold and dragging distance
-      this.pointerDown = false;
-      this.drag = {
-        startX: 0,
-        endX: 0,
-        startY: 0,
-        letItGo: null
-      };
-
-      // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler, { passive: true });
-      this.selector.addEventListener('touchend', this.touchendHandler);
-      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
-
-      // Mouse events
-      this.selector.addEventListener('mousedown', this.mousedownHandler);
-      this.selector.addEventListener('mouseup', this.mouseupHandler);
-      this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
-      this.selector.addEventListener('mousemove', this.mousemoveHandler);
-    }
+    // update draggable value dependable of user value
+    this.resolveDragging();
 
     if (this.selector === null) {
       throw new Error('Something wrong with your selector 😭');
@@ -113,10 +94,6 @@ export default class Siema {
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
-
-    if (this.config.draggable) {
-      this.selector.style.cursor = '-webkit-grab';
-    }
 
     // Create a document fragment to put slides into it
     const docFragment = document.createDocumentFragment();
@@ -158,6 +135,62 @@ export default class Siema {
           this.perPage = this.config.perPage[viewport];
         }
       }
+    }
+  }
+
+
+  /**
+   * Determinates draggable value accordingly to clients viewport.
+   */
+  resolveDragging() {
+    if (typeof this.config.draggable === 'boolean') {
+      this.draggable = this.config.draggable;
+    }
+    else if (typeof this.config.draggable === 'object') {
+      this.draggable = true;
+      for (const viewport in this.config.draggable) {
+        if (window.innerWidth >= viewport) {
+          this.draggable = this.config.draggable[viewport];
+        }
+      }
+    }
+
+    // If element is draggable / swipable, add event handlers
+    if (this.draggable) {
+      this.selector.style.cursor = '-webkit-grab';
+
+      // Keep track pointer hold and dragging distance
+      this.pointerDown = false;
+      this.drag = {
+        startX: 0,
+        endX: 0,
+        startY: 0,
+        letItGo: null
+      };
+
+      // Touch events
+      this.selector.addEventListener('touchstart', this.touchstartHandler, { passive: true });
+      this.selector.addEventListener('touchend', this.touchendHandler);
+      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
+
+      // Mouse events
+      this.selector.addEventListener('mousedown', this.mousedownHandler);
+      this.selector.addEventListener('mouseup', this.mouseupHandler);
+      this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
+      this.selector.addEventListener('mousemove', this.mousemoveHandler);
+    } else {
+      this.selector.style.cursor = 'auto';
+
+      // Touch events
+      this.selector.removeEventListener('touchstart', this.touchstartHandler, { passive: true });
+      this.selector.removeEventListener('touchend', this.touchendHandler);
+      this.selector.removeEventListener('touchmove', this.touchmoveHandler, { passive: true });
+
+      // Mouse events
+      this.selector.removeEventListener('mousedown', this.mousedownHandler);
+      this.selector.removeEventListener('mouseup', this.mouseupHandler);
+      this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
+      this.selector.removeEventListener('mousemove', this.mousemoveHandler);
     }
   }
 
@@ -267,6 +300,9 @@ export default class Siema {
   resizeHandler() {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
+
+    // update draggable value dependable of user value
+    this.resolveDragging();
 
     this.selectorWidth = this.selector.offsetWidth;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
@@ -401,7 +437,7 @@ export default class Siema {
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
-    if (this.config.draggable) {
+    if (this.draggable) {
       this.selector.style.cursor = '-webkit-grab';
     }
 
