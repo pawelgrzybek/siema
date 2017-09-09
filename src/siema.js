@@ -14,6 +14,7 @@ export default class Siema {
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
     this.selectorWidth = this.selector.offsetWidth;
     this.innerElements = [].slice.call(this.selector.children);
+    this.totalSlides = this.innerElements.length;
     this.currentSlide = this.config.startIndex;
     this.transformProperty = Siema.webkitOrNot();
 
