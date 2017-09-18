@@ -10,8 +10,15 @@ export default class Siema {
     // Merge defaults with user's settings
     this.config = Siema.mergeSettings(options);
 
-    // Create global references
+    // Resolve selector's type
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
+
+    // Early throw if selector doesn't exists
+    if (this.selector === null) {
+      throw new Error('Something wrong with your selector 😭');
+    }
+
+    // Create global references
     this.selectorWidth = this.selector.offsetWidth;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.startIndex;
@@ -97,10 +104,6 @@ export default class Siema {
       this.selector.addEventListener('mouseup', this.mouseupHandler);
       this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
-    }
-
-    if (this.selector === null) {
-      throw new Error('Something wrong with your selector 😭');
     }
 
     // update perPage number dependable of user value
