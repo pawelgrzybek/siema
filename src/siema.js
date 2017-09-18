@@ -40,6 +40,7 @@ export default class Siema {
       perPage: 1,
       startIndex: 0,
       draggable: true,
+      multipleDrag: true,
       threshold: 20,
       loop: false,
       onInit: () => {},
@@ -249,7 +250,7 @@ export default class Siema {
   updateAfterDrag() {
     const movement = this.drag.endX - this.drag.startX;
     const movementDistance = Math.abs(movement);
-    const howManySliderToSlide = Math.ceil(movementDistance / (this.selectorWidth / this.perPage));
+    const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
 
     if (movement > 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
       this.prev(howManySliderToSlide);

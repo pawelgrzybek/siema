@@ -49,6 +49,7 @@ new Siema({
   perPage: 1,
   startIndex: 0,
   draggable: true,
+  multipleDrag: true,
   threshold: 20,
   loop: false,
   onInit: () => {},
@@ -73,6 +74,9 @@ Index (zero-based) of the starting slide [(example)](http://codepen.io/pawelgrzy
 
 **`draggable`** (boolean)  
 Use dragging and touch swiping [(example)](http://codepen.io/pawelgrzybek/pen/mmbVVj).
+
+**`multipleDrag`** (boolean)  
+Allow dragging to move multiple slides.
 
 **`threshold`** (number)  
 Touch and mouse dragging threshold (in px) [(example)](http://codepen.io/pawelgrzybek/pen/gWYPrQ).
