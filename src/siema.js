@@ -40,6 +40,7 @@ export default class Siema {
       perPage: 1,
       startIndex: 0,
       draggable: true,
+      cursors: true,
       threshold: 20,
       loop: false,
       onInit: () => {},
@@ -115,7 +116,7 @@ export default class Siema {
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
     if (this.config.draggable) {
-      this.selector.style.cursor = '-webkit-grab';
+      this.updateCursor('-webkit-grab');
     }
 
     // Create a document fragment to put slides into it
@@ -350,7 +351,7 @@ export default class Siema {
   mouseupHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
-    this.selector.style.cursor = '-webkit-grab';
+    this.updateCursor('-webkit-grab');
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     if (this.drag.endX) {
@@ -367,7 +368,7 @@ export default class Siema {
     e.preventDefault();
     if (this.pointerDown) {
       this.drag.endX = e.pageX;
-      this.selector.style.cursor = '-webkit-grabbing';
+      this.updateCursor('-webkit-grabbing');
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
@@ -381,12 +382,22 @@ export default class Siema {
   mouseleaveHandler(e) {
     if (this.pointerDown) {
       this.pointerDown = false;
-      this.selector.style.cursor = '-webkit-grab';
+      this.updateCursor('-webkit-grab');
       this.drag.endX = e.pageX;
       this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.updateAfterDrag();
       this.clearDrag();
+    }
+  }
+
+
+  /**
+   * Updates the draggable element's cursor.
+   */
+  updateCursor(cursor) {
+    if (this.config.cursors) {
+      this.selector.style.cursor = cursor;
     }
   }
 
@@ -402,7 +413,7 @@ export default class Siema {
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
     if (this.config.draggable) {
-      this.selector.style.cursor = '-webkit-grab';
+      this.updateCursor('-webkit-grab');
     }
 
     // Create a document fragment to put slides into it
@@ -509,7 +520,7 @@ export default class Siema {
    */
   destroy(restoreMarkup = false, callback) {
     window.removeEventListener('resize', this.resizeHandler);
-    this.selector.style.cursor = 'auto';
+    this.updateCursor('auto');
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
     this.selector.removeEventListener('touchend', this.touchendHandler);
     this.selector.removeEventListener('touchmove', this.touchmoveHandler);
