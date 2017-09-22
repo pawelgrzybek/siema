@@ -206,6 +206,10 @@ Bug fixes are more than welcome. If you have a feature suggestion please [open a
 yarn run build
 ```
 
-## Extra
+## Extra & Thanks
 
-Siema means 'hello' in Polish. When I play around with some code, I always use random names. That's the whole story behind the name of this one :) Huge thanks to [Jarkko Sibenberg](http://www.sibenberg.com/) for the cute logo design!
+Siema means 'hello' in Polish. When I play around with some code, I always use random names. That's the whole story behind the name of this one :)
+
+Huge thanks to [Jarkko Sibenberg](http://www.sibenberg.com/) for the cute logo design! I can't thank [BrowserStack](https://www.browserstack.com) enough for giving me a free access to their testing amazing service.
+
+<img class="browserstack" src="assets/bs.svg">

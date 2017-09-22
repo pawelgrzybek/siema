@@ -130,3 +130,9 @@ Prints current slide index [(example)](https://codepen.io/pawelgrzybek/pen/XRNOP
 - Safari 4
 - Android Browser 4.0
 - iOS Safari 6.0
+
+## Extra & Thanks
+
+Siema means 'hello' in Polish. When I play around with some code, I always use random names. That's the whole story behind the name of this one :)
+
+Huge thanks to [Jarkko Sibenberg](http://www.sibenberg.com/) for the cute logo design! I can't thank [BrowserStack](https://www.browserstack.com) enough for giving me a free access to their testing amazing service.

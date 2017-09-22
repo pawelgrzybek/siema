@@ -166,3 +166,8 @@ code {
 button:active {
   background: #f7f7f7;
 }
+
+.browserstack {
+  width: 100%;
+  max-width: 188px;
+}
