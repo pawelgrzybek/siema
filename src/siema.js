@@ -21,6 +21,7 @@ export default class Siema {
     // Create global references
     this.selectorWidth = this.selector.offsetWidth;
     this.innerElements = [].slice.call(this.selector.children);
+    this.totalSlides = this.innerElements.length;
     this.currentSlide = this.config.startIndex;
     this.transformProperty = Siema.webkitOrNot();
 

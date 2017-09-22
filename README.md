@@ -121,6 +121,9 @@ Remove all event listeners on instance [(example)](http://codepen.io/pawelgrzybe
 **`currentSlide`**  
 Prints current slide index [(example)](https://codepen.io/pawelgrzybek/pen/XRNOPP).
 
+**`totalSlides`**
+Prints number of total slides [(example)](https://codepen.io/pawelgrzybek/pen/XRNOPP).
+
 ## Browser support
 
 - IE10
