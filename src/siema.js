@@ -47,6 +47,7 @@ export default class Siema {
       perPage: 1,
       startIndex: 0,
       draggable: true,
+      swipable: true,
       multipleDrag: true,
       threshold: 20,
       loop: false,
@@ -82,8 +83,7 @@ export default class Siema {
     // Resize element on window resize
     window.addEventListener('resize', this.resizeHandler);
 
-    // If element is draggable / swipable, add event handlers
-    if (this.config.draggable) {
+    if (this.config.draggable || this.config.swipable) {
       // Keep track pointer hold and dragging distance
       this.pointerDown = false;
       this.drag = {
@@ -92,17 +92,23 @@ export default class Siema {
         startY: 0,
         letItGo: null
       };
+    }
 
-      // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler, { passive: true });
-      this.selector.addEventListener('touchend', this.touchendHandler);
-      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
-
+    // If element is draggable, add event handlers
+    if (this.config.draggable) {
       // Mouse events
       this.selector.addEventListener('mousedown', this.mousedownHandler);
       this.selector.addEventListener('mouseup', this.mouseupHandler);
       this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
+    }
+
+    // If element is swipable, add event handlers
+    if (this.config.swipable) {
+      // Touch events
+      this.selector.addEventListener('touchstart', this.touchstartHandler, { passive: true });
+      this.selector.addEventListener('touchend', this.touchendHandler);
+      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
     }
   }
 
