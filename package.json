@@ -5,13 +5,13 @@
   "main": "dist/siema.min.js",
   "devDependencies": {
     "babel": "^6.23.0",
-    "babel-core": "^6.23.1",
+    "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.22.0",
-    "eslint": "^4.7.0",
-    "eslint-loader": "^1.7.1",
-    "webpack": "^3.6.0"
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.9.0",
+    "eslint-loader": "^1.9.0",
+    "webpack": "^3.8.0"
   },
   "scripts": {
     "build": "webpack && cp dist/siema.min.js docs/assets",
