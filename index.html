@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body { margin: 25px 20% 0; }
+      img { width: 100%; }
+
+      @media ( min-width: 767px ) {
+        .dsa { display: none; }
+      }
+
+      @media ( max-width: 767px ) {
+        body { margin: 25px 20px 0; }
+        .asd { display: none; }
+      }
+
+    </style>
+    <script src="dist/siema.min.js"></script>
+  </head>
+  <body>
+
+  <div id="siema_wrapper">
+    <div class="siema">
+      <img alt='' src="images/1.svg" />
+      <img alt='' src="images/2.svg" />
+      <img alt='' src="images/1.svg" />
+      <img alt='' src="images/2.svg" />
+    </div>
+  </div>
+
+    <button class="prev">prev</button>
+    <button class="next">next</button>
+
+    <script>
+      new Siema(
+        {
+          'breakpoints': [
+            {
+              'selector': '.asd',
+              'items': 1,
+              'navigation': true,
+            },
+            {
+              'selector': '.dsa',
+              'items': 3,
+              'navigation': true,
+            }
+          ]
+        }
+      );
+    </script>
+  </body>
+</html>
+
