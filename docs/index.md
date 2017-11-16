@@ -13,7 +13,7 @@ Siema is a lightweight (only 2kb gzipped) carousel plugin with no dependencies a
 5. [Browser support](#browser-support)
 6. [Other implementations](#other-implementations)
 7. [Contributing](#contributing)
-8. [Extra](#extra)
+8. [Extra](#extra--thanks)
 
 ## Installation
 
