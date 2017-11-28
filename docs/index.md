@@ -1,8 +1,19 @@
-# Siema - Lightweight and simple carousel with no dependencies
-
-Full docs with examples: [https://pawelgrzybek.com/siema/](https://pawelgrzybek.com/siema/).
+---
+layout: default
+---
 
 Siema is a lightweight (only 2kb gzipped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and [available on Github](https://github.com/pawelgrzybek/siema). It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.
+
+<a href="https://github.com/pawelgrzybek/siema/releases" class="btn">Download Siema from Github</a>
+
+1. [Installation](#installation)
+2. [Options](#options)
+3. [API](#api)
+4. [Example](#example)
+5. [Browser support](#browser-support)
+6. [Other implementations](#other-implementations)
+7. [Contributing](#contributing)
+8. [Extra](#extra--thanks)
 
 ## Installation
 
@@ -36,6 +47,11 @@ new Siema();
   new Siema();
 </script>
 ```
+
+<video class="video" controls poster="assets/siematutorial.jpg">
+  <source src="assets/siema.webm" type="video/webm">
+  <source src="assets/siema.mp4" type="video/mp4">
+</video>
 
 ## Options
 
@@ -121,18 +137,79 @@ Remove all event listeners on instance [(example)](http://codepen.io/pawelgrzybe
 **`currentSlide`**  
 Prints current slide index [(example)](https://codepen.io/pawelgrzybek/pen/XRNOPP).
 
+## Example
+
+Basic carousel with next and previous buttons.
+
+```html
+<div class="siema">
+  <img src="assets/siema--pink.svg">
+  <img src="assets/siema--yellow.svg">
+  <img src="assets/siema--pink.svg">
+  <img src="assets/siema--yellow.svg">
+</div>
+
+<button class="prev">prev</button>
+<button class="next">next</button>
+```
+
+```js
+const mySiema = new Siema();
+document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
+document.querySelector('.next').addEventListener('click', () => mySiema.next());
+```
+
+<div class="siema">
+  <img src="assets/siema--pink.svg">
+  <img src="assets/siema--yellow.svg">
+  <img src="assets/siema--pink.svg">
+  <img src="assets/siema--yellow.svg">
+</div>
+
+<button class="btn js-prev">prev</button>
+<button class="btn js-next">next</button>
+
+<script>
+  var mySiema = new Siema();
+  document.querySelector('.js-prev').addEventListener('click', function() {mySiema.prev()});
+  document.querySelector('.js-next').addEventListener('click', function() {mySiema.next()});
+</script>
+
+I've also created a Codepen collection with tons of Siema examples.
+
+<a href="http://codepen.io/collection/Adpkkd/" class="btn">Check the Codepen collection</a>
+
 ## Browser support
 
-- IE10
-- Chrome 12
-- Firefox 16
-- Opera 15
-- Safari 4
-- Android Browser 4.0
-- iOS Safari 6.0
+  - IE10
+  - Chrome 12
+  - Firefox 16
+  - Opera 15
+  - Safari 4
+  - Android Browser 4.0
+  - iOS Safari 6.0
+
+## Other implementations
+
+- [Angular version](https://www.npmjs.com/package/ngx-siema) by Lex Zhukov
+- [React version](https://www.npmjs.com/package/react-siema) by Mantas Kaveckas
+- [Vue version](https://www.npmjs.com/package/vue-siema) by Marko Bolliger
+- [Siema-rails](https://github.com/Naggi-Goishi/siema-rails) by Naggi Goishi
+
+
+## Contributing
+Siema's purpose is to provide a basic carousel tool and allow developers to extend it by using the available methods. It doesn't come with any complex configuration and myriad options — I would like to keep it this way. If you need a more powerful library I recommend the amazing [Flickity](http://flickity.metafizzy.co/) by David DeSandro or [Swiper](http://idangero.us/swiper/) by iDangero team.
+
+Bug fixes are more than welcome. If you have a feature suggestion please [open an issue](https://github.com/pawelgrzybek/siema/issues) on Github. Before sending a pull request make sure to use the `build` task please.
+
+```shell
+yarn run build
+```
 
 ## Extra & Thanks
 
 Siema means 'hello' in Polish. When I play around with some code, I always use random names. That's the whole story behind the name of this one :)
 
 Huge thanks to [Jarkko Sibenberg](http://www.sibenberg.com/) for the cute logo design! I can't thank [BrowserStack](https://www.browserstack.com) enough for giving me a free access to their testing amazing service.
+
+<img class="browserstack" src="assets/bs.svg">

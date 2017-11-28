@@ -24,22 +24,28 @@ body {
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
   margin-bottom: 1.6rem;
   color: #000;
   font-family: 'Source Code Pro', monospace;
   font-weight: 700;
 }
 
+h1 {
+  font-size: 2.4rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: 3.2rem;
+}
+
 p {
   margin-bottom: 1.6rem;
 }
 
-ul {
+ul,
+ol {
   margin: 0 0 1.6rem 1.6rem;
 }
 
@@ -82,11 +88,6 @@ code {
   max-width: 44rem;
   margin: 3.2rem auto;
   padding: 0 1rem;
-}
-
-/* Section */
-.section {
-  margin-bottom: 3.2rem;
 }
 
 /* Logo */
@@ -164,4 +165,9 @@ code {
 
 button:active {
   background: #f7f7f7;
+}
+
+.browserstack {
+  width: 100%;
+  max-width: 188px;
 }

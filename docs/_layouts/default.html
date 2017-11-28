@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Pawel Grzybek - https://pawelgrzybek.com">
+
+  <title>Siema - Lightweight and simple carousel with no dependencies</title>
+  <meta name="description" content="Siema is a simple and very lightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies.">
+
+  <!-- Open graph data -->
+  <meta property="og:site_name" content="Siema - Lightweight and simple carousel with no dependencies">
+  <meta property="og:title" content="Siema - Lightweight and simple carousel with no dependencies">
+  <meta property="og:url" content="https://pawelgrzybek.com/siema">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Siema is a simple and very lightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies.">
+  <meta property="og:image" content="https://pawelgrzybek.com/siema/assets/siema.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@pawelgrzybek" />
+  <meta name="twitter:creator" content="@pawelgrzybek" />
+  <meta name="twitter:title" content="Siema - Lightweight and simple carousel with no dependencies" />
+  <meta name="twitter:description" content="Siema is a simple and very lightweight slider / carousel plugin written in pure vanilla JavaScript without any dependencies."
+  />
+  <meta property="og:image" content="https://pawelgrzybek.com/siema/assets/siema.jpg">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="assets/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="assets/manifest.json">
+  <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#ffffff">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <meta name="msapplication-config" content="assets/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- General -->
+  <link rel="stylesheet" type="text/css" href="assets/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet">
+  <!-- <script src="dist/siema.min.js"></script> -->
+  <script src="assets/siema.min.js"></script>
+</head>
+
+<body>
+
+  <div class="page">
+    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 503 358">
+      <g class="logo__hand" transform="translate(0 53)">
+        <path fill="#FF0000" d="M180.2,145.8 C169.8,145.8 161,153.8 160,163.9 L160,82 C160,71.1 150.9,62.2 140,62.2 C129.1,62.2 120,71.1 120,82 L120,60 C120,49.1 111.4,40.2 100.5,40.2 C89.6,40.2 81,49.1 81,60 L81,81.1 C81,70.2 71.9,61.3 61,61.3 C50.1,61.3 41,70.2 41,81.1 L41,186.7 L41,186.7 L41,234.3 C41,254.3 57.1,270.6 77.1,270.6 L147.9,270.6 C154.4,270.6 159.9,265.2 160.1,258.7 C160.1,258.5 160.4,258.4 160.6,258.4 C171.7,258.3 200.1,251.1 200.1,226.2 L200.1,165.4 C200,154.6 191.1,145.8 180.2,145.8 Z"
+          opacity=".3" />
+        <path fill="#FFFF00" d="M139.2,105.8 C128.8,105.8 120,113.8 119,123.9 L119,42 C119,31.1 109.9,22.2 99,22.2 C88.1,22.2 79,31.1 79,42 L79,20 C79,9.1 70.4,0.2 59.5,0.2 C48.6,0.3 40,9.2 40,20.1 L40,41.2 C40,30.3 30.9,21.4 20,21.4 C9.1,21.4 0,30.3 0,41.2 L0,146.8 L0,146.8 L0,194.4 C0,214.4 17.1,231.7 37.1,231.7 L107.9,231.7 C114.4,231.7 119.9,225.8 120.1,219.3 C120.1,219.1 119.9,218.7 120.1,218.7 C131.2,218.6 159.1,211.1 159.1,186.2 L159.1,125.4 C159,114.6 150.1,105.8 139.2,105.8 Z"
+          opacity=".3" />
+        <path fill="#000000" d="M135.000629,169.182211 L135.000629,167.7 L135,62 C135,53.8614237 128.338576,47.2 120.2,47.2 C112.642542,47.2 106.358821,52.9440963 105.5,60.2811268 L105.5,145.9 L100.45,145.9 L95.4,145.9 L95.4,62 C95.4,61.2472905 95.4338137,60.5022396 95.5,59.7662885 L95.5,40.1 C95.5,31.9614237 88.8385763,25.3 80.7,25.3 C72.5614237,25.3 65.9,31.9614237 65.9,40.1 L65.9,145.9 L55.9,145.9 L55.9,103.45 L55.9,61.1 C55.9,52.9614237 49.2385763,46.3 41.1,46.3 C32.9614237,46.3 26.3,52.9614237 26.3,61.1 L26.3,166.85 L26.3,214.5 C26.3,231.704829 40.3864407,245.8 57.5086792,245.8 L128.130566,245.8 C131.878524,245.8 135.167203,242.587378 135.301215,238.777347 C135.364723,235.876941 137.675825,233.600003 140.553963,233.600204 C146.652347,233.545125 155.282747,231.331556 161.881866,227.481319 C170.24284,222.603134 174.9,215.701722 174.9,206.4 L174.9,145.6 C174.9,137.458608 168.357891,130.9 160.24956,130.9 C151.841983,130.9 145.000629,137.758608 145.000629,146.2 L145.000629,177.9 L144.4,177.9 L144.4,178.2 C125.061424,178.2 109.4,193.861424 109.4,213.2 L99.4,213.2 C99.4,191.562312 114.654517,173.502075 135.000629,169.182211 Z M16.3,166.85 L16.3,61.1 C16.3,47.4385763 27.4385763,36.3 41.1,36.3 C46.6396366,36.3 51.7644514,38.1314721 55.9,41.2199721 L55.9,40.1 C55.9,26.4385763 67.0385763,15.3 80.7,15.3 C94.3614237,15.3 105.5,26.4385763 105.5,40.1 L105.5,42.0456779 C109.618031,39.0021232 114.704928,37.2 120.2,37.2 C133.861424,37.2 145,48.3385763 145,62 L145,126.040965 C149.238037,122.815505 154.522275,120.9 160.24956,120.9 C173.886385,120.9 184.9,131.941392 184.9,145.6 L184.9,206.4 C184.9,219.565263 178.150785,229.566876 166.92131,236.118681 C160.092525,240.102915 151.73651,242.609809 144.603785,243.362155 C143.21582,243.508555 141.874176,243.588517 140.599119,243.6 C143.116649,243.6 145.221075,241.536735 145.297521,239.053387 C145.251856,240.541253 145.012249,241.985807 144.603785,243.362155 C142.486142,250.497708 135.829937,255.8 128.130566,255.8 L57.5086792,255.8 C34.8622058,255.8 16.3,237.22629 16.3,214.5 L16.3,166.85 Z"
+        />
+      </g>
+      <g transform="translate(211)">
+        <path fill="#FFFF00" d="M251.4,158.9 C251.4,246.7 200.7,317.8 125.8,317.8 C50.9,317.8 0.2,246.7 0.2,158.9 C0.2,71.1 22.6,0 125.9,0 C224.8,0 251.4,71.1 251.4,158.9 Z"
+          opacity=".3" />
+        <path fill="#FF0000" d="M291.4,198.9 C291.4,286.7 240.7,357.8 165.8,357.8 C90.9,357.8 40.2,286.7 40.2,198.9 C40.2,111.1 62.6,40 165.9,40 C264.8,40 291.4,111.1 291.4,198.9 Z"
+          opacity=".3" />
+        <path fill="#000000" d="M266.4,178.9 C266.4,266.663559 215.70498,332.8 145.8,332.8 C75.8950202,332.8 25.2,266.663559 25.2,178.9 C25.2,130.344009 32.1829713,94.5977767 48.5163721,69.2319281 C67.2620698,40.119771 98.5391854,25 145.9,25 C191.288302,25 222.347841,40.2205647 241.566956,69.2829992 C258.623592,95.0754142 266.4,131.680186 266.4,178.9 Z M276.4,178.9 C276.4,129.897406 268.240281,91.4883324 249.908044,63.7670008 C228.754245,31.7790074 194.514502,15 145.9,15 C95.3055998,15 60.8035625,31.6787407 40.1086279,63.8180719 C22.5180139,91.1363787 15.2,128.597714 15.2,178.9 C15.2,271.693503 69.7046755,342.8 145.8,342.8 C221.895325,342.8 276.4,271.693503 276.4,178.9 Z"
+        />
+        <path fill="#000000" d="M180.9 178.9C180.9 167.861424 189.861424 158.9 200.9 158.9 211.938576 158.9 220.9 167.861424 220.9 178.9L230.9 178.9C230.9 162.338576 217.461424 148.9 200.9 148.9 184.338576 148.9 170.9 162.338576 170.9 178.9L180.9 178.9zM70.9 178.9C70.9 167.861424 79.8614237 158.9 90.9 158.9 101.938576 158.9 110.9 167.861424 110.9 178.9L120.9 178.9C120.9 162.338576 107.461424 148.9 90.9 148.9 74.3385763 148.9 60.9 162.338576 60.9 178.9L70.9 178.9z"
+        />
+        <path fill="#FF0000" d="M145.8,288.7 C179.4,288.7 207.4,264.6 213.5,232.8 C214.8,226 209.6,219.8 202.7,219.8 L88.9,219.8 C82,219.8 76.8,226.1 78.1,232.8 C84.2,264.6 112.2,288.7 145.8,288.7 Z"
+        />
+      </g>
+    </svg>
+
+    <h1 class="title">
+      Siema
+      <span class="title__desc">Lightweight and simple carousel with no dependencies</span>
+    </h1>
+
+    {{ content }}
+
+    <!-- Footer -->
+    <footer class="section">
+      <hr>
+      <p>Built by <a href="https://pawelgrzybek.com">Paweł Grzybek</a> | Follow me on: <a href="https://twitter.com/pawelgrzybek">Twitter</a>,
+        <a href="https://github.com/pawelgrzybek">Github</a>, <a href="https://www.instagram.com/pawelgrzybek/">Instagram</a></p>
+    </footer>
+
+  </div>
+</body>
+
+</html>
