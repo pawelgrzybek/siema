@@ -50,6 +50,7 @@ export default class Siema {
       multipleDrag: true,
       threshold: 20,
       loop: false,
+      bullets: true,
       onInit: () => {},
       onChange: () => {},
     };
@@ -165,6 +166,23 @@ export default class Siema {
     this.selector.innerHTML = '';
     this.selector.appendChild(this.sliderFrame);
 
+    if (this.config.bullets) {
+      const bulletElements = document.createElement('div');
+      bulletElements.classList = 'siema__bullets';
+      this.bullets = [];
+      for (let i = 0; i < this.innerElements.length; i++) {
+        const bullet = document.createElement('button');
+        bullet.dataset.slide = i;
+        this.bullets.push(bullet);
+        bulletElements.appendChild(bullet);
+      }
+
+      // Adds the elements for a bullet navigation
+      this.selector.appendChild(bulletElements);
+
+      this.bulletClickEventAttach();
+    }
+
     // Go to currently active slide after initial build
     this.slideToCurrent();
     this.config.onInit.call(this);
@@ -267,6 +285,19 @@ export default class Siema {
    */
   slideToCurrent() {
     this.sliderFrame.style[this.transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
+
+    if (typeof this.bullets === 'undefined') {
+      throw 'Unable to activate bullet from a non existing group.';
+    }
+
+    this.bullets.forEach(bullet => {
+      if (Number(bullet.dataset.slide) === this.currentSlide) {
+        bullet.classList.add('active');
+      }
+      else {
+        bullet.classList.remove('active');
+      }
+    });
   }
 
 
@@ -523,6 +554,22 @@ export default class Siema {
     this.insert(item, this.innerElements.length + 1);
     if (callback) {
       callback.call(this);
+    }
+  }
+
+  bulletClickEventAttach() {
+    if (this.bullets) {
+      this.bullets.forEach(bullet => {
+        const targetSlide = bullet.dataset.slide;
+        bullet.addEventListener('click touchstart', e => {
+          e.stopPropagation();
+          if (targetSlide === null) {
+            return;
+          }
+
+          this.goTo(targetSlide, null);
+        });
+      });
     }
   }
 
