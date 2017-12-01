@@ -1,0 +1,22 @@
+{
+  "name": "siema",
+  "description": "Lightweight and simple carousel with no dependencies",
+  "version": "1.4.2",
+  "main": "dist/siema.min.js",
+  "authors": "Pawel Grzybek <grzybecki@gmail.com> (https://pawelgrzybek.com/)",
+  "homepage": "https://github.com/pawelgrzybek/siema",
+  "license": "MIT",
+  "ignore": [
+    "docs",
+    "images",
+    "src",
+    ".editorconfig",
+    ".eslintrc.js",
+    "*.md",
+    "*.html",
+    "package-lock.json",
+    "package.json",
+    "webpack.config.js",
+    "yarn.lock"
+  ]
+}
