@@ -68,73 +68,77 @@ new Siema({
   multipleDrag: true,
   threshold: 20,
   loop: false,
+  stopPropagation: true,
   onInit: () => {},
   onChange: () => {},
 });
 ```
 
-**`selector`** (string or DOM element)  
+**`selector`** (string or DOM element)
 The selector to use as a carousel. Siema will use all immediate children of this selector as a slider items. It can be a query string [(example)](http://codepen.io/pawelgrzybek/pen/QvLjxY) or DOM element [(example)](http://codepen.io/pawelgrzybek/pen/gWYaje).
 
-**`duration`** (number)  
+**`duration`** (number)
 Slide transition duration in milliseconds [(example)](http://codepen.io/pawelgrzybek/pen/BRBoqO).
 
-**`easing`** (string)  
+**`easing`** (string)
 It is like a CSS `transition-timing-function` — describes acceleration curve [(example)](http://codepen.io/pawelgrzybek/pen/aWovrB).
 
-**`perPage`** (number or object)  
+**`perPage`** (number or object)
 The number of slides to be shown. It accepts a number [(example)](http://codepen.io/pawelgrzybek/pen/bWbVXz) or an object [(example)](http://codepen.io/pawelgrzybek/pen/dWbGyZ) for complex responsive layouts.
 
-**`startIndex`** (number)  
+**`startIndex`** (number)
 Index (zero-based) of the starting slide [(example)](http://codepen.io/pawelgrzybek/pen/vmBLER).
 
-**`draggable`** (boolean)  
+**`draggable`** (boolean)
 Use dragging and touch swiping [(example)](http://codepen.io/pawelgrzybek/pen/mmbVVj).
 
-**`multipleDrag`** (boolean)  
+**`multipleDrag`** (boolean)
 Allow dragging to move multiple slides.
 
-**`threshold`** (number)  
+**`threshold`** (number)
 Touch and mouse dragging threshold (in px) [(example)](http://codepen.io/pawelgrzybek/pen/gWYPrQ).
 
-**`loop`** (boolean)  
+**`loop`** (boolean)
 Loop the slides around [(example)](http://codepen.io/pawelgrzybek/pen/zwOrKN).
 
-**`onInit`** (function)  
+**`onInit`** (function)
 Runs immediately after initialization [(example)](http://codepen.io/pawelgrzybek/pen/BRBjpE).
 
-**`onChange`** (function)  
+**`onChange`** (function)
 Runs after slide change [(example)](http://codepen.io/pawelgrzybek/pen/RVbrVe).
+
+**`stopPropagation`** (boolean)
+Stops propagation for internal events
 
 ## API
 
 As mentioned above, Siema doesn't come with many options - just a few useful methods. Combine it with some very basic JavaScript and voila!
 
-**`prev(howManySlides = 1, callback)`**  
+**`prev(howManySlides = 1, callback)`**
 Go to previous item [(example)](http://codepen.io/pawelgrzybek/pen/JNPKVE). Optionally slide few items backward by passing `howManySlides` (number) argument [(example)](http://codepen.io/pawelgrzybek/pen/wdwWZQ). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/JNPKQW).
 
-**`next(howManySlides = 1, callback)`**  
+**`next(howManySlides = 1, callback)`**
 Go to next item [(example)](http://codepen.io/pawelgrzybek/pen/JNPKVE). Optionally slide few items forward by passing `howManySlides` (number) argument [(example)](http://codepen.io/pawelgrzybek/pen/wdwWZQ). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/JNPKQW).
 
-**`goTo(index, callback)`**  
+**`goTo(index, callback)`**
 Go to item at particular `index` (number) [(example)](http://codepen.io/pawelgrzybek/pen/gWYLXP). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/ZKzBvo).
 
-**`remove(index, callback)`**  
+**`remove(index, callback)`**
 Remove item at particular `index` (number) [(example)](http://codepen.io/pawelgrzybek/pen/BRBpQJ). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/rmBjjE).
 
-**`insert(item, index, callback)`**  
+**`insert(item, index, callback)`**
 Insert new `item` (DOM element) at specific `index` (number) [(example)](http://codepen.io/pawelgrzybek/pen/QvLdaJ). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/vmBgdZ).
 
-**`prepend(item, callback)`**  
+**`prepend(item, callback)`**
 Prepend new `item` (DOM element) [(example)](http://codepen.io/pawelgrzybek/pen/rmBymW). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/LyPWLe).
 
-**`append(item, callback)`**  
+**`append(item, callback)`**
 Append new `item` (DOM element) [(example)](http://codepen.io/pawelgrzybek/pen/RVbpZe). Optional `callback` (function) available as a second argument [(example)](http://codepen.io/pawelgrzybek/pen/rmByGj).
 
-**`destroy(restoreMarkup = false, callback)`**  
+**`destroy(restoreMarkup = false, callback)`**
 Remove all event listeners on instance [(example)](http://codepen.io/pawelgrzybek/pen/oWvZEd). Use `restoreMarkup` to restore the initial markup inside selector [(example)](http://codepen.io/pawelgrzybek/pen/ZKzeoL). Optional `callback` (function) available as a third argument [(example)](http://codepen.io/pawelgrzybek/pen/Wjepyv).
 
-**`currentSlide`**  
+**`currentSlide`**
 Prints current slide index [(example)](https://codepen.io/pawelgrzybek/pen/XRNOPP).
 
 ## Example
