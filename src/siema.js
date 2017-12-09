@@ -50,6 +50,7 @@ export default class Siema {
       multipleDrag: true,
       threshold: 20,
       loop: false,
+      stopPropagation: true,
       onInit: () => {},
       onChange: () => {},
     };
@@ -319,7 +320,7 @@ export default class Siema {
    * touchstart event handler
    */
   touchstartHandler(e) {
-    e.stopPropagation();
+    this.stopPropagation(e);
     this.pointerDown = true;
     this.drag.startX = e.touches[0].pageX;
     this.drag.startY = e.touches[0].pageY;
@@ -330,7 +331,7 @@ export default class Siema {
    * touchend event handler
    */
   touchendHandler(e) {
-    e.stopPropagation();
+    this.stopPropagation(e);
     this.pointerDown = false;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -345,7 +346,7 @@ export default class Siema {
    * touchmove event handler
    */
   touchmoveHandler(e) {
-    e.stopPropagation();
+    this.stopPropagation(e);
 
     if (this.drag.letItGo === null) {
       this.drag.letItGo = Math.abs(this.drag.startY - e.touches[0].pageY) < Math.abs(this.drag.startX - e.touches[0].pageX);
@@ -366,7 +367,7 @@ export default class Siema {
    */
   mousedownHandler(e) {
     e.preventDefault();
-    e.stopPropagation();
+    this.stopPropagation(e);
     this.pointerDown = true;
     this.drag.startX = e.pageX;
   }
@@ -376,7 +377,7 @@ export default class Siema {
    * mouseup event handler
    */
   mouseupHandler(e) {
-    e.stopPropagation();
+    this.stopPropagation(e);
     this.pointerDown = false;
     this.selector.style.cursor = '-webkit-grab';
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -547,6 +548,16 @@ export default class Siema {
 
     if (callback) {
       callback.call(this);
+    }
+  }
+
+  /**
+   * Stops propagation for given event
+   * @param {event}
+   */
+  stopPropagation(event) {
+    if (event && this.config.stopPropagation) {
+      event.stopPropagation();
     }
   }
 }
