@@ -326,6 +326,12 @@ export default class Siema {
    * touchstart event handler
    */
   touchstartHandler(e) {
+    // Prevent dragging / swiping on inputs, selects and textareas
+    const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
+    if (ignoreSiema) {
+      return;
+    }
+
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.startX = e.touches[0].pageX;
@@ -372,6 +378,12 @@ export default class Siema {
    * mousedown event handler
    */
   mousedownHandler(e) {
+    // Prevent dragging / swiping on inputs, selects and textareas
+    const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
+    if (ignoreSiema) {
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
     this.pointerDown = true;
