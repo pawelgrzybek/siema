@@ -295,8 +295,15 @@ export default class Siema {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
+    // update sliderFrame width
     this.selectorWidth = this.selector.offsetWidth;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+
+    // relcalculate currentSlide
+    // prevent hiding items when browser width increases
+    if (this.currentSlide + this.perPage > this.innerElements.length) {
+      this.currentSlide = this.innerElements.length - this.perPage;
+    }
 
     this.slideToCurrent();
   }
