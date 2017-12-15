@@ -486,6 +486,14 @@ export default class Siema {
     if (index < 0 || index >= this.innerElements.length) {
       throw new Error('Item to remove doesn\'t exist 😭');
     }
+
+    // when iteam wit lower index than current is removed
+    // shift slider back one position
+    // better UX and avoids situation with slider with no visible items
+    if (index < this.currentSlide) {
+      this.currentSlide--;
+    }
+
     this.innerElements.splice(index, 1);
 
     this.updateFrame();
@@ -508,10 +516,12 @@ export default class Siema {
     if (this.innerElements.indexOf(item) !== -1) {
       throw new Error('The same item in a carousel? Really? Nope 😭');
     }
-    this.innerElements.splice(index, 0, item);
 
     // Avoid shifting content
-    this.currentSlide = index <= this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
+    const shouldItShift = index <= this.currentSlide > 0 && this.innerElements.length;
+    this.currentSlide = shouldItShift ? this.currentSlide + 1 : this.currentSlide;
+
+    this.innerElements.splice(index, 0, item);
 
     this.updateFrame();
     if (callback) {
