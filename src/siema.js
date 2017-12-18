@@ -326,8 +326,15 @@ export default class Siema {
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
+    // update sliderFrame width
     this.selectorWidth = this.selector.offsetWidth;
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+
+    // relcalculate currentSlide
+    // prevent hiding items when browser width increases
+    if (this.currentSlide + this.perPage > this.innerElements.length) {
+      this.currentSlide = this.innerElements.length - this.perPage;
+    }
 
     this.slideToCurrent();
   }
@@ -350,6 +357,12 @@ export default class Siema {
    * touchstart event handler
    */
   touchstartHandler(e) {
+    // Prevent dragging / swiping on inputs, selects and textareas
+    const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
+    if (ignoreSiema) {
+      return;
+    }
+
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.startX = e.touches[0].pageX;
@@ -396,6 +409,12 @@ export default class Siema {
    * mousedown event handler
    */
   mousedownHandler(e) {
+    // Prevent dragging / swiping on inputs, selects and textareas
+    const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
+    if (ignoreSiema) {
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
     this.pointerDown = true;
@@ -498,6 +517,14 @@ export default class Siema {
     if (index < 0 || index >= this.innerElements.length) {
       throw new Error('Item to remove doesn\'t exist 😭');
     }
+
+    // when iteam wit lower index than current is removed
+    // shift slider back one position
+    // better UX and avoids situation with slider with no visible items
+    if (index < this.currentSlide) {
+      this.currentSlide--;
+    }
+
     this.innerElements.splice(index, 1);
 
     this.updateFrame();
@@ -520,10 +547,12 @@ export default class Siema {
     if (this.innerElements.indexOf(item) !== -1) {
       throw new Error('The same item in a carousel? Really? Nope 😭');
     }
-    this.innerElements.splice(index, 0, item);
 
     // Avoid shifting content
-    this.currentSlide = index <= this.currentSlide ? this.currentSlide + 1 : this.currentSlide;
+    const shouldItShift = index <= this.currentSlide > 0 && this.innerElements.length;
+    this.currentSlide = shouldItShift ? this.currentSlide + 1 : this.currentSlide;
+
+    this.innerElements.splice(index, 0, item);
 
     this.updateFrame();
     if (callback) {
