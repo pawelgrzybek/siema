@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .siema__bullets{
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .siema__bullets button{
+      border-radius: 50%;
+      height: 1.3em;
+      width: 1.3em;
+      background: black;
+      border: 1px solid transparent;
+      margin: 0 0.1em;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .siema__bullets button.active{
+      background: red;
+    }
+  </style>
+</head>
+<body>
+
+<div class="siema">
+  <div>Hi, I'm slide 1</div>
+  <div>Hi, I'm slide 2</div>
+  <div>Hi, I'm slide 3</div>
+  <div>Hi, I'm slide 4</div>
+</div>
+<script src="./siema.min.js"></script>
+<script>
+  var mySiema = new Siema({
+    selector: '.siema',
+    loop: true,
+    duration: 1000,
+  });
+</script>
+</body>
+</html>
