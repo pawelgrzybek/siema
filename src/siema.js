@@ -135,6 +135,9 @@ export default class Siema {
     // hide everything out of selector's boundaries
     this.selector.style.overflow = 'hidden';
 
+    // disable another display properties, because it's may be `display: flex`
+    this.selector.style.display = 'block';
+
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
