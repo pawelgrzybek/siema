@@ -1,7 +1,7 @@
 /**
  * Hi :-) This is a class representing a Siema.
  */
-export default class Siema {
+class Siema {
   /**
    * Create a Siema.
    * @param {Object} options - Optional settings object.
@@ -50,6 +50,7 @@ export default class Siema {
       multipleDrag: true,
       threshold: 20,
       loop: false,
+      autorotate: 3000,
       onInit: () => {},
       onChange: () => {},
     };
@@ -168,6 +169,7 @@ export default class Siema {
     // Go to currently active slide after initial build
     this.slideToCurrent();
     this.config.onInit.call(this);
+    this.config.autorotate !== undefined ? this.autorotate() : null;
   }
 
 
@@ -238,6 +240,15 @@ export default class Siema {
         callback.call(this);
       }
     }
+  }
+  
+  /**
+   * autorotate
+   */
+  autorotate() {
+	if(this.config.autorotate !== undefined && this.config.autorotate != 0){
+		let timerId = setTimeout( () => {this.next(); this.autorotate();}, this.config.autorotate);
+	}
   }
 
 
