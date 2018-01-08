@@ -50,13 +50,16 @@ export default class Siema {
       multipleDrag: true,
       threshold: 20,
       loop: false,
+      overflowHidden: true,
       onInit: () => {},
       onChange: () => {},
     };
 
     const userSttings = options;
     for (const attrname in userSttings) {
-      settings[attrname] = userSttings[attrname];
+      if (typeof userSttings[attrname] != 'undefined') {
+        settings[attrname] = userSttings[attrname];
+      }
     }
 
     return settings;
@@ -133,7 +136,9 @@ export default class Siema {
     this.resolveSlidesNumber();
 
     // hide everything out of selector's boundaries
-    this.selector.style.overflow = 'hidden';
+    if (this.config.overflowHidden) {
+      this.selector.style.overflow = 'hidden';
+    }
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
