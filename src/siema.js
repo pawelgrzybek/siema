@@ -25,7 +25,7 @@ export default class Siema {
     this.transformProperty = Siema.webkitOrNot();
 
     // Bind all event handlers for referencability
-    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
+    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler', 'clickHandler'].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
@@ -90,7 +90,8 @@ export default class Siema {
         startX: 0,
         endX: 0,
         startY: 0,
-        letItGo: null
+        letItGo: null,
+        preventClick: false,
       };
 
       // Touch events
@@ -103,6 +104,9 @@ export default class Siema {
       this.selector.addEventListener('mouseup', this.mouseupHandler);
       this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
+
+      // Click
+      this.selector.addEventListener('click', this.clickHandler);
     }
   }
 
@@ -120,6 +124,7 @@ export default class Siema {
     this.selector.removeEventListener('mouseup', this.mouseupHandler);
     this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
     this.selector.removeEventListener('mousemove', this.mousemoveHandler);
+    this.selector.removeEventListener('click', this.clickHandler);
   }
 
 
@@ -317,7 +322,8 @@ export default class Siema {
       startX: 0,
       endX: 0,
       startY: 0,
-      letItGo: null
+      letItGo: null,
+      preventClick: this.drag.preventClick
     };
   }
 
@@ -413,6 +419,13 @@ export default class Siema {
   mousemoveHandler(e) {
     e.preventDefault();
     if (this.pointerDown) {
+      // if dragged element is a link
+      // mark preventClick prop as a true
+      // to detemine about browser redirection later on
+      if (e.target.nodeName === 'A') {
+        this.drag.preventClick = true;
+      }
+
       this.drag.endX = e.pageX;
       this.selector.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
@@ -435,6 +448,19 @@ export default class Siema {
       this.updateAfterDrag();
       this.clearDrag();
     }
+  }
+
+
+  /**
+   * click event handler
+   */
+  clickHandler(e) {
+    // if the dragged element is a link
+    // prevent browsers from folowing the link
+    if (this.drag.preventClick) {
+      e.preventDefault();
+    }
+    this.drag.preventClick = false;
   }
 
 
