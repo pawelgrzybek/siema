@@ -52,6 +52,7 @@ new Siema({
   multipleDrag: true,
   threshold: 20,
   loop: false,
+  overflowHidden: true,
   onInit: () => {},
   onChange: () => {},
 });
@@ -83,6 +84,10 @@ Touch and mouse dragging threshold (in px) [(example)](http://codepen.io/pawelgr
 
 **`loop`** (boolean)  
 Loop the slides around [(example)](http://codepen.io/pawelgrzybek/pen/zwOrKN).
+
+**`overflowHidden`** (boolean)  
+Automatically add `overflow: hidden;` style to main carousel DOM element.
+
 
 **`onInit`** (function)  
 Runs immediately after initialization [(example)](http://codepen.io/pawelgrzybek/pen/BRBjpE).
