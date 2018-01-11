@@ -443,6 +443,7 @@ export default class Siema {
       this.pointerDown = false;
       this.selector.style.cursor = '-webkit-grab';
       this.drag.endX = e.pageX;
+      this.drag.preventClick = false;
       this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
       this.updateAfterDrag();
