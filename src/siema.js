@@ -306,7 +306,9 @@ export default class Siema {
 
     // relcalculate currentSlide
     // prevent hiding items when browser width increases
-    this.currentSlide = Math.max(0, this.innerElements.length - this.perPage);
+    if (this.currentSlide + this.perPage > this.innerElements.length) {
+      this.currentSlide = this.innerElements.length <= this.perPage ? 0 : this.innerElements.length - this.perPage;
+    }
 
     this.slideToCurrent();
   }
