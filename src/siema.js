@@ -18,10 +18,13 @@ export default class Siema {
       throw new Error('Something wrong with your selector 😭');
     }
 
+    // update perPage number dependable of user value
+    this.resolveSlidesNumber();
+
     // Create global references
     this.selectorWidth = this.selector.offsetWidth;
     this.innerElements = [].slice.call(this.selector.children);
-    this.currentSlide = Math.max(0, Math.min(this.config.startIndex, this.innerElements.length - this.config.perPage));
+    this.currentSlide = Math.max(0, Math.min(this.config.startIndex, this.innerElements.length - this.perPage));
     this.transformProperty = Siema.webkitOrNot();
 
     // Bind all event handlers for referencability
@@ -133,9 +136,6 @@ export default class Siema {
    */
   init() {
     this.attachEvents();
-
-    // update perPage number dependable of user value
-    this.resolveSlidesNumber();
 
     // hide everything out of selector's boundaries
     this.selector.style.overflow = 'hidden';
@@ -307,7 +307,7 @@ export default class Siema {
     // relcalculate currentSlide
     // prevent hiding items when browser width increases
     if (this.currentSlide + this.perPage > this.innerElements.length) {
-      this.currentSlide = this.innerElements.length - this.perPage;
+      this.currentSlide = this.innerElements.length <= this.perPage ? 0 : this.innerElements.length - this.perPage;
     }
 
     this.slideToCurrent();
