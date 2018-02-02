@@ -68,6 +68,7 @@ export default class Siema {
 
   /**
    * Determine if browser supports unprefixed transform property.
+   * Google Chrome since version 26 supports prefix-less transform
    * @returns {string} - Transform property supported by client.
    */
   static webkitOrNot() {
