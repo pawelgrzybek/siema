@@ -185,7 +185,7 @@ I've also created a Codepen collection with tons of Siema examples.
   - Chrome 12
   - Firefox 16
   - Opera 15
-  - Safari 4
+  - Safari 5.1
   - Android Browser 4.0
   - iOS Safari 6.0
 

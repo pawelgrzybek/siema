@@ -127,7 +127,7 @@ Prints current slide index [(example)](https://codepen.io/pawelgrzybek/pen/XRNOP
 - Chrome 12
 - Firefox 16
 - Opera 15
-- Safari 4
+- Safari 5.1
 - Android Browser 4.0
 - iOS Safari 6.0
 
