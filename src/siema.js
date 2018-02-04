@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /**
  * Hi :-) This is a class representing a Siema.
  */
@@ -140,6 +141,10 @@ export default class Siema {
     // hide everything out of selector's boundaries
     this.selector.style.overflow = 'hidden';
 
+    // set direction
+    this.direction = getComputedStyle(this.selector).direction;
+    this.directionSign = this.direction === 'rtl' ? -1 : 1;
+
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
@@ -156,8 +161,8 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
-      elementContainer.style.cssFloat = 'left';
-      elementContainer.style.float = 'left';
+      elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
+      elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
       elementContainer.appendChild(this.innerElements[i]);
       docFragment.appendChild(elementContainer);
@@ -271,7 +276,7 @@ export default class Siema {
    * Moves sliders frame to position of currently active slide
    */
   slideToCurrent() {
-    this.sliderFrame.style[this.transformProperty] = `translate3d(-${this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
+    this.sliderFrame.style[this.transformProperty] = `translate3d(${this.directionSign * -1 * this.currentSlide * (this.selectorWidth / this.perPage)}px, 0, 0)`;
   }
 
 
@@ -279,7 +284,7 @@ export default class Siema {
    * Recalculate drag /swipe event and reposition the frame of a slider
    */
   updateAfterDrag() {
-    const movement = this.drag.endX - this.drag.startX;
+    const movement = (this.drag.endX - this.drag.startX) * this.directionSign;
     const movementDistance = Math.abs(movement);
     const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
 
@@ -375,7 +380,8 @@ export default class Siema {
       this.drag.endX = e.touches[0].pageX;
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
+      const movement = (this.drag.startX - this.drag.endX) * this.directionSign;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (movement)) * -1 * this.directionSign}px, 0, 0)`;
     }
   }
 
@@ -430,7 +436,8 @@ export default class Siema {
       this.selector.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
+      const movement = (this.drag.startX - this.drag.endX) * this.directionSign;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + movement) * this.directionSign * -1}px, 0, 0)`;
     }
   }
 
@@ -485,8 +492,8 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
-      elementContainer.style.cssFloat = 'left';
-      elementContainer.style.float = 'left';
+      elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
+      elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
       elementContainer.appendChild(this.innerElements[i]);
       docFragment.appendChild(elementContainer);
