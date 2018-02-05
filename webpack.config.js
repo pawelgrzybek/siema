@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const PROD_ENV = process.argv.indexOf('--prod') !== -1;
+
 module.exports = {
   entry: './src/siema.js',
   output: {
@@ -10,6 +12,7 @@ module.exports = {
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -29,9 +32,9 @@ module.exports = {
       },
     ]
   },
-  plugins: [
+  plugins: PROD_ENV ? [
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
     }),
-  ],
+  ] : []
 };
