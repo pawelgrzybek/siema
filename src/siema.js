@@ -56,6 +56,7 @@ export default class Siema {
       loop: false,
       sliderCssClass: 'siema-slider',
       slideCssClass: 'siema-slide',
+      stagePadding: 0,
       onInit: () => {},
       onChange: () => {},
     };
@@ -166,7 +167,7 @@ export default class Siema {
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
       elementContainer.classList.add(this.config.slideCssClass);
-      elementContainer.style.width = `${100 / this.innerElements.length}%`;
+      elementContainer.style.width = `${(100 - this.config.stagePadding) / this.innerElements.length}%`;
       elementContainer.appendChild(this.innerElements[i]);
       docFragment.appendChild(elementContainer);
     }
@@ -497,7 +498,7 @@ export default class Siema {
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
       elementContainer.classList.add(this.config.slideCssClass);
-      elementContainer.style.width = `${100 / this.innerElements.length}%`;
+      elementContainer.style.width = `${(100 - this.config.stagePadding) / this.innerElements.length}%`;
       elementContainer.appendChild(this.innerElements[i]);
       docFragment.appendChild(elementContainer);
     }
