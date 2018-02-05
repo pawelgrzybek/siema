@@ -54,6 +54,8 @@ export default class Siema {
       multipleDrag: true,
       threshold: 20,
       loop: false,
+      sliderCssClass: 'siema-slider',
+      slideCssClass: 'siema-slide',
       onInit: () => {},
       onChange: () => {},
     };
@@ -99,9 +101,9 @@ export default class Siema {
       };
 
       // Touch events
-      this.selector.addEventListener('touchstart', this.touchstartHandler);
+      this.selector.addEventListener('touchstart', this.touchstartHandler, { passive: true });
       this.selector.addEventListener('touchend', this.touchendHandler);
-      this.selector.addEventListener('touchmove', this.touchmoveHandler);
+      this.selector.addEventListener('touchmove', this.touchmoveHandler, { passive: true });
 
       // Mouse events
       this.selector.addEventListener('mousedown', this.mousedownHandler);
@@ -147,6 +149,7 @@ export default class Siema {
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
+    this.sliderFrame.classList.add(this.config.sliderCssClass);
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -161,6 +164,7 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
+      elementContainer.classList.add(this.config.sliderCssClass);
       elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
@@ -376,7 +380,6 @@ export default class Siema {
     }
 
     if (this.pointerDown && this.drag.letItGo) {
-      e.preventDefault();
       this.drag.endX = e.touches[0].pageX;
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
@@ -478,6 +481,7 @@ export default class Siema {
   updateFrame() {
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
+    this.sliderFrame.classList.add(this.config.sliderCssClass);
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -492,6 +496,7 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
+      elementContainer.classList.add(this.config.sliderCssClass);
       elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
