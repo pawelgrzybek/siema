@@ -149,6 +149,7 @@ export default class Siema {
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
+    this.sliderFrame.style.display = 'flex';
     this.sliderFrame.classList.add(this.config.sliderCssClass);
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -165,8 +166,6 @@ export default class Siema {
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
       elementContainer.classList.add(this.config.slideCssClass);
-      elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
-      elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
       elementContainer.appendChild(this.innerElements[i]);
       docFragment.appendChild(elementContainer);
@@ -481,6 +480,7 @@ export default class Siema {
   updateFrame() {
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
+    this.sliderFrame.style.display = 'flex';
     this.sliderFrame.classList.add(this.config.sliderCssClass);
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
@@ -497,8 +497,6 @@ export default class Siema {
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
       elementContainer.classList.add(this.config.slideCssClass);
-      elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
-      elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
       elementContainer.appendChild(this.innerElements[i]);
       docFragment.appendChild(elementContainer);
