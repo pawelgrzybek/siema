@@ -164,7 +164,7 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
-      elementContainer.classList.add(this.config.sliderCssClass);
+      elementContainer.classList.add(this.config.slideCssClass);
       elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
@@ -496,7 +496,7 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
-      elementContainer.classList.add(this.config.sliderCssClass);
+      elementContainer.classList.add(this.config.slideCssClass);
       elementContainer.style.cssFloat = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.float = this.direction === 'ltr' ? 'left' : 'right';
       elementContainer.style.width = `${100 / this.innerElements.length}%`;
