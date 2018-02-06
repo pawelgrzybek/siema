@@ -142,7 +142,7 @@ export default class Siema {
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * (this.innerElements.length + this.perPage)}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
@@ -153,13 +153,31 @@ export default class Siema {
     // Create a document fragment to put slides into it
     const docFragment = document.createDocumentFragment();
 
+    const extra = [];
+
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
       elementContainer.style.cssFloat = 'left';
       elementContainer.style.float = 'left';
-      elementContainer.style.width = `${100 / this.innerElements.length}%`;
+      elementContainer.style.width = `${100 / (this.innerElements.length + this.perPage)}%`;
+
+      if (i < this.perPage) {
+        const cloneElement = this.innerElements[i].cloneNode();
+        cloneElement.innerHTML = this.innerElements[i].innerHTML;
+        extra.push(cloneElement);
+      }
       elementContainer.appendChild(this.innerElements[i]);
+      docFragment.appendChild(elementContainer);
+    }
+
+    // if (this.innerElements.length > this.perPage) {
+    for (let i = 0; i < extra.length; i++) {
+      const elementContainer = document.createElement('div');
+      elementContainer.style.cssFloat = 'left';
+      elementContainer.style.float = 'left';
+      elementContainer.style.width = `${100 / (this.innerElements.length + this.perPage)}%`;
+      elementContainer.appendChild(extra[i]);
       docFragment.appendChild(elementContainer);
     }
 
@@ -203,14 +221,11 @@ export default class Siema {
     if (this.innerElements.length <= this.perPage) {
       return;
     }
-    const beforeChange = this.currentSlide;
     if (this.currentSlide === 0 && this.config.loop) {
-      this.currentSlide = this.innerElements.length - this.perPage;
+      this.updateFrame(this.innerElements.length, this.innerElements.length - howManySlides);
     }
     else {
-      this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
-    }
-    if (beforeChange !== this.currentSlide) {
+      this.currentSlide -= howManySlides;
       this.slideToCurrent();
       this.config.onChange.call(this);
       if (callback) {
@@ -230,17 +245,17 @@ export default class Siema {
       return;
     }
     const beforeChange = this.currentSlide;
-    if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
-      this.currentSlide = 0;
+    if (this.currentSlide === this.innerElements.length && this.config.loop) {
+      this.updateFrame(0, howManySlides);
     }
     else {
-      this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
-    }
-    if (beforeChange !== this.currentSlide) {
-      this.slideToCurrent();
-      this.config.onChange.call(this);
-      if (callback) {
-        callback.call(this);
+      this.currentSlide += howManySlides;
+      if (beforeChange !== this.currentSlide) {
+        this.slideToCurrent();
+        this.config.onChange.call(this);
+        if (callback) {
+          callback.call(this);
+        }
       }
     }
   }
@@ -468,10 +483,11 @@ export default class Siema {
   /**
    * Update after removing, prepending or appending items.
    */
-  updateFrame() {
+  updateFrame(initPostion, slideToPosition) {
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * (this.innerElements.length + this.perPage)}px`;
+
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
@@ -481,14 +497,32 @@ export default class Siema {
 
     // Create a document fragment to put slides into it
     const docFragment = document.createDocumentFragment();
+    const extra = [];
 
     // Loop through the slides, add styling and add them to document fragment
     for (let i = 0; i < this.innerElements.length; i++) {
       const elementContainer = document.createElement('div');
       elementContainer.style.cssFloat = 'left';
       elementContainer.style.float = 'left';
-      elementContainer.style.width = `${100 / this.innerElements.length}%`;
+      elementContainer.style.width = `${100 / (this.innerElements.length + this.perPage)}%`;
+
+      if (i < this.perPage) {
+        const cloneElement = this.innerElements[i].cloneNode();
+        cloneElement.innerHTML = this.innerElements[i].innerHTML;
+        extra.push(cloneElement);
+      }
       elementContainer.appendChild(this.innerElements[i]);
+      docFragment.appendChild(elementContainer);
+
+    }
+
+    // Loop through the slides, add styling and add them to document fragment
+    for (let i = 0; i < extra.length; i++) {
+      const elementContainer = document.createElement('div');
+      elementContainer.style.cssFloat = 'left';
+      elementContainer.style.float = 'left';
+      elementContainer.style.width = `${100 / (this.innerElements.length + this.perPage)}%`;
+      elementContainer.appendChild(extra[i]);
       docFragment.appendChild(elementContainer);
     }
 
@@ -499,8 +533,16 @@ export default class Siema {
     this.selector.innerHTML = '';
     this.selector.appendChild(this.sliderFrame);
 
-    // Go to currently active slide after initial build
+    this.currentSlide = initPostion;
     this.slideToCurrent();
+
+    this.currentSlide = slideToPosition;
+
+    const me = this;
+    // Go to currently active slide after initial build
+    setTimeout(() => {
+      me.slideToCurrent();
+    }, 0);
   }
 
 
@@ -523,7 +565,7 @@ export default class Siema {
 
     this.innerElements.splice(index, 1);
 
-    this.updateFrame();
+    this.updateFrame(this.currentSlide, this.currentSlide);
     if (callback) {
       callback.call(this);
     }
@@ -546,11 +588,10 @@ export default class Siema {
 
     // Avoid shifting content
     const shouldItShift = index <= this.currentSlide > 0 && this.innerElements.length;
-    this.currentSlide = shouldItShift ? this.currentSlide + 1 : this.currentSlide;
 
     this.innerElements.splice(index, 0, item);
 
-    this.updateFrame();
+    this.updateFrame(this.currentSlide, shouldItShift ? this.currentSlide + 1 : this.currentSlide);
     if (callback) {
       callback.call(this);
     }

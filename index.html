@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body>
+<div>
+  <input type="checkbox" id="backward" name="backward" value="backward">
+  <label for="backward">Backward</label>
+</div>
+<div class="siema">
+  <div><img src="yellow1.png" alt="Siema image" /></div>
+  <div><img src="pink2.png" alt="Siema image" /></div>
+  <div><img src="yellow3.png" alt="Siema image" /></div>
+  <div><img src="pink4.png" alt="Siema image" /></div>
+</div>
+<script src='dist/siema.min.js'></script>
+<script >
+  var mySiema = new Siema({
+    selector: '.siema',
+    duration: 200,
+    easing: 'ease-out',
+    perPage: 3,
+    startIndex: 0,
+    draggable: true,
+    multipleDrag: true,
+    threshold: 20,
+    loop: true,
+    onInit: () => {},
+    onChange: () => {},
+  });
+
+  var backward = false;
+  var overall = document.querySelector('input[id="backward"]');
+  overall.addEventListener('click', function() {
+    backward = overall.checked;
+  });
+
+  setInterval(function () {
+    if (backward) {
+      return mySiema.prev();
+    } else {
+      return mySiema.next();
+    }
+  }, 1000);
+</script>
+</body></html>
