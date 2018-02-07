@@ -52,6 +52,7 @@ new Siema({
   multipleDrag: true,
   threshold: 20,
   loop: false,
+  rtl: false,
   onInit: () => {},
   onChange: () => {},
 });
@@ -83,6 +84,9 @@ Touch and mouse dragging threshold (in px) [(example)](http://codepen.io/pawelgr
 
 **`loop`** (boolean)  
 Loop the slides around [(example)](http://codepen.io/pawelgrzybek/pen/zwOrKN).
+
+**`rtl`** (boolean)  
+Enables layout for languages written from right to left (like Hebrew or Arabic) [(example)](https://codepen.io/pawelgrzybek/pen/XZNEgd).
 
 **`onInit`** (function)  
 Runs immediately after initialization [(example)](http://codepen.io/pawelgrzybek/pen/BRBjpE).
