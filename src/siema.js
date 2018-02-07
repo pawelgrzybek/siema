@@ -515,10 +515,13 @@ export default class Siema {
       throw new Error('Item to remove doesn\'t exist 😭');
     }
 
-    // when iteam wit lower index than current is removed
-    // shift slider back one position
-    // better UX and avoids situation with slider with no visible items
-    if (index < this.currentSlide) {
+    // Shift sliderFrame back by one item when:
+    // 1. Item with lower index than currenSlide is removed.
+    // 2. Last item is removed.
+    const lowerIndex = index < this.currentSlide;
+    const lastItem = this.currentSlide + this.perPage - 1 === index;
+
+    if (lowerIndex || lastItem) {
       this.currentSlide--;
     }
 
