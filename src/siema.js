@@ -53,6 +53,7 @@ export default class Siema {
       multipleDrag: true,
       threshold: 20,
       loop: false,
+      rtl: false,
       onInit: () => {},
       onChange: () => {},
     };
