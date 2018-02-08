@@ -419,7 +419,8 @@ export default class Siema {
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const currentOffset = this.currentSlide * (this.selectorWidth / this.perPage);
+      const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
+      const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
       const dragOffset = (this.drag.endX - this.drag.startX);
       const offset = this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
@@ -478,7 +479,8 @@ export default class Siema {
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const currentOffset = this.currentSlide * (this.selectorWidth / this.perPage);
+      const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
+      const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
       const dragOffset = (this.drag.endX - this.drag.startX);
       const offset = this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
