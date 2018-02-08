@@ -274,7 +274,7 @@ export default class Siema {
       this.currentSlide = this.currentSlide + howManySlides;
     }
     else {
-      this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage)
+      this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
     }
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent();
