@@ -121,7 +121,6 @@ export default class Siema {
    */
   detachEvents() {
     window.removeEventListener('resize', this.resizeHandler);
-    this.selector.style.cursor = 'auto';
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
     this.selector.removeEventListener('touchend', this.touchendHandler);
     this.selector.removeEventListener('touchmove', this.touchmoveHandler);
@@ -582,6 +581,8 @@ export default class Siema {
    */
   destroy(restoreMarkup = false, callback) {
     this.detachEvents();
+
+    this.selector.style.cursor = 'auto';
 
     if (restoreMarkup) {
       const slides = document.createDocumentFragment();
