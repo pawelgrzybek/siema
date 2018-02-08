@@ -145,6 +145,17 @@ export default class Siema {
     // rtl or ltr
     this.selector.style.direction = this.config.rtl ? 'rtl' : 'ltr';
 
+    // build a frame and slide to a currentSlide
+    this.buildSliderFrame();
+
+    this.config.onInit.call(this);
+  }
+
+
+  /**
+   * Build a sliderFrame and slide to a current item.
+   */
+  buildSliderFrame() {
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
@@ -177,7 +188,6 @@ export default class Siema {
 
     // Go to currently active slide after initial build
     this.slideToCurrent();
-    this.config.onInit.call(this);
   }
 
 
@@ -480,45 +490,6 @@ export default class Siema {
 
 
   /**
-   * Update after removing, prepending or appending items.
-   */
-  updateFrame() {
-    // Create frame and apply styling
-    this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
-    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
-
-    if (this.config.draggable) {
-      this.selector.style.cursor = '-webkit-grab';
-    }
-
-    // Create a document fragment to put slides into it
-    const docFragment = document.createDocumentFragment();
-
-    // Loop through the slides, add styling and add them to document fragment
-    for (let i = 0; i < this.innerElements.length; i++) {
-      const elementContainer = document.createElement('div');
-      elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
-      elementContainer.style.float = this.config.rtl ? 'right' : 'left';
-      elementContainer.style.width = `${100 / this.innerElements.length}%`;
-      elementContainer.appendChild(this.innerElements[i]);
-      docFragment.appendChild(elementContainer);
-    }
-
-    // Add fragment to the frame
-    this.sliderFrame.appendChild(docFragment);
-
-    // Clear selector (just in case something is there) and insert a frame
-    this.selector.innerHTML = '';
-    this.selector.appendChild(this.sliderFrame);
-
-    // Go to currently active slide after initial build
-    this.slideToCurrent();
-  }
-
-
-  /**
    * Remove item from carousel.
    * @param {number} index - Item index to remove.
    * @param {function} callback - Optional callback to call after remove.
@@ -540,7 +511,9 @@ export default class Siema {
 
     this.innerElements.splice(index, 1);
 
-    this.updateFrame();
+    // build a frame and slide to a currentSlide
+    this.buildSliderFrame();
+
     if (callback) {
       callback.call(this);
     }
@@ -567,7 +540,9 @@ export default class Siema {
 
     this.innerElements.splice(index, 0, item);
 
-    this.updateFrame();
+    // build a frame and slide to a currentSlide
+    this.buildSliderFrame();
+
     if (callback) {
       callback.call(this);
     }
