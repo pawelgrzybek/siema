@@ -234,12 +234,15 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   prev(howManySlides = 1, callback) {
+    // early return when there is nothing to slide
     if (this.innerElements.length <= this.perPage) {
       return;
     }
+
     const beforeChange = this.currentSlide;
-    if (this.currentSlide === 0 && this.config.loop) {
-      this.currentSlide = this.innerElements.length - this.perPage;
+    if (this.config.loop) {
+      // howManySlides should be restricted to this.config.perPage at max
+      this.currentSlide = this.currentSlide - howManySlides;
     }
     else {
       this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
@@ -260,15 +263,18 @@ export default class Siema {
    * @param {function} callback - Optional callback function.
    */
   next(howManySlides = 1, callback) {
+    // early return when there is nothing to slide
     if (this.innerElements.length <= this.perPage) {
       return;
     }
+
     const beforeChange = this.currentSlide;
-    if (this.currentSlide === this.innerElements.length - this.perPage && this.config.loop) {
-      this.currentSlide = 0;
+    if (this.config.loop) {
+      // howManySlides should be restricted to this.config.perPage at max
+      this.currentSlide = this.currentSlide + howManySlides;
     }
     else {
-      this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
+      this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage)
     }
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent();
