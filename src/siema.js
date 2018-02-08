@@ -155,9 +155,12 @@ export default class Siema {
    * Build a sliderFrame and slide to a current item.
    */
   buildSliderFrame() {
+    const widthItem = this.selectorWidth / this.perPage;
+    const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.config.perPage) : this.innerElements.length;
+
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
 
@@ -169,13 +172,21 @@ export default class Siema {
     const docFragment = document.createDocumentFragment();
 
     // Loop through the slides, add styling and add them to document fragment
+    if (this.config.loop) {
+      for (let i = this.innerElements.length - this.config.perPage; i < this.innerElements.length; i++) {
+        const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
+        docFragment.appendChild(element);
+      }
+    }
     for (let i = 0; i < this.innerElements.length; i++) {
-      const elementContainer = document.createElement('div');
-      elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
-      elementContainer.style.float = this.config.rtl ? 'right' : 'left';
-      elementContainer.style.width = `${100 / this.innerElements.length}%`;
-      elementContainer.appendChild(this.innerElements[i]);
-      docFragment.appendChild(elementContainer);
+      const element = this.buildSliderFrameItem(this.innerElements[i]);
+      docFragment.appendChild(element);
+    }
+    if (this.config.loop) {
+      for (let i = 0; i < this.config.perPage; i++) {
+        const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
+        docFragment.appendChild(element);
+      }
     }
 
     // Add fragment to the frame
@@ -187,6 +198,15 @@ export default class Siema {
 
     // Go to currently active slide after initial build
     this.slideToCurrent();
+  }
+
+  buildSliderFrameItem(elm) {
+    const elementContainer = document.createElement('div');
+    elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
+    elementContainer.style.float = this.config.rtl ? 'right' : 'left';
+    elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.config.perPage * 2)) : 100 / (this.innerElements.length)}%`;
+    elementContainer.appendChild(elm);
+    return elementContainer;
   }
 
 
@@ -285,8 +305,12 @@ export default class Siema {
    * Moves sliders frame to position of currently active slide
    */
   slideToCurrent() {
-    const offset = (this.config.rtl ? 1 : -1) * this.currentSlide * (this.selectorWidth / this.perPage);
+    const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
+    const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
     this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
+
+    // const offset = (this.config.rtl ? 1 : -1) * this.currentSlide * (this.selectorWidth / this.perPage);
+    // this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
   }
 
 
@@ -312,12 +336,16 @@ export default class Siema {
    * When window resizes, resize slider components as well
    */
   resizeHandler() {
+    const widthItem = this.selectorWidth / this.perPage;
+    const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.config.perPage) : this.innerElements.length;
+
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
     // update sliderFrame width
     this.selectorWidth = this.selector.offsetWidth;
-    this.sliderFrame.style.width = `${(this.selectorWidth / this.perPage) * this.innerElements.length}px`;
+    this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
+
 
     // relcalculate currentSlide
     // prevent hiding items when browser width increases
