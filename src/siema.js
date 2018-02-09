@@ -241,7 +241,13 @@ export default class Siema {
 
     const beforeChange = this.currentSlide;
     if (this.config.loop) {
-      // howManySlides should be restricted to this.config.perPage at max
+      if (this.currentSlide === 0) {
+        console.log('danger bro!');
+        // remove transition
+        // move to a correct one
+        // change this.currentSlide to corect one
+        // nable transition
+      }
       this.currentSlide = this.currentSlide - howManySlides;
     }
     else {
@@ -270,6 +276,13 @@ export default class Siema {
 
     const beforeChange = this.currentSlide;
     if (this.config.loop) {
+      if (this.currentSlide === this.innerElements.length - this.perPage) {
+        console.log('danger bro!');
+        // remove transition
+        // move to a correct one
+        // change this.currentSlide to corect one
+        // nable transition
+      }
       // howManySlides should be restricted to this.config.perPage at max
       this.currentSlide = this.currentSlide + howManySlides;
     }
@@ -310,13 +323,19 @@ export default class Siema {
   /**
    * Moves sliders frame to position of currently active slide
    */
-  slideToCurrent() {
+  slideToCurrent(enableTransition) {
     const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
     const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
     this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
 
-    // const offset = (this.config.rtl ? 1 : -1) * this.currentSlide * (this.selectorWidth / this.perPage);
-    // this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
+    if (enableTransition) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+          this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+        });
+      });
+    }
   }
 
 
