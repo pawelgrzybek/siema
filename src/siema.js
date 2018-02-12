@@ -239,21 +239,31 @@ export default class Siema {
     }
 
     const beforeChange = this.currentSlide;
+
     if (this.config.loop) {
-      if (this.currentSlide === 0) {
-        console.log('danger bro!');
-        // remove transition
-        // move to a correct one
-        // change this.currentSlide to corect one
-        // nable transition
+      const isNewIndexClone = this.currentSlide - howManySlides < 0;
+      if (isNewIndexClone) {
+        this.disableTransition();
+
+        const mirrorSlideIndex = this.currentSlide + this.innerElements.length;
+        const mirrorSlideIndexOffset = this.config.perPage;
+        const moveTo = mirrorSlideIndex + mirrorSlideIndexOffset;
+        const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
+        const dragDistance = this.drag.endX - this.drag.startX;
+
+        this.sliderFrame.style[this.transformProperty] = `translate3d(${offset + dragDistance}px, 0, 0)`;
+        this.currentSlide = mirrorSlideIndex - howManySlides;
       }
-      this.currentSlide = this.currentSlide - howManySlides;
+      else {
+        this.currentSlide = this.currentSlide - howManySlides;
+      }
     }
     else {
       this.currentSlide = Math.max(this.currentSlide - howManySlides, 0);
     }
+
     if (beforeChange !== this.currentSlide) {
-      this.slideToCurrent();
+      this.slideToCurrent(this.config.loop);
       this.config.onChange.call(this);
       if (callback) {
         callback.call(this);
@@ -274,22 +284,30 @@ export default class Siema {
     }
 
     const beforeChange = this.currentSlide;
+
     if (this.config.loop) {
-      if (this.currentSlide === this.innerElements.length - this.perPage) {
-        console.log('danger bro!');
-        // remove transition
-        // move to a correct one
-        // change this.currentSlide to corect one
-        // nable transition
+      const isNewIndexClone = this.currentSlide + howManySlides > this.innerElements.length - this.config.perPage;
+      if (isNewIndexClone) {
+        this.disableTransition();
+
+        const mirrorSlideIndex = this.currentSlide - this.innerElements.length;
+        const mirrorSlideIndexOffset = this.config.perPage;
+        const moveTo = mirrorSlideIndex + mirrorSlideIndexOffset;
+        const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
+        const dragDistance = this.drag.endX - this.drag.startX;
+
+        this.sliderFrame.style[this.transformProperty] = `translate3d(${offset + dragDistance}px, 0, 0)`;
+        this.currentSlide = mirrorSlideIndex + howManySlides;
       }
-      // howManySlides should be restricted to this.config.perPage at max
-      this.currentSlide = this.currentSlide + howManySlides;
+      else {
+        this.currentSlide = this.currentSlide + howManySlides;
+      }
     }
     else {
       this.currentSlide = Math.min(this.currentSlide + howManySlides, this.innerElements.length - this.perPage);
     }
     if (beforeChange !== this.currentSlide) {
-      this.slideToCurrent();
+      this.slideToCurrent(this.config.loop);
       this.config.onChange.call(this);
       if (callback) {
         callback.call(this);
@@ -343,15 +361,19 @@ export default class Siema {
   slideToCurrent(enableTransition) {
     const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
     const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
-    this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
 
+    // This one is tricky, I know but this is a perfect explanation:
+    // https://youtu.be/cCOL7MC4Pl0
     if (enableTransition) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
-          this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+          this.enableTransition();
+          this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
         });
       });
+    }
+    else {
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
     }
   }
 
@@ -364,13 +386,16 @@ export default class Siema {
     const movementDistance = Math.abs(movement);
     const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
 
+    const slideToNegativeClone = movement > 0 && this.currentSlide - howManySliderToSlide < 0;
+    const slideToPositiveClone = movement < 0 && this.currentSlide + howManySliderToSlide > this.innerElements.length - this.config.perPage;
+
     if (movement > 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
       this.prev(howManySliderToSlide);
     }
     else if (movement < 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
       this.next(howManySliderToSlide);
     }
-    this.slideToCurrent();
+    this.slideToCurrent(slideToNegativeClone || slideToPositiveClone);
   }
 
 
