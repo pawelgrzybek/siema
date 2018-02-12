@@ -156,7 +156,7 @@ export default class Siema {
    */
   buildSliderFrame() {
     const widthItem = this.selectorWidth / this.perPage;
-    const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.config.perPage) : this.innerElements.length;
+    const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.perPage) : this.innerElements.length;
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
@@ -172,7 +172,7 @@ export default class Siema {
 
     // Loop through the slides, add styling and add them to document fragment
     if (this.config.loop) {
-      for (let i = this.innerElements.length - this.config.perPage; i < this.innerElements.length; i++) {
+      for (let i = this.innerElements.length - this.perPage; i < this.innerElements.length; i++) {
         const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
         docFragment.appendChild(element);
       }
@@ -182,7 +182,7 @@ export default class Siema {
       docFragment.appendChild(element);
     }
     if (this.config.loop) {
-      for (let i = 0; i < this.config.perPage; i++) {
+      for (let i = 0; i < this.perPage; i++) {
         const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
         docFragment.appendChild(element);
       }
@@ -203,7 +203,7 @@ export default class Siema {
     const elementContainer = document.createElement('div');
     elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
     elementContainer.style.float = this.config.rtl ? 'right' : 'left';
-    elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.config.perPage * 2)) : 100 / (this.innerElements.length)}%`;
+    elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.perPage * 2)) : 100 / (this.innerElements.length)}%`;
     elementContainer.appendChild(elm);
     return elementContainer;
   }
@@ -246,7 +246,7 @@ export default class Siema {
         this.disableTransition();
 
         const mirrorSlideIndex = this.currentSlide + this.innerElements.length;
-        const mirrorSlideIndexOffset = this.config.perPage;
+        const mirrorSlideIndexOffset = this.perPage;
         const moveTo = mirrorSlideIndex + mirrorSlideIndexOffset;
         const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
         const dragDistance = this.drag.endX - this.drag.startX;
@@ -286,12 +286,12 @@ export default class Siema {
     const beforeChange = this.currentSlide;
 
     if (this.config.loop) {
-      const isNewIndexClone = this.currentSlide + howManySlides > this.innerElements.length - this.config.perPage;
+      const isNewIndexClone = this.currentSlide + howManySlides > this.innerElements.length - this.perPage;
       if (isNewIndexClone) {
         this.disableTransition();
 
         const mirrorSlideIndex = this.currentSlide - this.innerElements.length;
-        const mirrorSlideIndexOffset = this.config.perPage;
+        const mirrorSlideIndexOffset = this.perPage;
         const moveTo = mirrorSlideIndex + mirrorSlideIndexOffset;
         const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
         const dragDistance = this.drag.endX - this.drag.startX;
@@ -359,7 +359,7 @@ export default class Siema {
    * Moves sliders frame to position of currently active slide
    */
   slideToCurrent(enableTransition) {
-    const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
+    const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
     const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
 
     // This one is tricky, I know but this is a perfect explanation:
@@ -387,7 +387,7 @@ export default class Siema {
     const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
 
     const slideToNegativeClone = movement > 0 && this.currentSlide - howManySliderToSlide < 0;
-    const slideToPositiveClone = movement < 0 && this.currentSlide + howManySliderToSlide > this.innerElements.length - this.config.perPage;
+    const slideToPositiveClone = movement < 0 && this.currentSlide + howManySliderToSlide > this.innerElements.length - this.perPage;
 
     if (movement > 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
       this.prev(howManySliderToSlide);
@@ -403,16 +403,8 @@ export default class Siema {
    * When window resizes, resize slider components as well
    */
   resizeHandler() {
-    const widthItem = this.selectorWidth / this.perPage;
-    const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.config.perPage) : this.innerElements.length;
-
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
-
-    // update sliderFrame width
-    this.selectorWidth = this.selector.offsetWidth;
-    this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
-
 
     // relcalculate currentSlide
     // prevent hiding items when browser width increases
@@ -420,7 +412,7 @@ export default class Siema {
       this.currentSlide = this.innerElements.length <= this.perPage ? 0 : this.innerElements.length - this.perPage;
     }
 
-    this.slideToCurrent();
+    this.buildSliderFrame();
   }
 
 
@@ -485,7 +477,7 @@ export default class Siema {
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
+      const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
       const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
       const dragOffset = (this.drag.endX - this.drag.startX);
       const offset = this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
@@ -544,7 +536,7 @@ export default class Siema {
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const currentSlide = this.config.loop ? this.currentSlide + this.config.perPage : this.currentSlide;
+      const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
       const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
       const dragOffset = (this.drag.endX - this.drag.startX);
       const offset = this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
