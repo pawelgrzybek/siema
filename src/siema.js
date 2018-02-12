@@ -346,7 +346,9 @@ export default class Siema {
       return;
     }
     const beforeChange = this.currentSlide;
-    this.currentSlide = this.config.loop ? index % this.innerElements.length : Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
+    this.currentSlide = this.config.loop ?
+      index % this.innerElements.length :
+      Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent();
       this.config.onChange.call(this);
@@ -364,9 +366,9 @@ export default class Siema {
     const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
     const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
 
-    // This one is tricky, I know but this is a perfect explanation:
-    // https://youtu.be/cCOL7MC4Pl0
     if (enableTransition) {
+      // This one is tricky, I know but this is a perfect explanation:
+      // https://youtu.be/cCOL7MC4Pl0
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           this.enableTransition();
