@@ -346,7 +346,7 @@ export default class Siema {
       return;
     }
     const beforeChange = this.currentSlide;
-    this.currentSlide = Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
+    this.currentSlide = this.config.loop ? index % this.innerElements.length : Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent();
       this.config.onChange.call(this);
