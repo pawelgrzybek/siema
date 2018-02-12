@@ -161,8 +161,7 @@ export default class Siema {
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
     this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
-    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.enableTransition();
 
     if (this.config.draggable) {
       this.selector.style.cursor = '-webkit-grab';
@@ -300,6 +299,24 @@ export default class Siema {
 
 
   /**
+   * Disable transition on sliderFrame.
+   */
+  disableTransition() {
+    this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
+  }
+
+
+  /**
+   * Enable transition on sliderFrame.
+   */
+  enableTransition() {
+    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+  }
+
+
+  /**
    * Go to slide with particular index
    * @param {number} index - Item index to slide to.
    * @param {function} callback - Optional callback function.
@@ -419,8 +436,7 @@ export default class Siema {
   touchendHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
-    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.enableTransition();
     if (this.drag.endX) {
       this.updateAfterDrag();
     }
@@ -477,8 +493,7 @@ export default class Siema {
     e.stopPropagation();
     this.pointerDown = false;
     this.selector.style.cursor = '-webkit-grab';
-    this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
-    this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+    this.enableTransition();
     if (this.drag.endX) {
       this.updateAfterDrag();
     }
@@ -522,8 +537,7 @@ export default class Siema {
       this.selector.style.cursor = '-webkit-grab';
       this.drag.endX = e.pageX;
       this.drag.preventClick = false;
-      this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
-      this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+      this.enableTransition();
       this.updateAfterDrag();
       this.clearDrag();
     }
