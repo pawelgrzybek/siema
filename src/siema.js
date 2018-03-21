@@ -7,6 +7,9 @@ class Siema {
    * @param {Object} options - Optional settings object.
    */
   constructor(options) {
+	//class vars
+	this.preventClickFlag = false;
+	
     // Merge defaults with user's settings
     this.config = Siema.mergeSettings(options);
 
@@ -25,7 +28,7 @@ class Siema {
     this.transformProperty = Siema.webkitOrNot();
 
     // Bind all event handlers for referencability
-    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler'].forEach(method => {
+    ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler', 'mouseclickHandler'].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
@@ -104,6 +107,7 @@ class Siema {
       this.selector.addEventListener('mouseup', this.mouseupHandler);
       this.selector.addEventListener('mouseleave', this.mouseleaveHandler);
       this.selector.addEventListener('mousemove', this.mousemoveHandler);
+      this.selector.addEventListener('click', this.mouseclickHandler);
     }
   }
 
@@ -117,6 +121,7 @@ class Siema {
     this.selector.removeEventListener('touchstart', this.touchstartHandler);
     this.selector.removeEventListener('touchend', this.touchendHandler);
     this.selector.removeEventListener('touchmove', this.touchmoveHandler);
+    this.selector.removeEventListener('click', this.mouseclickHandler);
     this.selector.removeEventListener('mousedown', this.mousedownHandler);
     this.selector.removeEventListener('mouseup', this.mouseupHandler);
     this.selector.removeEventListener('mouseleave', this.mouseleaveHandler);
@@ -389,6 +394,7 @@ class Siema {
    * mousedown event handler
    */
   mousedownHandler(e) {
+	this.preventClickFlag = false;
     // Prevent dragging / swiping on inputs, selects and textareas
     const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
     if (ignoreSiema) {
@@ -422,6 +428,7 @@ class Siema {
    * mousemove event handler
    */
   mousemoveHandler(e) {
+	this.preventClickFlag = true;
     e.preventDefault();
     if (this.pointerDown) {
       this.drag.endX = e.pageX;
@@ -430,6 +437,15 @@ class Siema {
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.currentSlide * (this.selectorWidth / this.perPage) + (this.drag.startX - this.drag.endX)) * -1}px, 0, 0)`;
     }
+  }
+  
+  /**
+   * mouseclick event handler
+   */
+  mouseclickHandler(e) {
+	if(this.preventClickFlag){
+		e.preventDefault();
+	}
   }
 
 
