@@ -1,9 +1,0 @@
-.editorconfig
-.github/
-.gitignore
-docs/
-package-lock.json
-src/
-webpack.config.js
-yarn.lock
-.eslintrc.js
