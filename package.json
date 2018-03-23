@@ -18,8 +18,7 @@
     "dev": "webpack --progress --colors --watch"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "repository": "pawelgrzybek/siema",
   "author": "Pawel Grzybek <grzybecki@gmail.com> (https://pawelgrzybek.com/)",
