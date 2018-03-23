@@ -17,6 +17,9 @@
     "build": "webpack && cp dist/siema.min.js docs/assets",
     "dev": "webpack --progress --colors --watch"
   },
+  "files": [
+    "dist"
+  ],
   "repository": "pawelgrzybek/siema",
   "author": "Pawel Grzybek <grzybecki@gmail.com> (https://pawelgrzybek.com/)",
   "license": "MIT",
