@@ -232,7 +232,7 @@ export default class Siema {
   /**
    * Go to previous slide.
    * @param {number} [howManySlides=1] - How many items to slide backward.
-   * @param {function} callback - Optional callback function.
+   * @param {function} [callback] - Optional callback function.
    */
   prev(howManySlides = 1, callback) {
     // early return when there is nothing to slide
@@ -277,7 +277,7 @@ export default class Siema {
   /**
    * Go to next slide.
    * @param {number} [howManySlides=1] - How many items to slide forward.
-   * @param {function} callback - Optional callback function.
+   * @param {function} [callback] - Optional callback function.
    */
   next(howManySlides = 1, callback) {
     // early return when there is nothing to slide
@@ -615,7 +615,7 @@ export default class Siema {
    * Insert item to carousel at particular index.
    * @param {HTMLElement} item - Item to insert.
    * @param {number} index - Index of new new item insertion.
-   * @param {function} callback - Optional callback to call after insert.
+   * @param {function} [callback] - Optional callback to call after insert.
    */
   insert(item, index, callback) {
     if (index < 0 || index > this.innerElements.length + 1) {
@@ -626,7 +626,7 @@ export default class Siema {
     }
 
     // Avoid shifting content
-    const shouldItShift = index <= this.currentSlide > 0 && this.innerElements.length;
+    const shouldItShift = index <= this.currentSlide && this.innerElements.length;
     this.currentSlide = shouldItShift ? this.currentSlide + 1 : this.currentSlide;
 
     this.innerElements.splice(index, 0, item);
