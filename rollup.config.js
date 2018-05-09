@@ -22,9 +22,8 @@ const es5 = {
   ],
   output: {
     file: 'dist/siema.es5.js',
-    format: 'umd',
+    format: 'es',
     sourcemap: true,
-    name: 'Siema',
   }
 };
 
