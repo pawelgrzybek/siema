@@ -4,7 +4,7 @@
   "description": "Lightweight and simple carousel with no dependencies",
   "main": "dist/siema.min.js",
   "module": "dist/siema.es.js",
-  "jsnext": "dist/siema.es.js",
+  "jsnext:main": "dist/siema.es.js",
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",

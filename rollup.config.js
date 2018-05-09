@@ -9,7 +9,7 @@ const es5 = {
   ],
   output: {
     file: 'dist/siema.min.js',
-    format: 'iife',
+    format: 'umd',
     sourcemap: true,
     name: 'Siema',
   }
@@ -18,6 +18,7 @@ const es5 = {
 const es6 = {
   input: './src/siema.js',
   plugins: [
+    babel(),
     uglify(),
   ],
   output: {
