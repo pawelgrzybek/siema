@@ -60,12 +60,7 @@ export default class Siema {
       onChange: () => {},
     };
 
-    const userSttings = options;
-    for (const attrname in userSttings) {
-      settings[attrname] = userSttings[attrname];
-    }
-
-    return settings;
+    return { ...settings, ...options };
   }
 
 
