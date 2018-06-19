@@ -53,6 +53,8 @@ export default class Siema {
       startIndex: 0,
       draggable: true,
       multipleDrag: true,
+      momentum: false,
+      weight: 1,
       threshold: 20,
       loop: false,
       rtl: false,
@@ -91,7 +93,7 @@ export default class Siema {
 
     // If element is draggable / swipable, add event handlers
     if (this.config.draggable) {
-      // Keep track pointer hold and dragging distance
+      // Keep track pointer hold and dragging distance, tracking points used for momentum
       this.pointerDown = false;
       this.drag = {
         startX: 0,
@@ -99,6 +101,7 @@ export default class Siema {
         startY: 0,
         letItGo: null,
         preventClick: false,
+        trackingPoints: [],
       };
 
       // Touch events
@@ -227,7 +230,6 @@ export default class Siema {
       }
     }
   }
-
 
   /**
    * Go to previous slide.
@@ -388,20 +390,49 @@ export default class Siema {
   updateAfterDrag() {
     const movement = (this.config.rtl ? -1 : 1) * (this.drag.endX - this.drag.startX);
     const movementDistance = Math.abs(movement);
-    const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
 
-    const slideToNegativeClone = movement > 0 && this.currentSlide - howManySliderToSlide < 0;
-    const slideToPositiveClone = movement < 0 && this.currentSlide + howManySliderToSlide > this.innerElements.length - this.perPage;
+    const howManySliderToSlide = () => {
+      if (this.config.momentum) {
+        return this.calculateSlides(movement, movementDistance);
+      }
+      const slide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
+      return slide;
+    };
+
+    const slideToNegativeClone = movement > 0 && this.currentSlide - howManySliderToSlide() < 0;
+    const slideToPositiveClone = movement < 0 && this.currentSlide + howManySliderToSlide() > this.innerElements.length - this.perPage;
 
     if (movement > 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
-      this.prev(howManySliderToSlide);
+      this.prev(howManySliderToSlide());
     }
     else if (movement < 0 && movementDistance > this.config.threshold && this.innerElements.length > this.perPage) {
-      this.next(howManySliderToSlide);
+      this.next(howManySliderToSlide());
     }
     this.slideToCurrent(slideToNegativeClone || slideToPositiveClone);
   }
 
+  /**
+  * determines how many slides to move based on swipe speed, weight, and sliders on page
+  */
+  calculateSlides(movement, movementDistance) {
+
+    // determine time elasped and calculate speed
+    const elapsedTime = this.drag.trackingPoints[this.drag.trackingPoints.length - 1] - this.drag.trackingPoints[0];
+    const speed = movementDistance / elapsedTime;
+
+    // arbitrary adjustment for slider speed, lowering the weight increases responsiveness
+    const sliderSpeed = speed * (1 + (this.config.perPage / this.config.weight));
+    const howManySlides = Math.round(sliderSpeed);
+
+    const dragSlideNumber = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
+    // set max number of slides to move for high speed swipes
+    const momentumNumber = (speed > this.innerElements.length) ? Math.floor(this.innerElements.length / 2) : howManySlides;
+
+    // pick the largest number to avoid rubber banding effect
+    const howManySliderToSlide = Math.max(dragSlideNumber, momentumNumber);
+
+    return howManySliderToSlide;
+  }
 
   /**
    * When window resizes, resize slider components as well
@@ -431,7 +462,8 @@ export default class Siema {
       endX: 0,
       startY: 0,
       letItGo: null,
-      preventClick: this.drag.preventClick
+      preventClick: this.drag.preventClick,
+      trackingPoints: []
     };
   }
 
@@ -450,8 +482,8 @@ export default class Siema {
     this.pointerDown = true;
     this.drag.startX = e.touches[0].pageX;
     this.drag.startY = e.touches[0].pageY;
+    this.drag.trackingPoints.push(Date.now());
   }
-
 
   /**
    * touchend event handler
@@ -461,6 +493,7 @@ export default class Siema {
     this.pointerDown = false;
     this.enableTransition();
     if (this.drag.endX) {
+      this.drag.trackingPoints.push(Date.now());
       this.updateAfterDrag();
     }
     this.clearDrag();
@@ -506,6 +539,7 @@ export default class Siema {
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.startX = e.pageX;
+    this.drag.trackingPoints.push(Date.now());
   }
 
 
@@ -518,6 +552,7 @@ export default class Siema {
     this.selector.style.cursor = '-webkit-grab';
     this.enableTransition();
     if (this.drag.endX) {
+      this.drag.trackingPoints.push(Date.now());
       this.updateAfterDrag();
     }
     this.clearDrag();
@@ -560,6 +595,7 @@ export default class Siema {
       this.selector.style.cursor = '-webkit-grab';
       this.drag.endX = e.pageX;
       this.drag.preventClick = false;
+      this.drag.trackingPoints.push(Date.now());
       this.enableTransition();
       this.updateAfterDrag();
       this.clearDrag();
