@@ -157,7 +157,7 @@ export default class Siema {
    * Build a sliderFrame and slide to a current item.
    */
   buildSliderFrame() {
-    const widthItem = this.selectorWidth / this.perPage;
+    const widthItem = this.selectorWidth / Math.min(this.perPage, this.innerElements.length);
     const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.perPage) : this.innerElements.length;
 
     // Create frame and apply styling
