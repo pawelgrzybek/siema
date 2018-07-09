@@ -162,6 +162,7 @@ export default class Siema {
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
+    this.sliderFrame.style.overflowY = 'auto';
     this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
     this.enableTransition();
 
