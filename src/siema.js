@@ -18,14 +18,11 @@ export default class Siema {
       throw new Error('Something wrong with your selector 😭');
     }
 
-    // update perPage number dependable of user value
+    // update perPage number and offset dependable of user value
     this.resolveSlidesNumber();
 
     // Create global references
     this.selectorWidth = this.selector.offsetWidth;
-    this.config.offset = this.config.offset === 1 ? 0 : this.config.offset;
-    this.widthItem = this.selectorWidth / this.perPage * (1 - this.config.offset);
-    this.innerOffset = this.config.center ? this.config.offset / 2 : this.config.offset;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.loop ?
       this.config.startIndex % this.innerElements.length :
@@ -157,12 +154,11 @@ export default class Siema {
     this.config.onInit.call(this);
   }
 
-
   /**
    * Build a sliderFrame and slide to a current item.
    */
   buildSliderFrame() {
-    this.widthItem = this.selectorWidth / this.perPage * (1 - this.config.offset);
+    this.widthItem = this.selectorWidth / this.perPage * (1 - this.originalOffset);
     const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.perPage) : this.innerElements.length;
 
     // Create frame and apply styling
@@ -216,9 +212,8 @@ export default class Siema {
     return elementContainer;
   }
 
-
   /**
-   * Determinates slides number accordingly to clients viewport.
+   * Determinates slides number and innerOffset accordingly to clients viewport.
    */
   resolveSlidesNumber() {
     if (typeof this.config.perPage === 'number') {
@@ -232,8 +227,27 @@ export default class Siema {
         }
       }
     }
-  }
 
+    // Setup original offset and innerOffset
+    // Keep original offset for witdhItem calculation
+    this.originalOffset = 0;
+    this.innerOffset = 0;
+
+    if (typeof this.config.offset === 'number') {
+      this.originalOffset = this.config.offset >= 1 ? 0 : this.config.offset;
+      this.innerOffset = this.config.center ? this.originalOffset / 2 * this.perPage : this.originalOffset;
+      return;
+    }
+
+    if (typeof this.config.offset === 'object') {
+      for (const viewport in this.config.offset) {
+        if (window.innerWidth >= viewport) {
+          this.originalOffset = this.config.offset[viewport] === 1 ? 0 : this.config.offset[viewport];
+          this.innerOffset = this.config.center ? this.originalOffset / 2 * this.perPage : this.originalOffset;
+        }
+      }
+    }
+  }
 
   /**
    * Go to previous slide.
