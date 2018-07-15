@@ -23,7 +23,9 @@ export default class Siema {
 
     // Create global references
     this.selectorWidth = this.selector.offsetWidth;
+    this.config.offset = this.config.offset === 1 ? 0 : this.config.offset;
     this.widthItem = this.selectorWidth / this.perPage * (1 - this.config.offset);
+    this.innerOffset = this.config.center ? this.config.offset / 2 : this.config.offset;
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.loop ?
       this.config.startIndex % this.innerElements.length :
@@ -50,6 +52,7 @@ export default class Siema {
       selector: '.siema',
       duration: 200,
       easing: 'ease-out',
+      center: false,
       perPage: 1,
       offset: 0,
       startIndex: 0,
@@ -481,11 +484,7 @@ export default class Siema {
     if (this.pointerDown && this.drag.letItGo) {
       e.preventDefault();
       this.drag.endX = e.touches[0].pageX;
-      this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
-
-      const offset = this.getOffset();
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
+      this.translateSliderFrame();
     }
   }
 
@@ -536,11 +535,8 @@ export default class Siema {
 
       this.drag.endX = e.pageX;
       this.selector.style.cursor = '-webkit-grabbing';
-      this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
-      this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const offset = this.getOffset();
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
+      this.translateSliderFrame();
     }
   }
 
@@ -560,12 +556,12 @@ export default class Siema {
   }
 
   /**
-   * Get currentOffset based on current slide
+   * Get currentOffset based on current slide and innerOffset
    * @returns {number}
    */
   getCurrentOffset() {
     const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
-    return currentSlide * this.widthItem;
+    return this.config.center ? currentSlide * this.widthItem - this.selectorWidth / this.perPage * this.innerOffset : currentSlide * this.widthItem;
   }
 
   /**
@@ -576,6 +572,18 @@ export default class Siema {
     const currentOffset = this.getCurrentOffset();
     const dragOffset = (this.drag.endX - this.drag.startX);
     return this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
+  }
+
+  /**
+   * Apply translate3d on carousel with new offset calculation
+   *
+   */
+  translateSliderFrame() {
+    this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
+    this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
+
+    const offset = this.getOffset();
+    this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
   }
 
   /**
