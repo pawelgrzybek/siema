@@ -204,7 +204,6 @@ export default class Siema {
 
   buildSliderFrameItem(elm) {
     const elementContainer = document.createElement('div');
-    elementContainer.style.border = '1px solid #000';
     elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
     elementContainer.style.float = this.config.rtl ? 'right' : 'left';
     elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.perPage * 2)) : 100 / (this.innerElements.length)}%`;
