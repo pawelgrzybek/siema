@@ -23,6 +23,7 @@ export default class Siema {
 
     // Create global references
     this.selectorWidth = this.selector.offsetWidth;
+    this.widthItem = this.selectorWidth / this.perPage * (1 - this.config.offset);
     this.innerElements = [].slice.call(this.selector.children);
     this.currentSlide = this.config.loop ?
       this.config.startIndex % this.innerElements.length :
@@ -50,6 +51,7 @@ export default class Siema {
       duration: 200,
       easing: 'ease-out',
       perPage: 1,
+      offset: 0,
       startIndex: 0,
       draggable: true,
       multipleDrag: true,
@@ -157,12 +159,12 @@ export default class Siema {
    * Build a sliderFrame and slide to a current item.
    */
   buildSliderFrame() {
-    const widthItem = this.selectorWidth / this.perPage;
+    this.widthItem = this.selectorWidth / this.perPage * (1 - this.config.offset);
     const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.perPage) : this.innerElements.length;
 
     // Create frame and apply styling
     this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
+    this.sliderFrame.style.width = `${this.widthItem * itemsToBuild}px`;
     this.enableTransition();
 
     if (this.config.draggable) {
@@ -203,6 +205,7 @@ export default class Siema {
 
   buildSliderFrameItem(elm) {
     const elementContainer = document.createElement('div');
+    elementContainer.style.border = '1px solid #000';
     elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
     elementContainer.style.float = this.config.rtl ? 'right' : 'left';
     elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.perPage * 2)) : 100 / (this.innerElements.length)}%`;
@@ -250,7 +253,7 @@ export default class Siema {
         const mirrorSlideIndex = this.currentSlide + this.innerElements.length;
         const mirrorSlideIndexOffset = this.perPage;
         const moveTo = mirrorSlideIndex + mirrorSlideIndexOffset;
-        const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
+        const offset = (this.config.rtl ? 1 : -1) * moveTo * this.widthItem;
         const dragDistance = this.config.draggable ? this.drag.endX - this.drag.startX : 0;
 
         this.sliderFrame.style[this.transformProperty] = `translate3d(${offset + dragDistance}px, 0, 0)`;
@@ -295,7 +298,7 @@ export default class Siema {
         const mirrorSlideIndex = this.currentSlide - this.innerElements.length;
         const mirrorSlideIndexOffset = this.perPage;
         const moveTo = mirrorSlideIndex + mirrorSlideIndexOffset;
-        const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
+        const offset = (this.config.rtl ? 1 : -1) * moveTo * this.widthItem;
         const dragDistance = this.config.draggable ? this.drag.endX - this.drag.startX : 0;
 
         this.sliderFrame.style[this.transformProperty] = `translate3d(${offset + dragDistance}px, 0, 0)`;
@@ -363,8 +366,7 @@ export default class Siema {
    * Moves sliders frame to position of currently active slide
    */
   slideToCurrent(enableTransition) {
-    const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
-    const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
+    const offset = this.getCurrentOffset();
 
     if (enableTransition) {
       // This one is tricky, I know but this is a perfect explanation:
@@ -372,15 +374,14 @@ export default class Siema {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           this.enableTransition();
-          this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
+          this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
         });
       });
     }
     else {
-      this.sliderFrame.style[this.transformProperty] = `translate3d(${offset}px, 0, 0)`;
+      this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
     }
   }
-
 
   /**
    * Recalculate drag /swipe event and reposition the frame of a slider
@@ -388,7 +389,7 @@ export default class Siema {
   updateAfterDrag() {
     const movement = (this.config.rtl ? -1 : 1) * (this.drag.endX - this.drag.startX);
     const movementDistance = Math.abs(movement);
-    const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
+    const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / this.widthItem) : 1;
 
     const slideToNegativeClone = movement > 0 && this.currentSlide - howManySliderToSlide < 0;
     const slideToPositiveClone = movement < 0 && this.currentSlide + howManySliderToSlide > this.innerElements.length - this.perPage;
@@ -483,14 +484,10 @@ export default class Siema {
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
-      const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
-      const dragOffset = (this.drag.endX - this.drag.startX);
-      const offset = this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
+      const offset = this.getOffset();
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
     }
   }
-
 
   /**
    * mousedown event handler
@@ -542,14 +539,10 @@ export default class Siema {
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
 
-      const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
-      const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
-      const dragOffset = (this.drag.endX - this.drag.startX);
-      const offset = this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
+      const offset = this.getOffset();
       this.sliderFrame.style[this.transformProperty] = `translate3d(${(this.config.rtl ? 1 : -1) * offset}px, 0, 0)`;
     }
   }
-
 
   /**
    * mouseleave event handler
@@ -566,6 +559,24 @@ export default class Siema {
     }
   }
 
+  /**
+   * Get currentOffset based on current slide
+   * @returns {number}
+   */
+  getCurrentOffset() {
+    const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
+    return currentSlide * this.widthItem;
+  }
+
+  /**
+   * Get new offset based on currentOffset and dragged value
+   * @returns {number}
+   */
+  getOffset() {
+    const currentOffset = this.getCurrentOffset();
+    const dragOffset = (this.drag.endX - this.drag.startX);
+    return this.config.rtl ? currentOffset + dragOffset : currentOffset - dragOffset;
+  }
 
   /**
    * click event handler
