@@ -45,6 +45,7 @@ Siema comes with a few (optional) settings that you can change by passing an obj
 new Siema({
   selector: '.siema',
   duration: 200,
+  durationPerSlide: false,
   easing: 'ease-out',
   perPage: 1,
   startIndex: 0,
@@ -63,6 +64,9 @@ The selector to use as a carousel. Siema will use all immediate children of this
 
 **`duration`** (number)  
 Slide transition duration in milliseconds [(example)](http://codepen.io/pawelgrzybek/pen/BRBoqO).
+
+**`durationPerSlide`** (boolean)  
+Decides whether transition exact amount of ms per single slide or per whole carousel.
 
 **`easing`** (string)  
 It is like a CSS `transition-timing-function` — describes acceleration curve [(example)](http://codepen.io/pawelgrzybek/pen/aWovrB).
