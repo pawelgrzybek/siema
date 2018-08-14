@@ -533,7 +533,7 @@ export default class Siema {
    */
   mousemoveHandler(e) {
     e.preventDefault();
-    if (this.pointerDown && (this.isDragging || e.pageX != this.drag.startX)) {
+    if (this.pointerDown && (this.isDragging || e.pageX !== this.drag.startX)) {
       // if dragged element is a link
       // mark preventClick prop as a true
       // to detemine about browser redirection later on
