@@ -29,6 +29,9 @@ export default class Siema {
       Math.max(0, Math.min(this.config.startIndex, this.innerElements.length - this.perPage));
     this.transformProperty = Siema.webkitOrNot();
 
+    // flag that will be used inside the buildSliderFrame method
+    this.isFirstRender = true;
+
     // Bind all event handlers for referencability
     ['resizeHandler', 'touchstartHandler', 'touchendHandler', 'touchmoveHandler', 'mousedownHandler', 'mouseupHandler', 'mouseleaveHandler', 'mousemoveHandler', 'clickHandler'].forEach(method => {
       this[method] = this[method].bind(this);
@@ -157,12 +160,10 @@ export default class Siema {
    * Build a sliderFrame and slide to a current item.
    */
   buildSliderFrame() {
-    const widthItem = this.selectorWidth / this.perPage;
     const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.perPage) : this.innerElements.length;
 
-    // Create frame and apply styling
+    // Create frame
     this.sliderFrame = document.createElement('div');
-    this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
     this.enableTransition();
 
     if (this.config.draggable) {
@@ -196,6 +197,18 @@ export default class Siema {
     // Clear selector (just in case something is there) and insert a frame
     this.selector.innerHTML = '';
     this.selector.appendChild(this.sliderFrame);
+
+    if (this.isFirstRender) {
+      // re-set the selectorWidth, because the offsetWidth value of the selector
+      // may have changed since the constructor was called
+      this.selectorWidth = this.selector.offsetWidth;
+
+      this.isFirstRender = false
+    }
+
+    // apply styling on the created frame, now that we are sure the offsetWidth is correct
+    const widthItem = this.selectorWidth / this.perPage;
+    this.sliderFrame.style.width = `${widthItem * itemsToBuild}px`;
 
     // Go to currently active slide after initial build
     this.slideToCurrent();
