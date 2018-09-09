@@ -35,7 +35,9 @@ export default class Siema {
     });
 
     // Build markup and apply required styling to elements
-    this.init();
+    if (!this.config.manualInit) {
+      this.init();
+    }
   }
 
 
@@ -52,6 +54,7 @@ export default class Siema {
       perPage: 1,
       startIndex: 0,
       draggable: true,
+      manualInit: false,
       multipleDrag: true,
       threshold: 20,
       loop: false,
