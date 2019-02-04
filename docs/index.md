@@ -69,6 +69,7 @@ new Siema({
   threshold: 20,
   loop: false,
   rtl: false,
+  autoplay: true,
   onInit: () => {},
   onChange: () => {},
 });

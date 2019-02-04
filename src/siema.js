@@ -56,6 +56,7 @@ export default class Siema {
       threshold: 20,
       loop: false,
       rtl: false,
+      autoplay:true,
       onInit: () => {},
       onChange: () => {},
     };
@@ -688,6 +689,12 @@ export default class Siema {
 
     if (callback) {
       callback.call(this);
+    }
+  }
+
+  autoplayer() {
+    if (this.config.autoplay) {
+      setInterval(() => this.next(), this.config.duration);
     }
   }
 }
