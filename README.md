@@ -57,6 +57,8 @@ new Siema({
   threshold: 20,
   loop: false,
   rtl: false,
+  itemsClass: 'siema-items',
+  contentClass: 'siema-content',
   onInit: () => {},
   onChange: () => {},
 });
