@@ -506,6 +506,11 @@ export default class Siema {
     e.stopPropagation();
     this.pointerDown = true;
     this.drag.startX = e.pageX;
+
+    // if dragged element is a link
+    // mark preventClick prop as a true
+    // to detemine about browser redirection later on
+    this.drag.preventClick = this.insideAnchor(e.target);
   }
 
 
@@ -523,6 +528,19 @@ export default class Siema {
     this.clearDrag();
   }
 
+  /**
+   * check if an element is or is inside an anchor tag
+   */
+  insideAnchor(elem) {
+    var value = false;
+
+    do {
+      value = elem.nodeName === 'A';
+    } while (!value && (elem = elem.parentNode))
+
+    return value;
+  }
+
 
   /**
    * mousemove event handler
@@ -530,13 +548,6 @@ export default class Siema {
   mousemoveHandler(e) {
     e.preventDefault();
     if (this.pointerDown) {
-      // if dragged element is a link
-      // mark preventClick prop as a true
-      // to detemine about browser redirection later on
-      if (e.target.nodeName === 'A') {
-        this.drag.preventClick = true;
-      }
-
       this.drag.endX = e.pageX;
       this.selector.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
