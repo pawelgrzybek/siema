@@ -93,6 +93,7 @@ export default class Siema {
     if (this.config.draggable) {
       // Keep track pointer hold and dragging distance
       this.pointerDown = false;
+      this.draggedBeyondThreshold = false;
       this.drag = {
         startX: 0,
         endX: 0,
@@ -511,6 +512,7 @@ export default class Siema {
     // mark preventClick prop as a true
     // to detemine about browser redirection later on
     this.drag.preventClick = this.insideAnchor(e.target);
+    this.draggedBeyondThreshold = false;
   }
 
 
@@ -552,6 +554,7 @@ export default class Siema {
       this.selector.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
       this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
+      this.draggedBeyondThreshold = Math.abs(this.drag.startX - this.drag.endX) > this.config.threshold;
 
       const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
       const currentOffset = currentSlide * (this.selectorWidth / this.perPage);
@@ -584,7 +587,7 @@ export default class Siema {
   clickHandler(e) {
     // if the dragged element is a link
     // prevent browsers from folowing the link
-    if (this.drag.preventClick) {
+    if (this.drag.preventClick && this.draggedBeyondThreshold) {
       e.preventDefault();
     }
     this.drag.preventClick = false;
