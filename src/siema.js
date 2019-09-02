@@ -176,8 +176,10 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     if (this.config.loop) {
       for (let i = this.innerElements.length - this.perPage; i < this.innerElements.length; i++) {
-        const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
-        docFragment.appendChild(element);
+        if (this.innerElements[i]) {
+          const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
+          docFragment.appendChild(element);
+        }
       }
     }
     for (let i = 0; i < this.innerElements.length; i++) {
