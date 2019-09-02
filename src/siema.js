@@ -334,6 +334,10 @@ export default class Siema {
   enableTransition() {
     this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
     this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
+
+    if (this.config.display) {
+      this.sliderFrame.style.display = this.config.display;
+    }
   }
 
 
