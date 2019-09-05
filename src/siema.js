@@ -183,13 +183,17 @@ export default class Siema {
       }
     }
     for (let i = 0; i < this.innerElements.length; i++) {
-      const element = this.buildSliderFrameItem(this.innerElements[i]);
-      docFragment.appendChild(element);
+      if (this.innerElements[i]) {
+        const element = this.buildSliderFrameItem(this.innerElements[i]);
+        docFragment.appendChild(element);
+      }
     }
     if (this.config.loop) {
       for (let i = 0; i < this.perPage; i++) {
-        const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
-        docFragment.appendChild(element);
+        if (this.innerElements[i]) {
+          const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
+          docFragment.appendChild(element);
+        }
       }
     }
 
