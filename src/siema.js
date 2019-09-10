@@ -57,6 +57,9 @@ export default class Siema {
       loop: false,
       rtl: false,
       constWidth: null,
+      swapping: true,
+      customLoop: false,
+      shiftLeft: 0,
       onInit: () => {},
       onChange: () => {},
     };
@@ -170,6 +173,10 @@ export default class Siema {
       this.selector.style.cursor = '-webkit-grab';
     }
 
+    if (this.config.swapping === false) {
+      this.selector.style.cursor = 'inherit';
+    }
+
     // Create a document fragment to put slides into it
     const docFragment = document.createDocumentFragment();
 
@@ -248,6 +255,7 @@ export default class Siema {
     }
 
     const beforeChange = this.currentSlide;
+    this.directionSlide = 'prev';
 
     if (this.config.loop) {
       const isNewIndexClone = this.currentSlide - howManySlides < 0;
@@ -278,6 +286,15 @@ export default class Siema {
         callback.call(this);
       }
     }
+    if (this.config.customLoop && beforeChange === this.currentSlide) {
+      this.currentSlide = this.innerElements.length - 1;
+      this.disableTransition();
+      this.slideToCurrent(this.config.loop);
+      this.config.onChange.call(this);
+      if (callback) {
+        callback.call(this);
+      }
+    }
   }
 
 
@@ -292,6 +309,7 @@ export default class Siema {
       return;
     }
 
+    this.directionSlide = 'next';
     const beforeChange = this.currentSlide;
 
     if (this.config.loop) {
@@ -321,6 +339,16 @@ export default class Siema {
       if (callback) {
         callback.call(this);
       }
+    }
+    if (this.config.customLoop && beforeChange === this.currentSlide) {
+      this.currentSlide = 0;
+      this.disableTransition();
+      this.slideToCurrent(this.config.loop);
+      this.config.onChange.call(this);
+      if (callback) {
+        callback.call(this);
+      }
+      this.enableTransition();
     }
   }
 
@@ -375,7 +403,25 @@ export default class Siema {
    */
   slideToCurrent(enableTransition) {
     const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
-    const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
+    let correctOffset = currentSlide;
+    // bug-fix if decimal slides per page
+    if (this.config.customLoop) {
+      let i = (!this.config.loop && correctOffset % 1 !== 0) ? this.currentSlide * 1.01 : correctOffset;
+      const lastSlide = this.innerElements.lastIndexOf(this.innerElements.slice(-1)[0]);
+      // bug-fix for last slide
+      if (i > lastSlide) {
+        i = lastSlide * 0.997;
+      }
+      if (this.directionSlide === 'prev') {
+        i = Math.round(i);
+      }
+      correctOffset = i;
+    }
+    let offset = (this.config.rtl ? 1 : -1) * correctOffset * (this.selectorWidth / this.perPage);
+    if (this.config.shiftLeft) {
+      offset += this.config.shiftLeft;
+    }
+
 
     if (enableTransition) {
       // This one is tricky, I know but this is a perfect explanation:
@@ -507,6 +553,9 @@ export default class Siema {
    * mousedown event handler
    */
   mousedownHandler(e) {
+    if (this.config.swapping === false) {
+      return;
+    }
     // Prevent dragging / swiping on inputs, selects and textareas
     const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
     if (ignoreSiema) {
@@ -524,6 +573,9 @@ export default class Siema {
    * mouseup event handler
    */
   mouseupHandler(e) {
+    if (this.config.swapping === false) {
+      return;
+    }
     e.stopPropagation();
     this.pointerDown = false;
     this.selector.style.cursor = '-webkit-grab';
@@ -539,6 +591,9 @@ export default class Siema {
    * mousemove event handler
    */
   mousemoveHandler(e) {
+    if (this.config.swapping === false) {
+      return;
+    }
     e.preventDefault();
     if (this.pointerDown) {
       // if dragged element is a link
@@ -566,6 +621,9 @@ export default class Siema {
    * mouseleave event handler
    */
   mouseleaveHandler(e) {
+    if (this.config.swapping === false) {
+      return;
+    }
     if (this.pointerDown) {
       this.pointerDown = false;
       this.selector.style.cursor = '-webkit-grab';
