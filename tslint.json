@@ -1,0 +1,54 @@
+{
+  "rules": {
+    "class-name": true,
+    "curly": false,
+    "eofline": true,
+    "indent": [true, "spaces"],
+    "max-line-length": [false, 140], // true
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "public-before-private",
+          "static-before-instance",
+          "variables-before-functions"
+        ]
+      }
+    ],
+    "no-arg": true,
+    "no-construct": true,
+    "no-duplicate-variable": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-trailing-whitespace": true,
+    "no-unused-expression": true,
+    "no-unused-variable": [true, {"ignore-pattern": "^_"} ],
+    "one-line": [true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "quotemark": [true, "single"],
+    "semicolon": [true, "always"],
+    "trailing-comma": [false],
+    "triple-equals": false, // true
+    "variable-name": false,
+
+    "directive-selector": [true, "attribute", [], "camelCase"],
+    "component-selector": [true, "element", [], "kebab-case"],
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "import-destructuring-spacing": true,
+    "templates-use-public": true,
+    "no-access-missing-member": true,
+    "invoke-injectable": true
+  }
+}
