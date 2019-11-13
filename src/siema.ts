@@ -636,7 +636,7 @@ export default class Siema {
         }
 
         // Avoid shifting content
-        const shouldItShift = index <= this.currentSlide && this.currentSlide > 0 && this.innerElements.length;
+        const shouldItShift = index <= this.currentSlide && this.innerElements.length;
         this.currentSlide = shouldItShift ? this.currentSlide + 1 : this.currentSlide;
 
         this.innerElements.splice(index, 0, item);
