@@ -69,7 +69,8 @@ export default class Siema {
       loop: false,
       rtl: false,
       onInit: () => {},
-      onChange: () => {},
+      onChangeStart: () => {},
+      onChangeEnd: () => {},
     };
 
     const userSettings = options;
@@ -254,6 +255,7 @@ export default class Siema {
     if (this.innerElements.length <= this.perPage) {
       return;
     }
+    this.config.onChangeStart.call(this);
 
     const beforeChange = this.currentSlide;
 
@@ -280,7 +282,7 @@ export default class Siema {
 
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent(this.config.loop);
-      this.config.onChange.call(this);
+      this.config.onChangeEnd.call(this);
       if (callback) {
         callback.call(this);
       }
@@ -297,6 +299,8 @@ export default class Siema {
     if (this.innerElements.length <= this.perPage) {
       return;
     }
+    // Before Slider Change Start
+    this.config.onChangeStart.call(this);
 
     const beforeChange = this.currentSlide;
 
@@ -326,7 +330,7 @@ export default class Siema {
     }
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent(this.config.loop);
-      this.config.onChange.call(this);
+      this.config.onChangeEnd.call(this);
       if (callback) {
         callback.call(this);
       }
@@ -358,13 +362,15 @@ export default class Siema {
     if (this.innerElements.length <= this.perPage) {
       return;
     }
+    this.config.onChangeStart.call(this);
+
     const beforeChange = this.currentSlide;
     this.currentSlide = this.config.loop
       ? index % this.innerElements.length
       : Math.min(Math.max(index, 0), this.innerElements.length - this.perPage);
     if (beforeChange !== this.currentSlide) {
       this.slideToCurrent();
-      this.config.onChange.call(this);
+      this.config.onChangeEnd.call(this);
       if (callback) {
         callback.call(this);
       }

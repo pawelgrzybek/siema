@@ -1,12 +1,8 @@
-**Hi. I will be discontinuing active maintenance of Siema. I built it by myself to use on one of my projects. Two years later I consider carousels as an anti-pattern and I would suggest you to find a better UI pattern than carousel for your current project. If you really want to use it, feel free. If you have any questions, please look for the answer in closed issues section. Would you like to contribute or coutinue maintenance of Siema? Fantastic!**
-
-- - -
-
 # Siema - Lightweight and simple carousel with no dependencies
 
 Full docs with examples: [https://pawelgrzybek.com/siema/](https://pawelgrzybek.com/siema/).
 
-Siema is a lightweight (only 3kb gzipped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and [available on Github](https://github.com/pawelgrzybek/siema). It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.
+Siema is a lightweight (only 3kb gzipped) carousel plugin with no dependencies and no styling. As Brad Frost once said "do that shit yourself". It is 100% open source and [available on Github](https://github.com/ihsan-ofluoglu/siema). It is free to use on personal and commercial projects. Use it with your favourite module bundler or by manually injecting the script into your project.
 
 ## Installation
 
@@ -58,7 +54,8 @@ new Siema({
   loop: false,
   rtl: false,
   onInit: () => {},
-  onChange: () => {},
+  onChangeStart: () => {},
+  onChangeEnd: () => {},
 });
 ```
 
@@ -95,7 +92,10 @@ Enables layout for languages written from right to left (like Hebrew or Arabic) 
 **`onInit`** (function)  
 Runs immediately after initialization [(example)](http://codepen.io/pawelgrzybek/pen/BRBjpE).
 
-**`onChange`** (function)  
+**`onChangeStart`** (function)  
+Runs before slide change.
+
+**`onChangeEnd`** (function)  
 Runs after slide change [(example)](http://codepen.io/pawelgrzybek/pen/RVbrVe).
 
 ## API
