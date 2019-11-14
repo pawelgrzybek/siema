@@ -1,0 +1,15 @@
+{
+  "extends": ["@atolye15/eslint-config-base"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "overrides": [
+    {
+      "files": ["gulp/**/*.js", "config/**/*.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}

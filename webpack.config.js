@@ -1,14 +1,17 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
+  mode: 'production',
   entry: './src/siema.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'siema.min.js',
     library: 'Siema',
     libraryTarget: 'umd',
-    umdNamedDefine: true
+    umdNamedDefine: true,
+  },
+  optimization: {
+    minimize: true,
   },
   module: {
     rules: [
@@ -27,11 +30,6 @@ module.exports = {
           plugins: ['babel-plugin-add-module-exports'],
         },
       },
-    ]
+    ],
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-    }),
-  ],
 };

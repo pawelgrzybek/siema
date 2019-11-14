@@ -4,27 +4,33 @@
   "description": "Lightweight and simple carousel with no dependencies",
   "main": "dist/siema.min.js",
   "devDependencies": {
+    "@atolye15/eslint-config-base": "^1.0.17",
+    "@babel/core": "^7.7.2",
     "babel": "^6.23.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^7.1.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "babel-preset-es2015": "^6.24.1",
-    "eslint": "4.16.0",
-    "eslint-loader": "^1.9.0",
-    "webpack": "3.10.0"
+    "eslint": "6.6.0",
+    "eslint-loader": "^3.0.2",
+    "prettier": "^1.19.1",
+    "webpack": "4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "build": "webpack && cp dist/siema.min.js docs/assets",
-    "dev": "webpack --progress --colors --watch"
+    "start": "webpack --progress --colors --watch",
+    "lint": "eslint \"src/**/*.js\""
   },
   "files": [
     "dist"
   ],
   "repository": "pawelgrzybek/siema",
-  "author": "Pawel Grzybek <grzybecki@gmail.com> (https://pawelgrzybek.com/)",
+  "author": "Ali ihsan Ofluoğlu <ihsan.ofluoglu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pawelgrzybek/siema/issues"
+    "url": "https://github.com/ihsan-ofluoglu/siema/issues"
   },
   "homepage": "https://pawelgrzybek.com/siema",
   "keywords": [
