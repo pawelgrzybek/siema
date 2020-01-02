@@ -31,5 +31,8 @@
     "slider",
     "carousel",
     "lightweight"
-  ]
+  ],
+  "dependencies": {
+    "typescript": "^3.7.4"
+  }
 }
