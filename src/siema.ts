@@ -12,6 +12,7 @@ export interface SiemaOptions {
     onInit?: () => void;
     onChange?: () => void;
 }
+
 /**
  * Hi :-) This is a class representing a Siema.
  */
@@ -25,11 +26,11 @@ export default class Siema {
 
     /** Variable to track mouse track */
     private drag: {
-        startX: number,
-        endX: number,
-        startY: number,
-        letItGo: boolean,
-        preventClick: boolean
+        startX: number;
+        endX: number;
+        startY: number;
+        letItGo: boolean;
+        preventClick: boolean;
     };
 
     /** Reference to the Siema element */
@@ -88,7 +89,7 @@ export default class Siema {
      * Merge default settings with custom ones.
      */
     static mergeSettings(options: Partial<SiemaOptions>): SiemaOptions {
-        let defaultOptions: SiemaOptions = {
+        const defaultOptions: SiemaOptions = {
             selector: '.siema',
             duration: 200,
             easing: 'ease-out',
@@ -110,7 +111,7 @@ export default class Siema {
      * Determine if browser supports unprefixed transform property.
      * Google Chrome since version 26 supports prefix-less transform
      */
-    static webkitOrNot() {
+    static webkitOrNot(): 'transform'|'webkitTransform' {
         const style = document.documentElement.style;
         if (typeof style.transform === 'string') {
             return 'transform';
@@ -121,7 +122,7 @@ export default class Siema {
     /**
      * Attaches listeners to required events.
      */
-    private attachEvents() {
+    private attachEvents(): void {
         // Resize element on window resize
         window.addEventListener('resize', this.resizeHandler);
 
@@ -156,7 +157,7 @@ export default class Siema {
     /**
      * Detaches listeners from required events.
      */
-    private detachEvents() {
+    private detachEvents(): void {
         window.removeEventListener('resize', this.resizeHandler);
         this.selector.removeEventListener('touchstart', this.touchstartHandler);
         this.selector.removeEventListener('touchend', this.touchendHandler);
@@ -186,11 +187,10 @@ export default class Siema {
         this.config.onInit.call(this);
     }
 
-
     /**
      * Build a sliderFrame and slide to a current item.
      */
-    private buildSliderFrame() {
+    private buildSliderFrame(): void {
         const widthItem = this.selectorWidth / this.perPage;
         const itemsToBuild = this.config.loop ? this.innerElements.length + (2 * this.perPage) : this.innerElements.length;
 
@@ -235,7 +235,7 @@ export default class Siema {
         this.slideToCurrent();
     }
 
-    private buildSliderFrameItem(elm: HTMLElement) {
+    private buildSliderFrameItem(elm: HTMLElement): HTMLDivElement {
         const elementContainer = document.createElement('div');
         elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
         elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.perPage * 2)) : 100 / (this.innerElements.length)}%`;
@@ -243,11 +243,10 @@ export default class Siema {
         return elementContainer;
     }
 
-
     /**
      * Determinates slides number accordingly to clients viewport.
      */
-    private resolveSlidesNumber() {
+    private resolveSlidesNumber(): void {
         if (typeof this.config.perPage === 'number') {
             this.perPage = this.config.perPage;
 
@@ -261,11 +260,10 @@ export default class Siema {
         }
     }
 
-
     /**
      * Go to previous slide.
      */
-    public prev(howManySlides = 1, callback?: () => void) {
+    public prev(howManySlides = 1, callback?: () => void): void {
         // early return when there is nothing to slide
         if (this.innerElements.length <= this.perPage) {
             return;
@@ -306,7 +304,7 @@ export default class Siema {
     /**
      * Go to next slide.
      */
-    public next(howManySlides = 1, callback?: () => void) {
+    public next(howManySlides = 1, callback?: () => void): void {
         // early return when there is nothing to slide
         if (this.innerElements.length <= this.perPage) {
             return;
@@ -346,7 +344,7 @@ export default class Siema {
     /**
      * Disable transition on sliderFrame.
      */
-    private disableTransition() {
+    private disableTransition(): void {
         this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
         this.sliderFrame.style.transition = `all 0ms ${this.config.easing}`;
     }
@@ -355,7 +353,7 @@ export default class Siema {
     /**
      * Enable transition on sliderFrame.
      */
-    private enableTransition() {
+    private enableTransition(): void {
         this.sliderFrame.style.webkitTransition = `all ${this.config.duration}ms ${this.config.easing}`;
         this.sliderFrame.style.transition = `all ${this.config.duration}ms ${this.config.easing}`;
     }
@@ -363,7 +361,7 @@ export default class Siema {
     /**
      * Go to slide with particular index
      */
-    public goTo(index: number, callback?: () => void) {
+    public goTo(index: number, callback?: () => void): void {
         if (this.innerElements.length <= this.perPage) {
             return;
         }
@@ -383,7 +381,7 @@ export default class Siema {
     /**
      * Moves sliders frame to position of currently active slide
      */
-    public slideToCurrent(enableTransition?: boolean) {
+    public slideToCurrent(enableTransition?: boolean): void {
         const currentSlide = this.config.loop ? this.currentSlide + this.perPage : this.currentSlide;
         const offset = (this.config.rtl ? 1 : -1) * currentSlide * (this.selectorWidth / this.perPage);
 
@@ -409,7 +407,7 @@ export default class Siema {
     /**
      * Recalculate drag /swipe event and reposition the frame of a slider
      */
-    private updateAfterDrag() {
+    private updateAfterDrag(): void {
         const movement = (this.config.rtl ? -1 : 1) * (this.drag.endX - this.drag.startX);
         const movementDistance = Math.abs(movement);
         const howManySliderToSlide = this.config.multipleDrag ? Math.ceil(movementDistance / (this.selectorWidth / this.perPage)) : 1;
@@ -429,7 +427,7 @@ export default class Siema {
     /**
      * When window resizes, resize slider components as well
      */
-    private resizeHandler = () => {
+    private resizeHandler = (): void => {
         // update perPage number dependable of user value
         this.resolveSlidesNumber();
 
@@ -447,7 +445,7 @@ export default class Siema {
     /**
      * Clear drag after touchend and mouseup event
      */
-    private clearDrag() {
+    private clearDrag(): void {
         this.drag = {
             startX: 0,
             endX: 0,
@@ -460,7 +458,7 @@ export default class Siema {
     /**
      * touchstart event handler
      */
-    private touchstartHandler = (e: TouchEvent) => {
+    private touchstartHandler = (e: TouchEvent): void => {
         // Prevent dragging / swiping on inputs, selects and textareas
         const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf((e.target as HTMLElement).nodeName) !== -1;
         if (ignoreSiema) {
@@ -476,7 +474,7 @@ export default class Siema {
     /**
      * touchend event handler
      */
-    private touchendHandler = (e: TouchEvent) => {
+    private touchendHandler = (e: TouchEvent): void => {
         e.stopPropagation();
         this.pointerDown = false;
         this.enableTransition();
@@ -489,7 +487,7 @@ export default class Siema {
     /**
      * touchmove event handler
      */
-    private touchmoveHandler = (e: TouchEvent) => {
+    private touchmoveHandler = (e: TouchEvent): void=> {
         e.stopPropagation();
 
         if (this.drag.letItGo === null) {
@@ -513,7 +511,7 @@ export default class Siema {
     /**
      * mousedown event handler
      */
-    private mousedownHandler = (e: MouseEvent) => {
+    private mousedownHandler = (e: MouseEvent): void => {
         // Prevent dragging / swiping on inputs, selects and textareas
         const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf((e.target as HTMLElement).nodeName) !== -1;
         if (ignoreSiema) {
@@ -529,7 +527,7 @@ export default class Siema {
     /**
      * mouseup event handler
      */
-    private mouseupHandler = (e: MouseEvent) => {
+    private mouseupHandler = (e: MouseEvent): void => {
         e.stopPropagation();
         this.pointerDown = false;
         this.selector.style.cursor = '-webkit-grab';
@@ -543,7 +541,7 @@ export default class Siema {
     /**
      * mousemove event handler
      */
-    private mousemoveHandler = (e: MouseEvent) => {
+    private mousemoveHandler = (e: MouseEvent): void => {
         e.preventDefault();
         if (this.pointerDown) {
             // if dragged element is a link
@@ -569,7 +567,7 @@ export default class Siema {
     /**
      * mouseleave event handler
      */
-    private mouseleaveHandler = (e: MouseEvent) => {
+    private mouseleaveHandler = (e: MouseEvent): void => {
         if (this.pointerDown) {
             this.pointerDown = false;
             this.selector.style.cursor = '-webkit-grab';
@@ -585,7 +583,7 @@ export default class Siema {
     /**
      * click event handler
      */
-    private clickHandler = (e: Event) => {
+    private clickHandler = (e: Event): void => {
         // if the dragged element is a link
         // prevent browsers from folowing the link
         if (this.drag.preventClick) {
@@ -598,7 +596,7 @@ export default class Siema {
     /**
      * Remove item from carousel.
      */
-    public remove(index: number, callback?: () => void) {
+    public remove(index: number, callback?: () => void): void {
         if (index < 0 || index >= this.innerElements.length) {
             throw new Error('Item to remove doesn\'t exist');
         }
@@ -627,7 +625,7 @@ export default class Siema {
     /**
      * Insert item to carousel at particular index.
      */
-    public insert(item: HTMLElement, index: number, callback?: () => void) {
+    public insert(item: HTMLElement, index: number, callback?: () => void): void {
         if (index < 0 || index > this.innerElements.length + 1) {
             throw new Error('Unable to inset it at this index 😭');
         }
@@ -652,7 +650,7 @@ export default class Siema {
     /**
      * Prepernd item to carousel.
      */
-    public prepend(item: HTMLElement, callback?: () => void) {
+    public prepend(item: HTMLElement, callback?: () => void): void {
         this.insert(item, 0);
         if (callback) {
             callback.call(this);
@@ -662,7 +660,7 @@ export default class Siema {
     /**
      * Append item to carousel.
      */
-    public append(item: HTMLElement, callback?: () => void) {
+    public append(item: HTMLElement, callback?: () => void): void {
         this.insert(item, this.innerElements.length + 1);
         if (callback) {
             callback.call(this);
@@ -672,7 +670,7 @@ export default class Siema {
     /**
      * Removes listeners and optionally restores to initial markup
      */
-    public destroy(restoreMarkup = false, callback?: () => void) {
+    public destroy(restoreMarkup = false, callback?: () => void): void {
         this.detachEvents();
 
         this.selector.style.cursor = 'auto';
