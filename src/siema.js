@@ -12,6 +12,9 @@ export default class Siema {
 
     // Resolve selector's type
     this.selector = typeof this.config.selector === 'string' ? document.querySelector(this.config.selector) : this.config.selector;
+    if (this.config.preserveInitialState) {
+      this.selectorContents = Array.from(this.selector.childNodes);
+    }
 
     // Early throw if selector doesn't exists
     if (this.selector === null) {
@@ -56,6 +59,7 @@ export default class Siema {
       threshold: 20,
       loop: false,
       rtl: false,
+      preserveInitialState: false,
       onInit: () => {},
       onChange: () => {},
     };
@@ -677,13 +681,21 @@ export default class Siema {
     this.selector.style.cursor = 'auto';
 
     if (restoreMarkup) {
-      const slides = document.createDocumentFragment();
-      for (let i = 0; i < this.innerElements.length; i++) {
-        slides.appendChild(this.innerElements[i]);
-      }
       this.selector.innerHTML = '';
-      this.selector.appendChild(slides);
       this.selector.removeAttribute('style');
+      if (this.config.preserveInitialState) {
+        for (let i = 0, l = this.selectorContents.length; i < l; i++) {
+          const child = this.selectorContents[i];
+          this.selector.appendChild(child);
+        }
+      }
+      else {
+        const slides = document.createDocumentFragment();
+        for (let i = 0; i < this.innerElements.length; i++) {
+          slides.appendChild(this.innerElements[i]);
+        }
+        this.selector.appendChild(slides);
+      }
     }
 
     if (callback) {
