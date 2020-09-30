@@ -1,5 +1,5 @@
 export interface SiemaOptions {
-    selector: string;
+    selector: HTMLElement | string;
     duration: number;
     easing: string;
     perPage: number | {
