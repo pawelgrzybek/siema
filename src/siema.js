@@ -641,7 +641,7 @@ export default class Siema {
 
 
   /**
-   * Prepernd item to carousel.
+   * Prepend item to carousel.
    * @param {HTMLElement} item - Item to prepend.
    * @param {function} callback - Optional callback to call after prepend.
    */
