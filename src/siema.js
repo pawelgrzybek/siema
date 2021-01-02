@@ -619,7 +619,7 @@ export default class Siema {
    */
   insert(item, index, callback) {
     if (index < 0 || index > this.innerElements.length + 1) {
-      throw new Error('Unable to inset it at this index 😭');
+      throw new Error('Unable to insert it at this index 😭');
     }
     if (this.innerElements.indexOf(item) !== -1) {
       throw new Error('The same item in a carousel? Really? Nope 😭');
