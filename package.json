@@ -1,21 +1,29 @@
 {
   "name": "siema",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Lightweight and simple carousel with no dependencies",
-  "main": "dist/siema.min.js",
+  "main": "dist/siema.js",
+  "module": "dist/siema.js",
+  "typings": "dist/siema.d.ts",
+  "typescript": {
+    "definition": "dist/siema.d.ts"
+  },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.24.1",
-    "eslint": "4.16.0",
-    "eslint-loader": "^1.9.0",
-    "webpack": "3.10.0"
+    "@typescript-eslint/eslint-plugin": "4.3.0",
+    "@typescript-eslint/parser": "4.3.0",
+    "awesome-typescript-loader": "5.2.1",
+    "eslint": "7.10.0",
+    "rimraf": "3.0.2",
+    "typescript": "4.0.3",
+    "webpack": "4.44.2",
+    "webpack-cli": "3.3.12"
   },
   "scripts": {
-    "build": "webpack && cp dist/siema.min.js docs/assets",
-    "dev": "webpack --progress --colors --watch"
+    "clean": "rimraf dist",
+    "build": "npm run build:prod",
+    "build:dev": "npm run clean && webpack --mode development --progress --profile --colors --bail --display-error-details",
+    "build:watch": "npm run clean && webpack --mode development --progress --profile --colors --bail --display-error-details --watch",
+    "build:prod": "npm run clean && webpack --mode production --progress --profile --colors --bail"
   },
   "files": [
     "dist"
