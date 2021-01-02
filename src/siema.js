@@ -205,7 +205,7 @@ export default class Siema {
     const elementContainer = document.createElement('div');
     elementContainer.style.cssFloat = this.config.rtl ? 'right' : 'left';
     elementContainer.style.float = this.config.rtl ? 'right' : 'left';
-    elementContainer.style.width = `${this.config.loop ? 100 / (this.innerElements.length + (this.perPage * 2)) : 100 / (this.innerElements.length)}%`;
+    elementContainer.style.width = `${this.selectorWidth}%`;
     elementContainer.appendChild(elm);
     return elementContainer;
   }
