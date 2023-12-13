@@ -407,6 +407,10 @@ export default class Siema {
    * When window resizes, resize slider components as well
    */
   resizeHandler() {
+    if (this.selector.offsetWidth === this.selectorWidth) {
+      return;
+    }
+
     // update perPage number dependable of user value
     this.resolveSlidesNumber();
 
