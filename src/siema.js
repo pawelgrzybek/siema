@@ -149,9 +149,28 @@ export default class Siema {
     // build a frame and slide to a currentSlide
     this.buildSliderFrame();
 
+    // Add the transform to divs within the siema carousel
+    this.addTransformToGallerySliderDivs();
+
     this.config.onInit.call(this);
   }
 
+  /**
+   * Add transform: translateZ(0); to all div elements inside the siema carousel to stop flickering on Safari.
+   */
+  addTransformToGallerySliderDivs() {
+    //this.selector points to the Siema carousel's main element
+    const siemaCarousel = this.selector;
+    if (!siemaCarousel) {
+      console.error("Siema carousel element not found");
+      return;
+    }
+
+    const divElements = siemaCarousel.querySelectorAll("div");
+    divElements.forEach((divElement) => {
+      divElement.style.transform = "translateZ(0)";
+    });
+  }
 
   /**
    * Build a sliderFrame and slide to a current item.
