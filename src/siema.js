@@ -93,6 +93,7 @@ export default class Siema {
     if (this.config.draggable) {
       // Keep track pointer hold and dragging distance
       this.pointerDown = false;
+      this.isDragging = false;
       this.drag = {
         startX: 0,
         endX: 0,
@@ -449,6 +450,7 @@ export default class Siema {
     }
 
     e.stopPropagation();
+    this.isDragging = true;
     this.pointerDown = true;
     this.drag.startX = e.touches[0].pageX;
     this.drag.startY = e.touches[0].pageY;
@@ -461,6 +463,7 @@ export default class Siema {
   touchendHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
+    this.isDragging = false;
     this.enableTransition();
     if (this.drag.endX) {
       this.updateAfterDrag();
@@ -517,6 +520,7 @@ export default class Siema {
   mouseupHandler(e) {
     e.stopPropagation();
     this.pointerDown = false;
+    this.isDragging = false;
     this.selector.style.cursor = '-webkit-grab';
     this.enableTransition();
     if (this.drag.endX) {
@@ -531,7 +535,7 @@ export default class Siema {
    */
   mousemoveHandler(e) {
     e.preventDefault();
-    if (this.pointerDown) {
+    if (this.pointerDown && (this.isDragging || e.pageX !== this.drag.startX)) {
       // if dragged element is a link
       // mark preventClick prop as a true
       // to detemine about browser redirection later on
@@ -539,6 +543,7 @@ export default class Siema {
         this.drag.preventClick = true;
       }
 
+      this.isDragging = true;
       this.drag.endX = e.pageX;
       this.selector.style.cursor = '-webkit-grabbing';
       this.sliderFrame.style.webkitTransition = `all 0ms ${this.config.easing}`;
@@ -559,6 +564,7 @@ export default class Siema {
   mouseleaveHandler(e) {
     if (this.pointerDown) {
       this.pointerDown = false;
+      this.isDragging = false;
       this.selector.style.cursor = '-webkit-grab';
       this.drag.endX = e.pageX;
       this.drag.preventClick = false;
