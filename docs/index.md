@@ -71,6 +71,7 @@ new Siema({
   rtl: false,
   onInit: () => {},
   onChange: () => {},
+  onResize: () => {}
 });
 ```
 
@@ -109,6 +110,9 @@ Runs immediately after initialization [(example)](http://codepen.io/pawelgrzybek
 
 **`onChange`** (function)  
 Runs after slide change [(example)](http://codepen.io/pawelgrzybek/pen/RVbrVe).
+
+**`onResize`** (function)  
+Runs after window resize [(example)](https://codepen.io/miturostislav/pen/yxdRNB).
 
 ## API
 
