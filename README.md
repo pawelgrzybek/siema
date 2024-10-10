@@ -71,8 +71,17 @@ Slide transition duration in milliseconds [(example)](http://codepen.io/pawelgrz
 **`easing`** (string)  
 It is like a CSS `transition-timing-function` — describes acceleration curve [(example)](http://codepen.io/pawelgrzybek/pen/aWovrB).
 
+**`center`** (boolean)  
+Determine if slider will be center in the selector or not.  Default: false.
+
 **`perPage`** (number or object)  
 The number of slides to be shown. It accepts a number [(example)](http://codepen.io/pawelgrzybek/pen/bWbVXz) or an object [(example)](http://codepen.io/pawelgrzybek/pen/dWbGyZ) for complex responsive layouts.
+
+**`offset`** (number or object)  
+An offset applied on slides width based on items per page.  
+For example, a configuration with perPage = 1 and offset = 0.25 will show in viewport the current slide and 25% of the next slide.  
+With center attribute enable, it will show 25% of the prev slide, the current slide and 25% of the next slide.  
+It accepts a number between 0 and 1 and object with value by breakpoint as for **perPage** attribute.
 
 **`startIndex`** (number)  
 Index (zero-based) of the starting slide [(example)](http://codepen.io/pawelgrzybek/pen/vmBLER).
