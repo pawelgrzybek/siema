@@ -197,7 +197,8 @@ I've also created a Codepen collection with tons of Siema examples.
 
 - [Angular version](https://www.npmjs.com/package/ngx-siema) by Lex Zhukov
 - [React version](https://www.npmjs.com/package/react-siema) by Mantas Kaveckas
-- [Vue version](https://www.npmjs.com/package/vue2-siema) by Carlos Nogueira
+- [Vue version #1](https://www.npmjs.com/package/vue2-siema) by Carlos Nogueira
+- [Vue version #2](https://github.com/robbinfellow/v-siema) by Robbin Johansson
 - [Siema-rails](https://github.com/Naggi-Goishi/siema-rails) by Naggi Goishi
 
 
